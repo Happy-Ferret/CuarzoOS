@@ -130,7 +130,7 @@ void View::calcBlurRect()
     // Window height
     float winH = compositor->window->height();
 
-    int margin = 16*5;
+    int margin = (6.0f*5.0f);
 
     // Top left
     blurRectVertices[0].position[0] = -1.0f;

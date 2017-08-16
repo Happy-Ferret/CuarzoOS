@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QProcess::startDetached(QGuiApplication::applicationDirPath() + "/GUI/./gui -platform wayland");
 
     // Launch a Demo App
-    QProcess::startDetached("DemoApp -platform wayland");
+    QProcess::startDetached(QGuiApplication::applicationDirPath()  + "/../DemoApp -platform wayland");
 
     // Execute Application
     return app.exec();

@@ -14,6 +14,9 @@ CrystalsGui::CrystalsGui()
     // Connects to Crystals Core
     socket->connectToServer("com.cuarzo.crystals");
 
+    // Wait until connect to Crystals
+    socket->waitForReadyRead();
+
 }
 
 // Connected to Crystals Core
@@ -41,5 +44,6 @@ void CrystalsGui::connected()
 
 void CrystalsGui::newMessage()
 {
+
 
 }

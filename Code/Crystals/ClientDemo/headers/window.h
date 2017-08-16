@@ -1,7 +1,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "capplication.h"
+#include "CApplication.h"
+#include "CLabel.h"
+
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QTimer>
@@ -11,21 +13,24 @@ class Window : public CWidget
     Q_OBJECT
 public:
     Window();
+
     QPushButton *mov = new QPushButton("Mover");
     QPushButton *cre = new QPushButton("Crear");
     QPushButton *opa = new QPushButton("Opacidad");
     QPushButton *mod = new QPushButton("Modo");
     QPushButton *blu = new QPushButton("Blur");
-    QPushButton *tit = new QPushButton("Title");
+    QPushButton *tit = new QPushButton("Change the beautiful Title");
     QPushButton *siz = new QPushButton("Resize");
     QPushButton *del = new QPushButton("Delete");
+
+    CLabel *label = new CLabel("CuarzoOS is cool!");
+
     QHBoxLayout *layout = new QHBoxLayout(this);
     QTimer *time = new QTimer(this);
     bool movee = false;
-    void mouseMoveEvent(QMouseEvent *event)
+    void mouseMoveEvent(QMouseEvent *)
     {
-        if(movee)
-        move(QCursor::pos()+QPoint(-100,-100));
+        if(movee) move(QCursor::pos()+QPoint(-100,-100));
     }
 
 public slots:

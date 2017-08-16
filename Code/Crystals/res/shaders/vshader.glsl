@@ -77,8 +77,8 @@ void drawBlur()
     calcSurfacePosition();
 
     // Set Texture Vertex Position
-    texCoordsOut.x = ( pos.x + 80.0 ) / (viewSize.x + 240.0) ;
-    texCoordsOut.y = ( pos.y + 80.0 ) / (viewSize.y + 240.0) ;
+    texCoordsOut.x = ( pos.x + 150.0 ) / (viewSize.x + 300.0) ;
+    texCoordsOut.y = ( pos.y + 150.0 ) / (viewSize.y + 300.0) ;
 }
 
 void drawSurface()

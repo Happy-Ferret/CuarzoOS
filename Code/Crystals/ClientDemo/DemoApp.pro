@@ -1,24 +1,22 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2017-07-20T06:38:39
-#
-#-------------------------------------------------
-
 QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = DemoApp
-TEMPLATE = app
+INCLUDEPATH += $$PWD/CFramework
+INCLUDEPATH += $$PWD/headers
+
+HEADERS += \
+    CFramework/CApplication.h \
+    CFramework/CCore.h \
+    CFramework/CWidget.h \
+    headers/window.h \
+    CFramework/CLabel.h \
+    CFramework/CPushButton.h
+
+SOURCES += \
+    sources/main.cpp \
+    sources/window.cpp
 
 
-SOURCES += main.cpp \
-    window.cpp
-
-HEADERS  += \
-    capplication.h \
-    window.h
-
-FORMS    +=
 
 

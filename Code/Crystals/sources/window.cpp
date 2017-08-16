@@ -119,7 +119,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Forest.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Valparaiso 2.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
@@ -199,10 +199,11 @@ void Window::drawView(View *view)
         // Set blur texture
         glBindTexture(GL_TEXTURE_2D, blurTexture);
 
-        float b = 0.5f;
+        float b = 0.25f;
+        int extra = 5*6;
 
         // Sets blur texture size
-        glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, (w+160)*b, (h+160)*b, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, (w+extra)*b, (h+extra)*b, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
         // Set OpenGL to blur mode
         glUniform1i(shaderModeUniform,SHADER_BLUR_RECT);
@@ -214,7 +215,7 @@ void Window::drawView(View *view)
         view->calcBlurRect();
 
         // Sets render size
-        glViewport( 0, 0,( w+160)*b, (h + 160)*b);
+        glViewport( 0, 0,( w+extra)*b, (h + extra)*b);
 
         // Send the vertex data
         glBufferData(GL_ARRAY_BUFFER, sizeof(view->blurRectVertices), view->blurRectVertices, GL_STATIC_DRAW);
@@ -231,7 +232,7 @@ void Window::drawView(View *view)
         // Send the vertex data
         glBufferData(GL_ARRAY_BUFFER, sizeof(screenRectVertices), screenRectVertices, GL_STATIC_DRAW);
 
-        for( int i = 1;  i < 16; i+=4 )
+        for( int i = 1;  i <= 13; i+=6 )
         {
             // Set OpenGL to blur mode
             glUniform1f(blurRadiusUniform,i);

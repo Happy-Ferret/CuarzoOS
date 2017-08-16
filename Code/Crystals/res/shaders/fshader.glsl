@@ -62,7 +62,7 @@ void main(void){
 
     else if(Mode == 6)
     {
-        gl_FragColor =  (texture2D(Texture,texCoordsOut)*0.7 + vec4(0.3))*finalColor;
+        gl_FragColor =  (texture2D(Texture,texCoordsOut)*0.4 + vec4(0.6))*finalColor;
     }
 
 }

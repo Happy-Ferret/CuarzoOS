@@ -1,10 +1,9 @@
-#include "window.h"
-
+#include "headers/window.h"
+#include <QScreen>
 Window::Window()
 {
-  //setStyleSheet("font-family:Lato");
-  move(400,400);
-  resize(500,500);
+  move(200,200);
+  setFixedWidth(QApplication::primaryScreen()->size().width());
   connect(mov,SIGNAL(pressed()),this,SLOT(moveWindow()));
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));
   connect(del,SIGNAL(pressed()),this,SLOT(deleteWindow()));
@@ -14,6 +13,8 @@ Window::Window()
   connect(tit,SIGNAL(pressed()),this,SLOT(changeTitle()));
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
   connect(time,SIGNAL(timeout()),this,SLOT(timeStopped()));
+
+  tit->setFixedSize(400,400);
   layout->addWidget(mov);
   layout->addWidget(siz);
   layout->addWidget(cre);
@@ -22,6 +23,9 @@ Window::Window()
   layout->addWidget(opa);
   layout->addWidget(tit);
   layout->addWidget(del);
+  //label->setFixedWidth(100);
+  label->enableEllipsis(true);
+  layout->addWidget(label);
   setMouseTracking(true);
 }
 void Window::moveWindow()
@@ -56,7 +60,7 @@ void Window::changeTitle()
 
 void Window::changeSize()
 {
-    resize(width() + 10,height() + 10);
+    setFixedSize(width() + 10,height() + 10);
 }
 
 void Window::deleteWindow()

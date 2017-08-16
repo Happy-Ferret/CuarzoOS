@@ -88,7 +88,7 @@ void Compositor::newClientMessage()
             if(socket->appType  == CRYSTALS_TYPE)
             {
                 // Remove the socket from the client list
-                crystalsGuiSocket = sockets.takeAt(sockets.indexOf(socket));
+                crystalsGuiSocket = socket;
 
                 // Prints the event
                 qDebug() << "Crystals Gui Connected";
