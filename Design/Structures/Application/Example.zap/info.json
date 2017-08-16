@@ -1,0 +1,12 @@
+{
+  "info":{
+    "name":"Example Application",
+    "version":"1.0.0",
+    "executable":"example",
+    "identifier":"com.cuarzo.example",
+    "icon":"icon.png"
+  },
+  "libraries":{
+
+  }
+}

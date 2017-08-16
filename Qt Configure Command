@@ -1,0 +1,2 @@
+./configure -top-level -opensource -confirm-license -make libs -nomake tools -nomake examples -skip qt3d -skip qtandroidextras -skip qtcanvas3d -skip qtcharts -skip qtdoc -skip qtmacextras -skip qtpurchasing -skip qtwebchannel -skip qtwebengine -skip qtwebview -skip qtwinextras -skip qtx11extras -opengl es2 -kms -eglfs -egl
+
