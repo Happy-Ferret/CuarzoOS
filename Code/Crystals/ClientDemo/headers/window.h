@@ -4,6 +4,8 @@
 #include "CApplication.h"
 #include "CWindow.h"
 #include "CLabel.h"
+#include "CImage.h"
+
 
 #include <QBoxLayout>
 #include <QPushButton>
@@ -25,6 +27,7 @@ public:
     QPushButton *del = new QPushButton("Delete");
 
     CLabel *label = new CLabel("CuarzoOS is cool!");
+    CImage *image = new CImage(QPixmap("/home/e/icon.svg"),QSize(100,100));
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     QTimer *time = new QTimer(this);

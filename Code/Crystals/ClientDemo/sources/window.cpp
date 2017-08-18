@@ -14,7 +14,11 @@ Window::Window()
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
   connect(time,SIGNAL(timeout()),this,SLOT(timeStopped()));
 
+  image->enableColor(true);
+  image->setImageColor(Qt::blue);
   tit->setFixedSize(400,400);
+  image->setBorderRadius(5);
+  layout->addWidget(image);
   layout->addWidget(mov);
   layout->addWidget(siz);
   layout->addWidget(cre);

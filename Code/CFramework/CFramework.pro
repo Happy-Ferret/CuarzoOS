@@ -19,9 +19,13 @@ HEADERS += \
     Headers/CApplication.h \
     Headers/CCore.h \
     Headers/CLabel.h \
-    Headers/CWindow.h
+    Headers/CWindow.h \
+    Headers/CPushButton.h \
+    Headers/CImage.h
 
 SOURCES += \
     Sources/CApplication.cpp \
     Sources/CWindow.cpp \
-    Sources/CLabel.cpp
+    Sources/CLabel.cpp \
+    Sources/CPushButton.cpp \
+    Sources/CImage.cpp
