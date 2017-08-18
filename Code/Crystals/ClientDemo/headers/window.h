@@ -2,13 +2,14 @@
 #define WINDOW_H
 
 #include "CApplication.h"
+#include "CWindow.h"
 #include "CLabel.h"
 
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QTimer>
 
-class Window : public CWidget
+class Window : public CWindow
 {
     Q_OBJECT
 public:

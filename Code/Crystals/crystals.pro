@@ -13,7 +13,8 @@ HEADERS += \
     headers/server.h \
     headers/socket.h \
     headers/view.h \
-    headers/window.h
+    headers/window.h \
+    headers/launchman.h
 
 SOURCES += \
     sources/background.cpp \

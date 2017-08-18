@@ -2,16 +2,14 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-INCLUDEPATH += $$PWD/CFramework
+#INCLUDEPATH += /CFramework
 INCLUDEPATH += $$PWD/headers
 
+INCLUDEPATH += /home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include
+LIBS += -L/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/lib -lCFramework
 HEADERS += \
-    CFramework/CApplication.h \
-    CFramework/CCore.h \
-    CFramework/CWidget.h \
     headers/window.h \
-    CFramework/CLabel.h \
-    CFramework/CPushButton.h
+
 
 SOURCES += \
     sources/main.cpp \

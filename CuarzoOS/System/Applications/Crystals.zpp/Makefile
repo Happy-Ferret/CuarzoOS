@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../../../Code/Crystals/ClientDemo -I. -I../../../../Code/Crystals/ClientDemo/CFramework -I../../../../Code/Crystals/ClientDemo/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
+INCPATH       = -I../../../../Code/Crystals/ClientDemo -I. -I../../../../Code/Crystals/ClientDemo/headers -I../../Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
 QMAKE         = /usr/local/Qt-5.9.1/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = DemoApp1.0.0
 DISTDIR = /home/e/Escritorio/CuarzoOS/CuarzoOS/System/Applications/Crystals.zpp/.tmp/DemoApp1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/usr/local/Qt-5.9.1/lib
-LIBS          = $(SUBLIBS) -L/usr/local/Qt-5.9.1/lib -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGLESv2 -lpthread 
+LIBS          = $(SUBLIBS) -L/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/lib -lCFramework -L/usr/local/Qt-5.9.1/lib -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGLESv2 -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -51,18 +51,10 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../../../../Code/Crystals/ClientDemo/sources/main.cpp \
-		../../../../Code/Crystals/ClientDemo/sources/window.cpp moc_CApplication.cpp \
-		moc_CWidget.cpp \
-		moc_window.cpp \
-		moc_CLabel.cpp \
-		moc_CPushButton.cpp
+		../../../../Code/Crystals/ClientDemo/sources/window.cpp moc_window.cpp
 OBJECTS       = main.o \
 		window.o \
-		moc_CApplication.o \
-		moc_CWidget.o \
-		moc_window.o \
-		moc_CLabel.o \
-		moc_CPushButton.o
+		moc_window.o
 DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/common/unix.conf \
 		/usr/local/Qt-5.9.1/mkspecs/common/linux.conf \
@@ -186,12 +178,7 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/exceptions.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/yacc.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/lex.prf \
-		/home/e/Escritorio/Code/Crystals/ClientDemo/DemoApp.pro ../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h \
-		../../../../Code/Crystals/ClientDemo/headers/window.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CPushButton.h ../../../../Code/Crystals/ClientDemo/sources/main.cpp \
+		/home/e/Escritorio/Code/Crystals/ClientDemo/DemoApp.pro ../../../../Code/Crystals/ClientDemo/headers/window.h ../../../../Code/Crystals/ClientDemo/sources/main.cpp \
 		../../../../Code/Crystals/ClientDemo/sources/window.cpp
 QMAKE_TARGET  = DemoApp
 DESTDIR       = 
@@ -476,7 +463,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h ../../../../Code/Crystals/ClientDemo/CFramework/CCore.h ../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h ../../../../Code/Crystals/ClientDemo/headers/window.h ../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h ../../../../Code/Crystals/ClientDemo/CFramework/CPushButton.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../../../Code/Crystals/ClientDemo/headers/window.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../../Code/Crystals/ClientDemo/sources/window.cpp $(DISTDIR)/
 
 
@@ -509,11 +496,12 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_CApplication.cpp moc_CWidget.cpp moc_window.cpp moc_CLabel.cpp moc_CPushButton.cpp
+compiler_moc_header_make_all: moc_window.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_CApplication.cpp moc_CWidget.cpp moc_window.cpp moc_CLabel.cpp moc_CPushButton.cpp
-moc_CApplication.cpp: ../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h \
+	-$(DEL_FILE) moc_window.cpp
+moc_window.cpp: ../../Library/Frameworks/CFramework/include/CApplication.h \
+		../../Library/Frameworks/CFramework/include/CCore.h \
+		../../Library/Frameworks/CFramework/include/CWidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -626,233 +614,7 @@ moc_CApplication.cpp: ../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h \
-		moc_predefs.h \
-		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/CFramework -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h -o moc_CApplication.cpp
-
-moc_CWidget.cpp: ../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h \
-		moc_predefs.h \
-		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/CFramework -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h -o moc_CWidget.cpp
-
-moc_window.cpp: ../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h \
+		../../Library/Frameworks/CFramework/include/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -872,223 +634,7 @@ moc_window.cpp: ../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h \
 		../../../../Code/Crystals/ClientDemo/headers/window.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/CFramework -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Crystals/ClientDemo/headers/window.h -o moc_window.cpp
-
-moc_CLabel.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h \
-		moc_predefs.h \
-		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/CFramework -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h -o moc_CLabel.cpp
-
-moc_CPushButton.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QPushButton \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qpushbutton.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qabstractbutton.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CPushButton.h \
-		moc_predefs.h \
-		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/CFramework -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Crystals/ClientDemo/CFramework/CPushButton.h -o moc_CPushButton.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo -I/home/e/Escritorio/CuarzoOS/Code/Crystals/ClientDemo/headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Crystals/ClientDemo/headers/window.h -o moc_window.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1104,9 +650,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h \
+main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../Library/Frameworks/CFramework/include/CApplication.h \
+		../../Library/Frameworks/CFramework/include/CCore.h \
+		../../Library/Frameworks/CFramework/include/CWidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -1220,7 +766,7 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../../Code/C
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
 		../../../../Code/Crystals/ClientDemo/headers/window.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h \
+		../../Library/Frameworks/CFramework/include/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -1242,9 +788,9 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../../Code/C
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../../../Code/Crystals/ClientDemo/sources/main.cpp
 
 window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Code/Crystals/ClientDemo/headers/window.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CApplication.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CCore.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CWidget.h \
+		../../Library/Frameworks/CFramework/include/CApplication.h \
+		../../Library/Frameworks/CFramework/include/CCore.h \
+		../../Library/Frameworks/CFramework/include/CWidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -1357,7 +903,7 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		../../../../Code/Crystals/ClientDemo/CFramework/CLabel.h \
+		../../Library/Frameworks/CFramework/include/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -1373,23 +919,19 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h
+		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QScreen \
+		/usr/local/Qt-5.9.1/include/QtGui/qscreen.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QList \
+		/usr/local/Qt-5.9.1/include/QtCore/QObject \
+		/usr/local/Qt-5.9.1/include/QtCore/QRect \
+		/usr/local/Qt-5.9.1/include/QtCore/QSize \
+		/usr/local/Qt-5.9.1/include/QtCore/QSizeF \
+		/usr/local/Qt-5.9.1/include/QtGui/QTransform
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o ../../../../Code/Crystals/ClientDemo/sources/window.cpp
-
-moc_CApplication.o: moc_CApplication.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CApplication.o moc_CApplication.cpp
-
-moc_CWidget.o: moc_CWidget.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CWidget.o moc_CWidget.cpp
 
 moc_window.o: moc_window.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_window.o moc_window.cpp
-
-moc_CLabel.o: moc_CLabel.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CLabel.o moc_CLabel.cpp
-
-moc_CPushButton.o: moc_CPushButton.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CPushButton.o moc_CPushButton.cpp
 
 ####### Install
 

@@ -1,5 +1,6 @@
 #include "headers.h"
 #include "compositor.h"
+#include "launchman.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,11 +10,14 @@ int main(int argc, char *argv[])
     // Creates the Compositor
     Compositor *compositor = new Compositor();
 
+    // Creates the LaunchMan ( Application launcher )
+    LaunchMan man;
+
     // Launch Crystals Gui
-    QProcess::startDetached(QGuiApplication::applicationDirPath() + "/GUI/./gui -platform wayland");
+    man.launchZpp(SYSTEM_PATH + "/System/Applications/CrystalsGui.zpp");
 
     // Launch a Demo App
-    QProcess::startDetached(QGuiApplication::applicationDirPath()  + "/../DemoApp -platform wayland");
+    man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
 
     // Execute Application
     return app.exec();

@@ -1,0 +1,11 @@
+prefix=/home/eduardo/Escritorio/TagLibLinux
+exec_prefix=/home/eduardo/Escritorio/TagLibLinux
+libdir=/home/eduardo/Escritorio/TagLibLinux/lib
+includedir=/home/eduardo/Escritorio/TagLibLinux/include
+
+Name: TagLib
+Description: Audio meta-data library
+Requires: 
+Version: 1.11.1
+Libs: -L${libdir} -ltag
+Cflags: -I${includedir}/taglib

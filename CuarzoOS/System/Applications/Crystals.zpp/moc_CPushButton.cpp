@@ -63,7 +63,7 @@ void CPushButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
 }
 
 const QMetaObject CPushButton::staticMetaObject = {
-    { &QPushButton::staticMetaObject, qt_meta_stringdata_CPushButton.data,
+    { &QFrame::staticMetaObject, qt_meta_stringdata_CPushButton.data,
       qt_meta_data_CPushButton,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -78,12 +78,12 @@ void *CPushButton::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CPushButton.stringdata0))
         return static_cast<void*>(const_cast< CPushButton*>(this));
-    return QPushButton::qt_metacast(_clname);
+    return QFrame::qt_metacast(_clname);
 }
 
 int CPushButton::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QPushButton::qt_metacall(_c, _id, _a);
+    _id = QFrame::qt_metacall(_c, _id, _a);
     return _id;
 }
 QT_WARNING_POP
