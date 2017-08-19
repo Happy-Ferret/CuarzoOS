@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QLocalSocket>
 #include <QWindow>
+#include <QStyleFactory>
 
 #ifndef CAPPLICATION
 #define CAPPLICATION

@@ -14,10 +14,7 @@ int main(int argc, char *argv[])
     LaunchMan man;
 
     // Launch Crystals Gui
-    man.launchZpp(SYSTEM_PATH + "/System/Applications/CrystalsGui.zpp");
-
-    // Launch a Demo App
-    man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+    man.launchZpp(SYSTEM_PATH + "/System/Applications/GUI.zpp");
 
     // Execute Application
     return app.exec();

@@ -90,6 +90,9 @@ void Compositor::newClientMessage()
                 // Remove the socket from the client list
                 crystalsGuiSocket = socket;
 
+                // Now can open apps
+                readyToLaunchApps();
+
                 // Prints the event
                 qDebug() << "Crystals Gui Connected";
             }
@@ -122,10 +125,10 @@ void Compositor::newClientMessage()
             view->setPosition(QPointF(message->x,message->y));
 
             // Assign the surface role
-            view->role = message->role;
+            view->setRole(message->role);
 
             // Assign surface title
-            view->title = message->title;
+            view->setTitle(message->title);
 
             // Triggers OpenGL render
             triggerRender();
@@ -145,7 +148,7 @@ void Compositor::newClientMessage()
             View *view = findViewByIdAndPid(msg->id,socket->processID);
 
             // Set surface role
-            view->role = msg->role;
+            view->setRole(msg->role);
 
              // Triggers OpenGL render
             triggerRender();
@@ -185,7 +188,7 @@ void Compositor::newClientMessage()
             View *view = findViewByIdAndPid(msg->id,socket->processID);
 
             // Sets surface opacity
-            view->opacity = msg->opacity;
+            view->setOpacity(msg->opacity);
 
             // Triggers OpenGL render
             triggerRender();
@@ -212,6 +215,35 @@ void Compositor::newClientMessage()
 
             // Prints the event
             qDebug() << "Surface Blur Activated";
+
+        }break;
+
+        // Titlebar created
+        case TITLEBAR_CREATED:{
+
+            // Parse the message
+            TitlebarCreatedStruct *msg = (TitlebarCreatedStruct*)data.data();
+
+            // Finds the titlebar view
+            View *titleBar = findViewByIdAndPid(msg->id,socket->processID);
+
+            // Set surface role
+            titleBar->setRole(TITLEBAR_MODE);
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->forId, msg->forPid);
+
+            // Assigns the titlebar to the view
+            view->titleBar = titleBar;
+
+            // Now view is configured
+            view->configured = true;
+
+            // Triggers OpenGL render
+            triggerRender();
+
+            // Prints the event
+            qDebug() << "TitleBar created";
 
         }break;
     }
@@ -248,6 +280,32 @@ void Compositor::onSurfaceCreated(QWaylandSurface *surface)
 void Compositor::onWlShellCreated(QWaylandWlShellSurface *wlShellSurface)
 {
     connect(wlShellSurface,SIGNAL(titleChanged()),this,SLOT(titleChanged()));
+}
+
+// Wrongly used to identify a surface
+void Compositor::titleChanged()
+{
+    QWaylandWlShellSurface *surface = qobject_cast< QWaylandWlShellSurface*>(sender());
+
+    // Find equivalent view
+    View* view = findView(surface->surface());
+
+    // Asign the ID
+    view->surfaceId = surface->title().toInt();
+
+    // Send response
+    RegisteredSurfaceStruct reply;
+    reply.id = view->surfaceId;
+
+    // Copy message to a char pointer
+    char data[sizeof(RegisteredSurfaceStruct)];
+    memcpy(data,&reply,sizeof(RegisteredSurfaceStruct));
+
+    // Ask the surface for a full configuration
+    findSocketByPId(surface->surface()->client()->processId())->socket->write(data,sizeof(RegisteredSurfaceStruct));
+
+    qDebug() << "Surface Registered with ID: "+QString::number(view->surfaceId);
+    return;
 }
 
 void Compositor::surfaceHasContentChanged()
@@ -351,6 +409,12 @@ void Compositor::adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int
         updateCursor();
 }
 
+void Compositor::readyToLaunchApps()
+{
+    // Launch a Demo App
+    man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+}
+
 
 
 void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)
@@ -389,33 +453,7 @@ void Compositor::startDrag()
     emit dragStarted(iconView);
 }
 
-// Wrongly used to identify a surface
-void Compositor::titleChanged()
-{
-    QWaylandWlShellSurface *surface = qobject_cast< QWaylandWlShellSurface*>(sender());
 
-    // Find equivalent view
-    View* view = findView(surface->surface());
-
-    // Asign the ID
-    view->surfaceId = surface->title().toInt();
-
-    // Send response
-    RegisteredSurfaceStruct reply;
-    reply.id = view->surfaceId;
-
-    // Copy message to a char pointer
-    char data[sizeof(RegisteredSurfaceStruct)];
-    memcpy(data,&reply,sizeof(RegisteredSurfaceStruct));
-
-    // Send message
-    findSocketByPId(surface->surface()->client()->processId())->socket->write(data,sizeof(RegisteredSurfaceStruct));
-
-    qDebug() << "Surface Registered sId: "+QString::number(view->surfaceId);
-    return;
-
-
-}
 
 void Compositor::handleDrag(View *target, QMouseEvent *me)
 {

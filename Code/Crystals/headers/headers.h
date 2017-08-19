@@ -60,6 +60,7 @@
     #define TOPBAR_MODE 2
     #define FILEMANAGER_MODE 3
     #define DOCK_MODE 4
+    #define TITLEBAR_MODE 5
 #endif
 
 // System root path
@@ -177,6 +178,30 @@ typedef struct{
     unsigned int height; // Pixels
     unsigned char pixels[4*64*64]; // 64x64 Image (RGBA 255)
 }SurfaceBlurImageStruct;
+
+
+/* ------------------ Messages to GUI ------------------ */
+
+// Titlebar request
+#define TITLEBAR_REQUEST 20
+typedef struct{
+    unsigned int type = TITLEBAR_REQUEST; // Message type
+    unsigned int forPid; // Process id of the surface
+    unsigned int forId; // Surface which needs the titlebar
+    unsigned int width; // Surface width
+    char title[128]; // Surface Title
+}TitlebarRequestStruct;
+
+/* ------------------ Messages from GUI ------------------ */
+
+// Titlebar Created
+#define TITLEBAR_CREATED 20
+typedef struct{
+    unsigned int type; // Message type
+    unsigned int id; // TitleBar id
+    unsigned int forPid; // Process id of the surface
+    unsigned int forId; // Surface which needs the titlebar
+}TitlebarCreatedStruct;
 
 #endif
 

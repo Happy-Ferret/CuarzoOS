@@ -161,6 +161,9 @@ void Window::drawBackground()
 
 void Window::drawView(View *view)
 {
+    // Skip view if is not configured
+    if(!view->configured || view->role == TITLEBAR_MODE) return;
+
     // Surface position
     float x = view->position().x();
     float y = view->position().y();

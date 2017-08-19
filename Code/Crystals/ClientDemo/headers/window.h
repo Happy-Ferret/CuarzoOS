@@ -5,6 +5,7 @@
 #include "CWindow.h"
 #include "CLabel.h"
 #include "CImage.h"
+#include "CPushButton.h"
 
 
 #include <QBoxLayout>
@@ -17,7 +18,10 @@ class Window : public CWindow
 public:
     Window();
 
-    QPushButton *mov = new QPushButton("Mover");
+    CPushButton *mov = new CPushButton("Mover");
+    CPushButton *home = new CPushButton(QPixmap("/home/e/icon.svg"));
+    CPushButton *wel = new CPushButton("Welcome",QPixmap("/home/e/icon.svg"));
+
     QPushButton *cre = new QPushButton("Crear");
     QPushButton *opa = new QPushButton("Opacidad");
     QPushButton *mod = new QPushButton("Modo");
@@ -27,7 +31,7 @@ public:
     QPushButton *del = new QPushButton("Delete");
 
     CLabel *label = new CLabel("CuarzoOS is cool!");
-    CImage *image = new CImage(QPixmap("/home/e/icon.svg"),QSize(100,100));
+    //CImage *image = new CImage(QPixmap("/home/e/icon.svg"),QSize(100,100));
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     QTimer *time = new QTimer(this);

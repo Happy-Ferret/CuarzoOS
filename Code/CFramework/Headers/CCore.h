@@ -3,6 +3,11 @@
 
 /* ------------------ CCore ------------------ */
 
+// The way Crystals recognize the application
+
+#define CLIENT_TYPE 0
+#define CRYSTALS_TYPE 1
+
 // Way Crystals identify a surface
 
 #define WINDOW_MODE 0
@@ -10,6 +15,12 @@
 #define TOPBAR_MODE 2
 #define FILEMANAGER_MODE 3
 #define DOCK_MODE 4
+
+// Cuarzo Colors
+#define BLUE QString("#009DDC")
+#define VIOLET QString("#963D96")
+#define RED QString("#E03A3E")
+#define GREEN QString("#61BE4B")
 
 // System root path ( For developing propouse )
 

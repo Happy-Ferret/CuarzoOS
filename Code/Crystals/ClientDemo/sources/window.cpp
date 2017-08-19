@@ -1,9 +1,10 @@
 #include "headers/window.h"
 #include <QScreen>
+#include "CCore.h"
 Window::Window()
 {
   move(200,200);
-  setFixedWidth(QApplication::primaryScreen()->size().width());
+  setFixedSize(400,400);
   connect(mov,SIGNAL(pressed()),this,SLOT(moveWindow()));
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));
   connect(del,SIGNAL(pressed()),this,SLOT(deleteWindow()));
@@ -14,12 +15,11 @@ Window::Window()
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
   connect(time,SIGNAL(timeout()),this,SLOT(timeStopped()));
 
-  image->enableColor(true);
-  image->setImageColor(Qt::blue);
-  tit->setFixedSize(400,400);
-  image->setBorderRadius(5);
-  layout->addWidget(image);
+  home->enableIconColor(true);
+  home->setIconColor(GREEN);
+  layout->addWidget(wel);
   layout->addWidget(mov);
+  layout->addWidget(home);
   layout->addWidget(siz);
   layout->addWidget(cre);
   layout->addWidget(mod);

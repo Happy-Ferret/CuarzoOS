@@ -20,7 +20,7 @@ public:
     Vertex blurRectVertices[4]; // Blur Rect
     float zIndex = 0.01f; // Z-Position in OpenGL Coords
     float radius = 15.0f; // Size of radius
-    uint borderWidth = 2; // Smooth border width
+    uint borderWidth = 1; // Smooth border width
     uint surfaceCount, borderCount; // Amount of used vertices
 
     // Surface configuration
@@ -29,6 +29,12 @@ public:
     QString title = ""; // Surface Title
     int surfaceId = -1; // Surface ID
     bool blur = false; // Surface Blur state
+    bool configured = false; // Is configured
+
+    // Configuration methods
+    void setRole(uint newRole);
+    void setTitle(const QString &newTitle);
+    void setOpacity(uint newOpacity);
 
     // OpenGL functions
     void calcVertexPos(); // Calculates all the vertex positions and colors of the view
@@ -36,6 +42,9 @@ public:
     void setVertexCol(int index, QColor color); // Assign color to a vertex
     void setVertexPos(int index, float x, float y); // Assign position to a vertex
     void setTextureCord(int index, float x, float y); // Assign vertex texture coords
+
+    // Elements
+    View *titleBar = nullptr;
 
     QOpenGLTexture *getTexture();
     QPointF position() const { return m_position; }
@@ -50,9 +59,11 @@ public:
     QPointF m_position, previusPosition;
     View *m_parentView;
 
-
     QSize previusSize; // For not recalc vertex positions
-
+signals:
+    void roleChanged(uint newRole);
+    void titleChanged(const QString &newTitle);
+    void opacityChanged(uint newOpacity);
 
 };
 

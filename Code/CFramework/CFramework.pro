@@ -1,5 +1,5 @@
 QT       += widgets network
-
+CONFIG += warn_off alerts_off
 TARGET = CFramework
 TEMPLATE = lib
 

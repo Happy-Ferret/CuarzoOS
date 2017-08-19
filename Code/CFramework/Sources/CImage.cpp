@@ -15,7 +15,7 @@ CImage::CImage(QPixmap image, QSize size, QWidget *parent)
 {
     setParent(parent);
     setFixedSize(size);
-    setImage(image);
+    setImage(image);    
 }
 
 CImage::CImage(QPixmap image, QColor color, QWidget *parent)
@@ -28,45 +28,57 @@ CImage::CImage(QPixmap image, QColor color, QWidget *parent)
 void CImage::setImage(QPixmap image)
 {
     _image = image;
-    repaint();
+    update();
 }
 
 void CImage::setBorderRadius(uint radius)
 {
     _borderRadius = radius;
-    repaint();
+    update();
 }
 
 void CImage::setImageColor(QColor color)
 {
     _imageColor = color;
-    repaint();
+    update();
 }
 
 void CImage::setBorderColor(QColor color)
 {
     _borderColor = color;
-    repaint();
+    update();
 }
 
 void CImage::setBorderWidth(uint width)
 {
     _borderWidth = width;
-    repaint();
+    update();
 }
 
 void CImage::enableColor(bool mode)
 {
     _colorEnabled = mode;
-    repaint();
+    update();
 }
 
-void CImage::paintEvent(QPaintEvent *event)
+void CImage::setOpacity(float opacity)
 {
-    Q_UNUSED(event);
+    if(opacity > 1.0)
+        opacity = 1.0;
+    if(opacity < 0.0)
+        opacity = 0.0;
+
+    _opacity = opacity;
+    update();
+}
+
+void CImage::paintEvent(QPaintEvent *)
+{
+
     QPainter *painter = new QPainter(this);
     painter->setRenderHint(QPainter::Antialiasing, true);
     QBrush brush;
+    _borderColor.setAlphaF(_opacity);
     QPen pen = QPen(_borderColor);
     pen.setWidth(_borderWidth);
     painter->setPen(pen);
@@ -80,7 +92,7 @@ void CImage::paintEvent(QPaintEvent *event)
             for(int x= 0; x < im.width(); x++)
             {
                 QColor color = _imageColor;
-                color.setAlpha(im.pixelColor(x,y).alpha());
+                color.setAlpha(im.pixelColor(x,y).alpha()*_opacity);
                 im.setPixelColor(x,y,color);
             }
         }
@@ -93,4 +105,7 @@ void CImage::paintEvent(QPaintEvent *event)
 
     painter->setBrush(brush);
     painter->drawRoundedRect(QRect(0,0,width(),height()), _borderRadius, _borderRadius);
+
 }
+
+

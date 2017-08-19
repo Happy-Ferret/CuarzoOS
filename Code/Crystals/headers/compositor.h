@@ -5,6 +5,7 @@
 #include "window.h"
 #include "view.h"
 #include "socket.h"
+#include "launchman.h"
 
 class QOpenGLTexture;
 class Compositor;
@@ -30,6 +31,9 @@ public:
 
     // Wayland Shell to identify surfaces
     QWaylandWlShell *wlShell = new QWaylandWlShell(this);
+
+    // Launchman
+    LaunchMan man;
 
     // Stored surfaces
     QList<View*> views;
@@ -79,6 +83,7 @@ signals:
     void dragStarted(View *dragIcon);
 
 public slots:
+    void readyToLaunchApps();
     void triggerRender();
     void newClientConnected();
     void newClientMessage();

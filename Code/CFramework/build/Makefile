@@ -13,8 +13,8 @@ MAKEFILE      = Makefile
 CC            = gcc
 CXX           = g++
 DEFINES       = -DCFRAMEWORK_LIBRARY -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CFLAGS        = -pipe -g -w -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -g -std=gnu++11 -w -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I../../CFramework -I. -I../Headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
 QMAKE         = /usr/local/Qt-5.9.1/bin/qmake
 DEL_FILE      = rm -f
@@ -179,8 +179,8 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/resolve_config.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_post.prf \
+		/usr/local/Qt-5.9.1/mkspecs/features/warn_off.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/qml_debug.prf \
-		/usr/local/Qt-5.9.1/mkspecs/features/warn_on.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/qt.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/resources.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/moc.prf \
@@ -341,8 +341,8 @@ Makefile: ../CFramework.pro /usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf /us
 		/usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/resolve_config.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_post.prf \
+		/usr/local/Qt-5.9.1/mkspecs/features/warn_off.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/qml_debug.prf \
-		/usr/local/Qt-5.9.1/mkspecs/features/warn_on.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/qt.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/resources.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/moc.prf \
@@ -471,8 +471,8 @@ Makefile: ../CFramework.pro /usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf /us
 /usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/resolve_config.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/default_post.prf:
+/usr/local/Qt-5.9.1/mkspecs/features/warn_off.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/qml_debug.prf:
-/usr/local/Qt-5.9.1/mkspecs/features/warn_on.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/qt.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/resources.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/moc.prf:
@@ -536,7 +536,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
-	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
+	g++ -pipe -g -std=gnu++11 -w -dM -E -o moc_predefs.h /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_CApplication.cpp moc_CLabel.cpp moc_CWindow.cpp moc_CPushButton.cpp moc_CImage.cpp
 compiler_moc_header_clean:
@@ -994,12 +994,15 @@ moc_CPushButton.cpp: ../Headers/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
+		../Headers/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h \
 		../Headers/CPushButton.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
@@ -1109,6 +1112,8 @@ moc_CImage.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		../Headers/CImage.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
@@ -1576,12 +1581,15 @@ CPushButton.o: ../Sources/CPushButton.cpp ../Headers/CPushButton.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
+		../Headers/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CPushButton.o ../Sources/CPushButton.cpp
 
 CImage.o: ../Sources/CImage.cpp ../Headers/CImage.h \
@@ -1688,7 +1696,9 @@ CImage.o: ../Sources/CImage.cpp ../Headers/CImage.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
 		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpen.h
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CImage.o ../Sources/CImage.cpp
 
 moc_CApplication.o: moc_CApplication.cpp 
