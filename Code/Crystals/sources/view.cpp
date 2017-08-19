@@ -49,113 +49,26 @@ void View::setOpacity(uint newOpacity)
 
 void View::calcVertexPos()
 {
+    float x = position().x(); // View X
+    float y = position().y(); // View Y
     float h = size().height(); // View Height
     float w = size().width(); // View Width
 
     QColor surfaceColor = QColor(255,255,255,255);
+    setVertexPos(0, 0, 0);
+    setVertexPos(1, w, 0);
+    setVertexPos(2, w, h);
+    setVertexPos(3, 0,  h);
 
-    /* -------------- Surface -------------*/
+    setVertexCol(0,surfaceColor);
+    setVertexCol(1,surfaceColor);
+    setVertexCol(2,surfaceColor);
+    setVertexCol(3,surfaceColor);
 
-    // Top Left
-    setVertexPos(0,borderWidth,0);
-    setVertexCol(0, surfaceColor);
-
-    // Top Right
-    setVertexPos(1,w - borderWidth,0);
-    setVertexCol(1, surfaceColor);
-
-    uint index = 2;
-
-    // Right corner
-    for(float x = radius - borderWidth; x >= 0.0f ; x -= (radius - borderWidth)/radius)
-    {
-        float y = qSqrt( qPow( radius - borderWidth , 2 ) - qPow( x  , 2 ));
-        setVertexCol(index,surfaceColor);
-        setVertexPos(index , w - radius + x , h - radius + y );
-        index++;
-
-    }
-
-    // Left corner
-    for(float x = 0.0f; x <= radius - borderWidth ; x += (radius - borderWidth)/radius)
-    {
-        float y = qSqrt( qPow( radius - borderWidth , 2 ) - qPow( x  , 2 ));
-        setVertexCol(index,surfaceColor);
-        setVertexPos(index , radius - x - borderWidth, h - radius + y );
-        index++;
-
-    }
-
-    // Save surface vertex count
-    surfaceCount = index;
-
-
-
-    /* -------------- Border -------------*/
-
-
-    // Top Right less border
-    setVertexPos(index,w,0);
-    setVertexCol(index,Qt::transparent);
-    index++;
-
-    // Top Right
-    setVertexPos(index,w - borderWidth,0);
-    setVertexCol(index,surfaceColor);
-    index++;
-
-    int X = radius;
-
-    // Right corner
-    for(float x = radius - borderWidth; x >= 0.0f ; x -= (radius - borderWidth)/radius)
-    {
-        // Out
-        float y = qSqrt( qPow( radius , 2 ) - qPow( X  , 2 ));
-        setVertexCol(index,Qt::transparent);
-        setVertexPos(index , w - radius + X , h - radius + y );
-        index++;
-        X--;
-
-        // In
-        y = qSqrt( qPow( radius - borderWidth , 2 ) - qPow( x  , 2 ));
-        setVertexCol(index,surfaceColor);
-        setVertexPos(index , w - radius + x , h - radius + y );
-        index++;
-
-    }
-
-    X = 0;
-    // Left corner
-    for(float x = 0.0f; x <= radius - borderWidth ; x += (radius - borderWidth)/radius)
-    {
-        // Out
-        float y = qSqrt( qPow( radius , 2 ) - qPow( X  , 2 ));
-        setVertexCol(index,Qt::transparent);
-        setVertexPos(index , radius - X - borderWidth , h - radius + y );
-        index++;
-        X++;
-
-        // In
-        y = qSqrt( qPow( radius - borderWidth , 2 ) - qPow( x  , 2 ));
-        setVertexCol(index,surfaceColor);
-        setVertexPos(index , radius - x  - borderWidth, h - radius + y );
-        index++;
-
-    }
-
-    // Top Right
-    setVertexPos(index,0,0);
-    setVertexCol(index,Qt::transparent);
-    index++;
-
-    // Top Left less border
-    setVertexPos(index,borderWidth,0);
-    setVertexCol(index,surfaceColor);
-    index++;
-
-    borderCount = index - surfaceCount;
-
-
+    setTextureCord(0,0,0);
+    setTextureCord(1,1,0);
+    setTextureCord(2,1,1);
+    setTextureCord(3,0,1);
 }
 
 void View::calcBlurRect()
@@ -204,6 +117,47 @@ void View::calcBlurRect()
 
     blurRectVertices[3].texture[0] = x + w + margin;
     blurRectVertices[3].texture[1] = winH - y + margin;
+}
+
+void View::calcTopBarRect()
+{
+    float x = position().x(); // View X
+    float y = position().y(); // View Y
+    float w = size().width(); // View Height
+
+    // Top left
+    topBarVertices[0].position[0] = 0;
+    topBarVertices[0].position[1] = 0;
+    topBarVertices[0].position[2] = zIndex;
+
+    topBarVertices[0].texture[0] = 0;
+    topBarVertices[0].texture[1] = 0;
+
+    // Top Right
+    topBarVertices[1].position[0] = w;
+    topBarVertices[1].position[1] = 0;
+    topBarVertices[1].position[2] = zIndex;
+
+    topBarVertices[1].texture[0] = 1;
+    topBarVertices[1].texture[1] = 0;
+
+    // Bottom right
+    topBarVertices[2].position[0] = w;
+    topBarVertices[2].position[1] = topBarHeight;
+    topBarVertices[2].position[2] = zIndex;
+
+    topBarVertices[2].texture[0] = 1;
+    topBarVertices[2].texture[1] = 1;
+
+    // Bottom left
+    topBarVertices[3].position[0] = 0;
+    topBarVertices[3].position[1] = topBarHeight ;
+    topBarVertices[3].position[2] = zIndex;
+
+    topBarVertices[3].texture[0] = 0;
+    topBarVertices[3].texture[1] = 1;
+
+    titleBar->setPosition(QPointF(x, y-topBarHeight));
 }
 
 void View::setVertexCol(int index, QColor color)

@@ -4,7 +4,7 @@
 Window::Window()
 {
   move(200,200);
-  setFixedSize(400,400);
+  setFixedSize(1200,50);
   connect(mov,SIGNAL(pressed()),this,SLOT(moveWindow()));
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));
   connect(del,SIGNAL(pressed()),this,SLOT(deleteWindow()));

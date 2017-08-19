@@ -5,28 +5,31 @@
 #define SHADER_FINAL 4
 #define SHADER_BLUR_RECT 5
 #define SHADER_DRAW_BLUR 6
+#define SHADER_TITLEBAR 7
 
 
 uniform highp vec2 textureSize;
 uniform sampler2D Texture;
 uniform lowp int Mode;
 uniform lowp int viewOpacity;
+uniform highp vec2 viewSize;
+
 
 
 precision mediump float;
 precision mediump int;
 
-varying mediump vec4 finalColor;
-varying mediump vec2 texCoordsOut;
+varying highp vec4 finalColor;
+varying highp vec2 texCoordsOut;
 varying highp vec2 blurTextureCoords[11];
 
 void main(void){
 
+    // FInal or blur rect
     if ( Mode == 4 || Mode == 5 )
-    {
         gl_FragColor = texture2D(Texture, texCoordsOut);
-    }
 
+    // Vblur or Hblur
     if(Mode == 2 || Mode == 3)
     {
         vec4 sum = vec4(0.0);
@@ -49,17 +52,39 @@ void main(void){
         gl_FragColor = sum;
 
     }
+    // Normal view
     else if(Mode == 0 )
     {
         vec4 color = finalColor;
         color.a = color.a * (float(viewOpacity) / 255.0);
-        gl_FragColor =  texture2D(Texture,texCoordsOut)*color;
+
+        highp float  xPix = viewSize.x * texCoordsOut.x;
+        highp float  yPix = texCoordsOut.y * viewSize.y;
+        highp float radius = 12.0;
+
+        highp float y = texCoordsOut.y;
+
+        if( xPix <= radius  )
+        {
+            y = sqrt( pow(radius,2.0) - pow(xPix-radius,2.0) ) + viewSize.y - radius;
+            if( yPix  > y) gl_FragColor = vec4(0.0,1.0,0.0,0.0);
+            else gl_FragColor =  texture2D(Texture,texCoordsOut)*color;
+        }
+        else if( xPix > radius && xPix< viewSize.x - radius )
+        {
+            gl_FragColor =  texture2D(Texture,texCoordsOut)*color;
+        }
+
+
     }
     else if(Mode == 1 )
     {
         gl_FragColor =  texture2D(Texture,texCoordsOut)*finalColor;
     }
-
+    else if(Mode == 7 )
+    {
+        gl_FragColor =  texture2D(Texture,texCoordsOut);
+    }
     else if(Mode == 6)
     {
         gl_FragColor =  (texture2D(Texture,texCoordsOut)*0.4 + vec4(0.6))*finalColor;

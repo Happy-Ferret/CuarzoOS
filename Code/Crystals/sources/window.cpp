@@ -119,7 +119,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Valparaiso 2.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Sea.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
@@ -180,6 +180,9 @@ void Window::drawView(View *view)
 
         // Calculates the view vertices
         view->calcVertexPos();
+
+        // Calculates the topbar vertices
+        view->calcTopBarRect();
     }
 
     // Tells OpenGL the view position
@@ -272,10 +275,7 @@ void Window::drawView(View *view)
         glBufferData(GL_ARRAY_BUFFER, sizeof(view->vertices), view->vertices, GL_STATIC_DRAW);
 
         // Draw Surface
-        glDrawArrays(GL_TRIANGLE_FAN,0, view->surfaceCount);
-
-        // Draw borders
-        glDrawArrays(GL_TRIANGLE_STRIP,view->surfaceCount, view->borderCount);
+        glDrawArrays(GL_TRIANGLE_FAN,0, 4);
 
     }
 
@@ -289,10 +289,27 @@ void Window::drawView(View *view)
     glBufferData(GL_ARRAY_BUFFER, sizeof(view->vertices), view->vertices, GL_STATIC_DRAW);
 
     // Draw Surface
-    glDrawArrays(GL_TRIANGLE_FAN,0, view->surfaceCount);
+    glDrawArrays(GL_TRIANGLE_FAN,0,4);
 
-    // Draw borders
-    glDrawArrays(GL_TRIANGLE_STRIP,view->surfaceCount, view->borderCount);
+    // Draws the titlebar
+    if(view->role == WINDOW_MODE)
+    {
+        // Set OpenGL to blur mode
+        glUniform1i(shaderModeUniform,SHADER_TITLEBAR);
+
+        // Tells OpenGL the view position
+        glUniform2f(offsetUniform, x, y - view->topBarHeight);
+
+        // Select current titlebar texture
+        glBindTexture(GL_TEXTURE_2D, view->titleBar->getTexture()->textureId());
+
+        // Sends the vertices list
+        glBufferData(GL_ARRAY_BUFFER, sizeof(view->topBarVertices), view->topBarVertices, GL_STATIC_DRAW);
+
+        // Draw Surface
+        glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+    }
 
     view->previusPosition = view->position();
 }

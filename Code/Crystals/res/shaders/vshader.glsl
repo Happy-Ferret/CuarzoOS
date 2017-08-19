@@ -5,6 +5,7 @@
 #define SHADER_FINAL 4
 #define SHADER_BLUR_RECT 5
 #define SHADER_DRAW_BLUR 6
+#define SHADER_TITLEBAR 7
 
 
 attribute vec4 pos;
@@ -86,9 +87,9 @@ void drawSurface()
     calcSurfacePosition();
 
      // Set Texture Vertex Position
-     texCoordsOut.x = (pos.x)/viewSize.x;
-     texCoordsOut.y = (pos.y)/viewSize.y;
+    texCoordsOut = texCoordsIn;
 }
+
 
 void drawBackground()
 {
@@ -132,6 +133,9 @@ void main(void)
 
     // Draws blur
     if(Mode == 6) drawBlur();
+
+    // Draws title bar
+    if(Mode == 7) drawSurface();
 
 }
 

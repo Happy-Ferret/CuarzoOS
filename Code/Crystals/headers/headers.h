@@ -236,5 +236,5 @@ enum ViewType{ Paradiso, TitleBar, Roller };
 #define SHADER_FINAL 4
 #define SHADER_BLUR_RECT 5
 #define SHADER_DRAW_BLUR 6
-
+#define SHADER_TITLEBAR 7
 #endif

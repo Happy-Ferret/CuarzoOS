@@ -16,12 +16,14 @@ public:
     View(Compositor *compositor); // Constructor
 
     // OpenGL variables
-    Vertex vertices[256]; // Vertex list
+    Vertex vertices[4]; // Vertex list
+    Vertex topBarVertices[4]; // Top bar Rect
     Vertex blurRectVertices[4]; // Blur Rect
     float zIndex = 0.01f; // Z-Position in OpenGL Coords
     float radius = 15.0f; // Size of radius
     uint borderWidth = 1; // Smooth border width
     uint surfaceCount, borderCount; // Amount of used vertices
+    int topBarHeight = 40;
 
     // Surface configuration
     uint role = WINDOW_MODE; // Surface role
@@ -39,6 +41,7 @@ public:
     // OpenGL functions
     void calcVertexPos(); // Calculates all the vertex positions and colors of the view
     void calcBlurRect(); // Calculates the surface pixels of the rect
+    void calcTopBarRect(); // Calculates the topbar vertices
     void setVertexCol(int index, QColor color); // Assign color to a vertex
     void setVertexPos(int index, float x, float y); // Assign position to a vertex
     void setTextureCord(int index, float x, float y); // Assign vertex texture coords
