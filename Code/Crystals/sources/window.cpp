@@ -297,6 +297,9 @@ void Window::drawView(View *view)
         // Set OpenGL to blur mode
         glUniform1i(shaderModeUniform,SHADER_TITLEBAR);
 
+        // Tells OpenGL the Title Bar size
+        glUniform2f(viewSizeUniform, w, 40);
+
         // Tells OpenGL the view position
         glUniform2f(offsetUniform, x, y - view->topBarHeight);
 

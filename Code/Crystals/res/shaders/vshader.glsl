@@ -6,6 +6,8 @@
 #define SHADER_BLUR_RECT 5
 #define SHADER_DRAW_BLUR 6
 #define SHADER_TITLEBAR 7
+#define SHADER_SHADOW 8
+
 
 
 attribute vec4 pos;
@@ -108,6 +110,11 @@ void drawScreen()
     gl_Position = pos;
 }
 
+void drawShadow()
+{
+    gl_Position = pos;
+}
+
 void main(void)
 {
     // Set vertex color
@@ -136,6 +143,9 @@ void main(void)
 
     // Draws title bar
     if(Mode == 7) drawSurface();
+
+    // Draws shadow
+    if(Mode == 8) drawShadow();
 
 }
 

@@ -4,7 +4,7 @@
 Window::Window()
 {
   move(200,200);
-  setFixedSize(1200,50);
+  setFixedSize(800,500);
   connect(mov,SIGNAL(pressed()),this,SLOT(moveWindow()));
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));
   connect(del,SIGNAL(pressed()),this,SLOT(deleteWindow()));
@@ -15,8 +15,13 @@ Window::Window()
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
   connect(time,SIGNAL(timeout()),this,SLOT(timeStopped()));
 
+  home->setFixedHeight(30);
   home->enableIconColor(true);
   home->setIconColor(GREEN);
+  wel->setFixedHeight(30);
+  mov->setFixedHeight(30);
+  mov->enableIconColor(true);
+  mov->setIconColor("red");
   layout->addWidget(wel);
   layout->addWidget(mov);
   layout->addWidget(home);

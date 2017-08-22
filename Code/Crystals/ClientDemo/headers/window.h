@@ -19,8 +19,8 @@ public:
     Window();
 
     CPushButton *mov = new CPushButton("Mover");
-    CPushButton *home = new CPushButton(QPixmap("/home/e/icon.svg"));
-    CPushButton *wel = new CPushButton("Welcome",QPixmap("/home/e/icon.svg"));
+    CPushButton *home = new CPushButton("Pico");
+    CPushButton *wel = new CPushButton("Welcome");
 
     QPushButton *cre = new QPushButton("Crear");
     QPushButton *opa = new QPushButton("Opacidad");
