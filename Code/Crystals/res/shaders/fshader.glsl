@@ -26,7 +26,7 @@ float borderRadiusOpacity(bool topLeft, bool topRight, bool bottomRight, bool bo
 {
     highp float  xPix = viewSize.x * texCoordsOut.x;
     highp float  yPix = texCoordsOut.y * viewSize.y;
-    highp float radius = 12.0;
+    highp float radius = 8.0;
 
     // Top Left
     if( xPix <= radius && yPix  <= radius )
@@ -64,56 +64,74 @@ float borderRadiusOpacity(bool topLeft, bool topRight, bool bottomRight, bool bo
     else
         return 1.0;
 
-
 }
 
-void main(void){
+void blur()
+{
+    vec4 sum = vec4(0.0);
+    sum += texture2D(Texture, blurTextureCoords[0]) * 0.0093f;
+    sum += texture2D(Texture, blurTextureCoords[1]) * 0.028002f;
+    sum += texture2D(Texture, blurTextureCoords[2]) * 0.065984f;
+    sum += texture2D(Texture, blurTextureCoords[3]) * 0.121703f;
+    sum += texture2D(Texture, blurTextureCoords[4]) * 0.175713f;
+    sum += texture2D(Texture, blurTextureCoords[5]) * 0.198596f;
+    sum += texture2D(Texture, blurTextureCoords[6]) * 0.175713f;
+    sum += texture2D(Texture, blurTextureCoords[7]) * 0.121703f;
+    sum += texture2D(Texture, blurTextureCoords[8]) * 0.065984f;
+    sum += texture2D(Texture, blurTextureCoords[9]) * 0.028002f;
+    sum += texture2D(Texture, blurTextureCoords[10]) * 0.0093f;
 
-    // FInal or blur rect
-    if ( Mode == 4 || Mode == 5 )
-        gl_FragColor = texture2D(Texture, texCoordsOut);
+    sum = sum*1.03f ;
+    sum.a = 1.0;
 
-    // Vblur or Hblur
-    if(Mode == 2 || Mode == 3)
-    {
-        vec4 sum = vec4(0.0);
-        sum += texture2D(Texture, blurTextureCoords[0]) * 0.0093f;
-        sum += texture2D(Texture, blurTextureCoords[1]) * 0.028002f;
-        sum += texture2D(Texture, blurTextureCoords[2]) * 0.065984f;
-        sum += texture2D(Texture, blurTextureCoords[3]) * 0.121703f;
-        sum += texture2D(Texture, blurTextureCoords[4]) * 0.175713f;
-        sum += texture2D(Texture, blurTextureCoords[5]) * 0.198596f;
-        sum += texture2D(Texture, blurTextureCoords[6]) * 0.175713f;
-        sum += texture2D(Texture, blurTextureCoords[7]) * 0.121703f;
-        sum += texture2D(Texture, blurTextureCoords[8]) * 0.065984f;
-        sum += texture2D(Texture, blurTextureCoords[9]) * 0.028002f;
-        sum += texture2D(Texture, blurTextureCoords[10]) * 0.0093f;
+    gl_FragColor = sum;
+}
 
-        sum = sum*1.03f ;
-        sum.a = 1.0;
+void clientView()
+{
+    vec4 color = finalColor;
+    color.a = color.a * (float(viewOpacity) / 255.0);
+    gl_FragColor =  texture2D(Texture,texCoordsOut)*color*vec4(1.0,1.0,1.0,borderRadiusOpacity(false,false,true,true));
+}
+
+void finalView()
+{
+    gl_FragColor = texture2D(Texture, texCoordsOut);
+}
+
+void blurRect()
+{
+    gl_FragColor = texture2D(Texture, texCoordsOut);
+}
+
+void finalBlur()
+{
+    vec4 px = texture2D(Texture,texCoordsOut);
+    px = px*0.5 + vec4(0.55);
+    px.a = 1.0;
 
 
-        gl_FragColor = sum;
+    gl_FragColor =  (px)*finalColor*vec4(1.0,1.0,1.0,borderRadiusOpacity(false,false,true,true));
+}
 
-    }
-    // Normal view
-    else if(Mode == 0 )
-    {
-        vec4 color = finalColor;
-        color.a = color.a * (float(viewOpacity) / 255.0);
-        gl_FragColor =  texture2D(Texture,texCoordsOut)*color*vec4(1.0,1.0,1.0,borderRadiusOpacity(false,false,true,true));
-    }
-    else if(Mode == 1 )
-    {
-        gl_FragColor =  texture2D(Texture,texCoordsOut)*finalColor;
-    }
-    else if(Mode == 7 )
-    {
-        gl_FragColor =  texture2D(Texture,texCoordsOut)*vec4(1.0,1.0,1.0,borderRadiusOpacity(true,true,false,false));
-    }
-    else if(Mode == 6)
-    {
-        gl_FragColor =  (texture2D(Texture,texCoordsOut)*0.4 + vec4(0.6))*finalColor;
-    }
+void background()
+{
+    gl_FragColor =  texture2D(Texture,texCoordsOut)*finalColor;
+}
 
+void titleBar()
+{
+    gl_FragColor =  texture2D(Texture,texCoordsOut)*vec4(1.0,1.0,1.0,borderRadiusOpacity(true,true,false,false));
+}
+
+void main(void)
+{
+                 if ( Mode == 0 ) clientView();
+        else if ( Mode == 1 ) background();
+        else if ( Mode == 2 ) blur();
+        else if ( Mode == 3 ) blur();
+        else if ( Mode == 4 ) finalView();
+        else if ( Mode == 5 ) blurRect();
+        else if ( Mode == 6 ) finalBlur();
+        else if ( Mode == 7 ) titleBar();
 }

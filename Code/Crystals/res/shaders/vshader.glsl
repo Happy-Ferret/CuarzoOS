@@ -52,7 +52,10 @@ void horizontalBlur()
     for( int i = -5; i <= 5; i++ )
     {
         // Calculates the x offset
-        blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 );
+        if( texCoordsIn.x + pixelSize * float( i ) < 0.0 ||  texCoordsIn.x + pixelSize * float( i ) > 1.0)
+            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 ) * 0.9;
+        else
+            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 );
     }
 
     // Sends vertex position
@@ -68,7 +71,10 @@ void verticalBlur()
     for( int i = -5; i <= 5; i++ )
     {
         // Calculates the y offset
-        blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0, pixelSize * float( i ) ) ;
+        if( texCoordsIn.y + pixelSize * float( i ) < 0.0 ||  texCoordsIn.y + pixelSize * float( i ) > 1.0)
+            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0 ,pixelSize * float( i ) ) * 0.9;
+        else
+            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0 ,pixelSize * float( i ) );
     }
 
     // Sends vertex position
@@ -80,8 +86,11 @@ void drawBlur()
     calcSurfacePosition();
 
     // Set Texture Vertex Position
-    texCoordsOut.x = ( pos.x + 150.0 ) / (viewSize.x + 300.0) ;
-    texCoordsOut.y = ( pos.y + 150.0 ) / (viewSize.y + 300.0) ;
+   // texCoordsOut.x = ( pos.x + 150.0 ) / (viewSize.x + 300.0) ;
+    //texCoordsOut.y = ( pos.y + 150.0 ) / (viewSize.y + 300.0) ;
+
+    texCoordsOut = texCoordsIn;
+
 }
 
 void drawSurface()

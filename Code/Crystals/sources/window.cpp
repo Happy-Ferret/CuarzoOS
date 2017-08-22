@@ -119,7 +119,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Sea.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Cactus.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
@@ -205,8 +205,10 @@ void Window::drawView(View *view)
         // Set blur texture
         glBindTexture(GL_TEXTURE_2D, blurTexture);
 
-        float b = 0.25f;
-        int extra = 5*6;
+        float b = 0.4f;
+        //int extra = 5*6;
+        int extra = 0;
+
 
         // Sets blur texture size
         glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, (w+extra)*b, (h+extra)*b, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
