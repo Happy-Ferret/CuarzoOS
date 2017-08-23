@@ -6,6 +6,7 @@
 #define SHADER_BLUR_RECT 5
 #define SHADER_DRAW_BLUR 6
 #define SHADER_TITLEBAR 7
+#define SHADER_BOTTOM_SHADOW 8
 
 
 uniform highp vec2 textureSize;
@@ -109,9 +110,9 @@ void finalBlur()
     vec4 px = texture2D(Texture,texCoordsOut);
     px = px*0.5 + vec4(0.55);
     px.a = 1.0;
-
-
-    gl_FragColor =  (px)*finalColor*vec4(1.0,1.0,1.0,borderRadiusOpacity(false,false,true,true));
+    vec4 color = finalColor;
+    color.a = color.a * (float(viewOpacity) / 255.0);
+    gl_FragColor =  (px)*color*vec4(1.0,1.0,1.0,borderRadiusOpacity(false,false,true,true));
 }
 
 void background()
@@ -124,6 +125,24 @@ void titleBar()
     gl_FragColor =  texture2D(Texture,texCoordsOut)*vec4(1.0,1.0,1.0,borderRadiusOpacity(true,true,false,false));
 }
 
+void bottomShadow()
+{
+    float margin = 100.0;
+    float streight = 0.5;
+    float xPix =texCoordsOut.x*(viewSize.x + margin*2.0);
+    float yPix =texCoordsOut.y*(viewSize.y + margin);
+
+    if(xPix <= margin && yPix < viewSize.y)
+        gl_FragColor = vec4(0.0,0.0,0.0,streight - (margin - xPix)/(margin/streight));
+    else if(xPix >= viewSize.x + margin && yPix < viewSize.y)
+        gl_FragColor = vec4(0.0,0.0,0.0, (margin*2.0  + viewSize.x - xPix)/(margin/streight));
+    else if(yPix >= viewSize.y && xPix > margin)
+        gl_FragColor = vec4(0.0,0.0,0.0, (margin  + viewSize.y - yPix)/(margin/streight));
+    else
+        gl_FragColor = vec4(0);
+
+}
+
 void main(void)
 {
                  if ( Mode == 0 ) clientView();
@@ -134,4 +153,6 @@ void main(void)
         else if ( Mode == 5 ) blurRect();
         else if ( Mode == 6 ) finalBlur();
         else if ( Mode == 7 ) titleBar();
+        else if ( Mode == 8 ) bottomShadow();
+
 }

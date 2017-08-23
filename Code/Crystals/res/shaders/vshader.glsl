@@ -6,7 +6,7 @@
 #define SHADER_BLUR_RECT 5
 #define SHADER_DRAW_BLUR 6
 #define SHADER_TITLEBAR 7
-#define SHADER_SHADOW 8
+#define SHADER_BOTTOM_SHADOW 8
 
 
 
@@ -52,10 +52,7 @@ void horizontalBlur()
     for( int i = -5; i <= 5; i++ )
     {
         // Calculates the x offset
-        if( texCoordsIn.x + pixelSize * float( i ) < 0.0 ||  texCoordsIn.x + pixelSize * float( i ) > 1.0)
-            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 ) * 0.9;
-        else
-            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 );
+        blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 );
     }
 
     // Sends vertex position
@@ -71,10 +68,7 @@ void verticalBlur()
     for( int i = -5; i <= 5; i++ )
     {
         // Calculates the y offset
-        if( texCoordsIn.y + pixelSize * float( i ) < 0.0 ||  texCoordsIn.y + pixelSize * float( i ) > 1.0)
-            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0 ,pixelSize * float( i ) ) * 0.9;
-        else
-            blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0 ,pixelSize * float( i ) );
+        blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0 ,pixelSize * float( i ) );
     }
 
     // Sends vertex position
@@ -119,9 +113,23 @@ void drawScreen()
     gl_Position = pos;
 }
 
-void drawShadow()
+void drawBottomShadow()
 {
-    gl_Position = pos;
+    float margin = 100.0;
+    if( pos.x == 0.0 )
+        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x - margin) - 1.0f;
+    else
+        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x + pos.x + margin) - 1.0f;
+
+    if( pos.y == 0.0 )
+        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y);
+    else
+        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y + margin);
+
+    gl_Position.z = pos.z;
+    gl_Position.w = 1.0f;
+
+    texCoordsOut = texCoordsIn;
 }
 
 void main(void)
@@ -154,7 +162,7 @@ void main(void)
     if(Mode == 7) drawSurface();
 
     // Draws shadow
-    if(Mode == 8) drawShadow();
+    if(Mode == 8) drawBottomShadow();
 
 }
 

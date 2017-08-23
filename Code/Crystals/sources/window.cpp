@@ -76,6 +76,7 @@ void Window::initializeGL()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+
     // Create the offscreen buffer
     glGenFramebuffers(1, &offscreenBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, offscreenBuffer);
@@ -99,6 +100,7 @@ void Window::initializeGL()
     glGenFramebuffers(1, &blurBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, blurBuffer);
 
+
     // Set offscreen texture as our colour attachement
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,blurTexture,0);
 
@@ -119,7 +121,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Cactus.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Sea 1.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
@@ -205,8 +207,7 @@ void Window::drawView(View *view)
         // Set blur texture
         glBindTexture(GL_TEXTURE_2D, blurTexture);
 
-        float b = 0.4f;
-        //int extra = 5*6;
+        float b = 0.3f;
         int extra = 0;
 
 
@@ -239,6 +240,9 @@ void Window::drawView(View *view)
 
         // Send the vertex data
         glBufferData(GL_ARRAY_BUFFER, sizeof(screenRectVertices), screenRectVertices, GL_STATIC_DRAW);
+
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,   GL_CLAMP_TO_EDGE);
+
 
         for( int i = 1;  i <= 13; i+=6 )
         {
@@ -282,13 +286,25 @@ void Window::drawView(View *view)
     }
 
     // Set OpenGL to vblur mode
-    glUniform1i(shaderModeUniform,SHADER_NORMAL);
+    glUniform1i(shaderModeUniform,SHADER_BOTTOM_SHADOW);
 
     // Select current view texture
     glBindTexture(GL_TEXTURE_2D, view->getTexture()->textureId());
 
     // Sends the vertices list
     glBufferData(GL_ARRAY_BUFFER, sizeof(view->vertices), view->vertices, GL_STATIC_DRAW);
+
+    // Set blend mode
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Draw Shadow
+    glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+    // Set blend mode
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Set OpenGL to vblur mode
+    glUniform1i(shaderModeUniform,SHADER_NORMAL);
 
     // Draw Surface
     glDrawArrays(GL_TRIANGLE_FAN,0,4);
