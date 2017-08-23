@@ -15,13 +15,8 @@ Window::Window()
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
   connect(time,SIGNAL(timeout()),this,SLOT(timeStopped()));
 
-  home->setFixedHeight(30);
-  home->enableIconColor(true);
-  home->setIconColor(GREEN);
-  wel->setFixedHeight(30);
-  mov->setFixedHeight(30);
-  mov->enableIconColor(true);
-  mov->setIconColor("red");
+  home->setFrameColor(GREEN);
+  mov->setFrameColor(RED);
   layout->addWidget(wel);
   layout->addWidget(mov);
   layout->addWidget(home);
@@ -32,7 +27,6 @@ Window::Window()
   layout->addWidget(opa);
   layout->addWidget(tit);
   layout->addWidget(del);
-  //label->setFixedWidth(100);
   label->enableEllipsis(true);
   layout->addWidget(label);
   setMouseTracking(true);

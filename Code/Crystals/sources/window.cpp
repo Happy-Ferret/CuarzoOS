@@ -285,8 +285,6 @@ void Window::drawView(View *view)
 
     }
 
-    // Set OpenGL to vblur mode
-    glUniform1i(shaderModeUniform,SHADER_BOTTOM_SHADOW);
 
     // Select current view texture
     glBindTexture(GL_TEXTURE_2D, view->getTexture()->textureId());
@@ -296,6 +294,9 @@ void Window::drawView(View *view)
 
     // Set blend mode
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Set OpenGL to bottom shadow mode
+    glUniform1i(shaderModeUniform,SHADER_BOTTOM_SHADOW);
 
     // Draw Shadow
     glDrawArrays(GL_TRIANGLE_FAN,0,4);
@@ -312,8 +313,6 @@ void Window::drawView(View *view)
     // Draws the titlebar
     if(view->role == WINDOW_MODE)
     {
-        // Set OpenGL to blur mode
-        glUniform1i(shaderModeUniform,SHADER_TITLEBAR);
 
         // Tells OpenGL the Title Bar size
         glUniform2f(viewSizeUniform, w, 40);
@@ -326,6 +325,23 @@ void Window::drawView(View *view)
 
         // Sends the vertices list
         glBufferData(GL_ARRAY_BUFFER, sizeof(view->topBarVertices), view->topBarVertices, GL_STATIC_DRAW);
+
+
+
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+        // Set OpenGL to bottom shadow mode
+        glUniform1i(shaderModeUniform,SHADER_TOP_SHADOW);
+
+        // Draw Shadow
+        glDrawArrays(GL_TRIANGLE_FAN,0,4);
+
+        // Set blend mode
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+        // Set OpenGL to blur mode
+        glUniform1i(shaderModeUniform,SHADER_TITLEBAR);
 
         // Draw Surface
         glDrawArrays(GL_TRIANGLE_FAN,0,4);

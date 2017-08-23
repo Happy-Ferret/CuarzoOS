@@ -7,8 +7,7 @@
 #define SHADER_DRAW_BLUR 6
 #define SHADER_TITLEBAR 7
 #define SHADER_BOTTOM_SHADOW 8
-
-
+#define SHADER_TOP_SHADOW 9
 
 attribute vec4 pos;
 attribute vec4 col;
@@ -27,6 +26,10 @@ uniform float blurRadius;
 uniform highp vec2 textureSize;
 
 varying highp vec2 blurTextureCoords[11];
+
+// Shadow
+float margin = 256.0;
+
 
 void calcBlurRect()
 {
@@ -115,7 +118,6 @@ void drawScreen()
 
 void drawBottomShadow()
 {
-    float margin = 100.0;
     if( pos.x == 0.0 )
         gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x - margin) - 1.0f;
     else
@@ -125,6 +127,24 @@ void drawBottomShadow()
         gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y);
     else
         gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y + margin);
+
+    gl_Position.z = pos.z;
+    gl_Position.w = 1.0f;
+
+    texCoordsOut = texCoordsIn;
+}
+
+void drawTopShadow()
+{
+    if( pos.x == 0.0 )
+        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x - margin) - 1.0f;
+    else
+        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x + pos.x + margin) - 1.0f;
+
+    if( pos.y == 0.0 )
+        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y - margin);
+    else
+        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y);
 
     gl_Position.z = pos.z;
     gl_Position.w = 1.0f;
@@ -161,8 +181,11 @@ void main(void)
     // Draws title bar
     if(Mode == 7) drawSurface();
 
-    // Draws shadow
+    // Draws bottom shadow
     if(Mode == 8) drawBottomShadow();
+
+    // Draws top shadow
+    if(Mode == 9) drawTopShadow();
 
 }
 

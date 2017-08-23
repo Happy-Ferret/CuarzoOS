@@ -7,6 +7,7 @@
 #define SHADER_DRAW_BLUR 6
 #define SHADER_TITLEBAR 7
 #define SHADER_BOTTOM_SHADOW 8
+#define SHADER_TOP_SHADOW 9
 
 
 uniform highp vec2 textureSize;
@@ -22,12 +23,16 @@ varying highp vec4 finalColor;
 varying highp vec2 texCoordsOut;
 varying highp vec2 blurTextureCoords[11];
 
+// Shadow
+highp float radius = 8.0;
+highp float margin = 256.0;
+highp float streight = 0.3;
+
 
 float borderRadiusOpacity(bool topLeft, bool topRight, bool bottomRight, bool bottomLeft)
 {
     highp float  xPix = viewSize.x * texCoordsOut.x;
     highp float  yPix = texCoordsOut.y * viewSize.y;
-    highp float radius = 8.0;
 
     // Top Left
     if( xPix <= radius && yPix  <= radius )
@@ -127,20 +132,83 @@ void titleBar()
 
 void bottomShadow()
 {
-    float margin = 100.0;
-    float streight = 0.5;
     float xPix =texCoordsOut.x*(viewSize.x + margin*2.0);
     float yPix =texCoordsOut.y*(viewSize.y + margin);
 
-    if(xPix <= margin && yPix < viewSize.y)
-        gl_FragColor = vec4(0.0,0.0,0.0,streight - (margin - xPix)/(margin/streight));
-    else if(xPix >= viewSize.x + margin && yPix < viewSize.y)
-        gl_FragColor = vec4(0.0,0.0,0.0, (margin*2.0  + viewSize.x - xPix)/(margin/streight));
-    else if(yPix >= viewSize.y && xPix > margin)
-        gl_FragColor = vec4(0.0,0.0,0.0, (margin  + viewSize.y - yPix)/(margin/streight));
+    // Left
+    if(xPix <= margin && yPix < viewSize.y - radius)
+        gl_FragColor = vec4(0.0,0.0,0.0,streight - sqrt( (margin - xPix)/(margin/streight)));
+
+    // Right
+    else if(xPix >= viewSize.x + margin && yPix < viewSize.y -radius )
+        gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((xPix - viewSize.x - margin)/(margin/streight)));
+
+    // Bottom
+    else if(yPix >= viewSize.y && xPix > margin + radius && xPix < viewSize.x + margin - radius)
+        gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((yPix- viewSize.y )/(margin/streight)));
+
+    // Bottom Left
+    else if(yPix >= viewSize.y - radius && xPix < margin + radius)
+    {
+        float distance = sqrt( pow((margin + radius) -  xPix, 2.0) + pow( (viewSize.y - radius) - yPix, 2.0) );
+        if( distance <= radius)
+            gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+        else
+            gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((distance - radius)/(margin/streight)));
+    }
+
+    // Bottom Right
+    else if(yPix >= viewSize.y - radius && xPix > viewSize.x + margin - radius)
+    {
+        float distance = sqrt( pow((viewSize.x + margin - radius) -  xPix, 2.0) + pow( (viewSize.y - radius) - yPix, 2.0) );
+        if( distance <= radius)
+            gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+        else
+            gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((distance - radius)/(margin/streight)));
+    }
     else
         gl_FragColor = vec4(0);
 
+}
+
+void topShadow()
+{
+    float xPix =texCoordsOut.x*(viewSize.x + margin*2.0);
+    float yPix =texCoordsOut.y*(viewSize.y + margin);
+
+    // Left
+    if(xPix <= margin && yPix > margin + radius)
+        gl_FragColor = vec4(0.0,0.0,0.0,streight - sqrt((margin - xPix)/(margin/streight)));
+
+    // Right
+    else if(xPix >= viewSize.x + margin && yPix > margin + radius )
+        gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((xPix - viewSize.x -margin)/(margin/streight)));
+
+    // Top
+    else if(yPix <= margin && xPix > margin + radius && xPix < viewSize.x + margin - radius)
+        gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((margin  - yPix)/(margin/streight)));
+
+    // Top Left
+    else if(yPix <= margin + radius && xPix < margin + radius)
+    {
+        float distance = sqrt( pow((margin + radius) -  xPix, 2.0) + pow( (margin + radius) - yPix, 2.0) );
+        if( distance <= radius)
+            gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+        else
+            gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((distance - radius)/(margin/streight)));
+    }
+
+    // Top Right
+    else if(yPix <= margin + radius && xPix > viewSize.x + margin - radius)
+    {
+        float distance = sqrt( pow((viewSize.x + margin - radius) -  xPix, 2.0) + pow( (margin + radius) - yPix, 2.0) );
+        if( distance <= radius)
+            gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+        else
+            gl_FragColor = vec4(0.0,0.0,0.0, streight - sqrt((distance - radius)/(margin/streight)));
+    }
+    else
+        gl_FragColor = vec4(0);
 }
 
 void main(void)
@@ -154,5 +222,6 @@ void main(void)
         else if ( Mode == 6 ) finalBlur();
         else if ( Mode == 7 ) titleBar();
         else if ( Mode == 8 ) bottomShadow();
+        else if ( Mode == 9 ) topShadow();
 
 }
