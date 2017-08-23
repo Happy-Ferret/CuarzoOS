@@ -269,6 +269,8 @@ void Compositor::onSurfaceCreated(QWaylandSurface *surface)
     connect(surface, &QWaylandSurface::hasContentChanged, this, &Compositor::surfaceHasContentChanged);
     connect(surface, &QWaylandSurface::redraw, this, &Compositor::triggerRender);
     connect(surface, &QWaylandSurface::subsurfacePositionChanged, this, &Compositor::onSubsurfacePositionChanged);
+    connect(surface, &QWaylandSurface::sizeChanged, this, &Compositor::surfaceSizeChanged);
+
     View *view = new View(this);
     view->setSurface(surface);
     view->setOutput(outputFor(window));
@@ -326,6 +328,31 @@ void Compositor::surfaceDestroyed()
     triggerRender();
 }
 
+void Compositor::surfaceSizeChanged()
+{
+    QWaylandSurface *surface = qobject_cast<QWaylandSurface*>(sender());
+    View *view = findView(surface);
+
+    if(view->role == TITLEBAR_MODE || !view->configured || crystalsGuiSocket == nullptr)
+        return;
+
+    // Send request
+    TitlebarWidthStruct request;
+    request.forId = view->surfaceId;
+    request.forPid = surface->client()->processId();
+    request.width = view->size().width();
+
+    // Copy message to a char pointer
+    char data[sizeof(TitlebarWidthStruct)];
+    memcpy(data,&request,sizeof(TitlebarWidthStruct));
+
+    // Ask the surface for a full configuration
+    crystalsGuiSocket->socket->write(data,sizeof(TitlebarWidthStruct));
+
+    qDebug() << "Surface Size Changed: ";
+
+}
+
 void Compositor::viewSurfaceDestroyed()
 {
     View *view = qobject_cast<View*>(sender());
@@ -367,8 +394,6 @@ void Compositor::triggerRender()
 {
     window->requestUpdate();
 }
-
-
 
 void Compositor::startRender()
 {
@@ -414,7 +439,6 @@ void Compositor::readyToLaunchApps()
     // Launch a Demo App
     man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
 }
-
 
 
 void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)

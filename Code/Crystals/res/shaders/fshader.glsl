@@ -97,6 +97,8 @@ void clientView()
 {
     vec4 color = finalColor;
     color.a = color.a * (float(viewOpacity) / 255.0);
+    if(color.a > 1.0) color.a = 1.0;
+    if(color.a < 0.0) color.a = 0.0;
     gl_FragColor =  texture2D(Texture,texCoordsOut)*color*vec4(1.0,1.0,1.0,borderRadiusOpacity(false,false,true,true));
 }
 

@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <QLocalSocket>
+#include <QList>
 
 
 /* ------------------ Messages from Crystals ------------------ */
@@ -18,6 +19,15 @@ typedef struct{
     unsigned int width; // Surface width
     char title[128]; // Surface Title
 }TitlebarRequestStruct;
+
+// Change titlebar width
+#define TITLEBAR_WIDTH 21
+typedef struct{
+    unsigned int type; // Message type
+    unsigned int forPid; // Process id of the surface
+    unsigned int forId; // Id of the surface
+    unsigned int width; // Surface width
+}TitlebarWidthStruct;
 
 /* ------------------ Messages to Crystals ------------------ */
 

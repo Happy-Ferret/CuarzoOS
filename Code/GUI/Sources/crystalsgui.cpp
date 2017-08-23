@@ -24,8 +24,12 @@ TitleBar *CrystalsGui::findTitlebarByIdAndPid(uint id, uint pid)
     Q_FOREACH(TitleBar *titleBar, titleBars)
     {
         if(titleBar->surfaceID == id && titleBar->processID == pid)
+        {
+            qDebug() << "TitleBar found";
             return titleBar;
+        }
     }
+    return nullptr;
 }
 
 // Connected to Crystals Core
@@ -74,6 +78,8 @@ void CrystalsGui::newMessage()
             titleBar->title->setText(message->title);
             titleBar->setFixedWidth(message->width);
 
+            titleBars.append(titleBar);
+
             // Send the confirmation
             TitlebarCreatedStruct res;
             res.forId = message->forId;
@@ -88,6 +94,12 @@ void CrystalsGui::newMessage()
             socket->write(data,sizeof(TitlebarCreatedStruct));
 
         }break;
+    case TITLEBAR_WIDTH:{
+        // Parse the message
+        TitlebarWidthStruct *req = (TitlebarWidthStruct*)data.data();
+        TitleBar *titleBar = findTitlebarByIdAndPid(req->forId,req->forPid);
+        titleBar->setFixedWidth(req->width);
+    }break;
     }
 }
 

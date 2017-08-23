@@ -192,6 +192,15 @@ typedef struct{
     char title[128]; // Surface Title
 }TitlebarRequestStruct;
 
+// Change titlebar width
+#define TITLEBAR_WIDTH 21
+typedef struct{
+    unsigned int type = TITLEBAR_WIDTH; // Message type
+    unsigned int forPid; // Process id of the surface
+    unsigned int forId; // Id of the surface
+    unsigned int width; // Surface width
+}TitlebarWidthStruct;
+
 /* ------------------ Messages from GUI ------------------ */
 
 // Titlebar Created

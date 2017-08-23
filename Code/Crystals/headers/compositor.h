@@ -92,6 +92,7 @@ private slots:
     void socketDisconnected();
     void surfaceHasContentChanged();
     void surfaceDestroyed();
+    void surfaceSizeChanged();
     void viewSurfaceDestroyed();
 
     void startDrag();
