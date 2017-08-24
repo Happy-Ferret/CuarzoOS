@@ -26,10 +26,10 @@ LeftBar::LeftBar()
  layout->addWidget(title2);
  layout->addWidget(playlistsFrame);
 
- items.append(new LeftBarItem("artists",":res/img/artists.svg","Artists"));
- items.append(new LeftBarItem("albums",":res/img/albums.svg","Albums"));
- items.append(new LeftBarItem("songs",":res/img/songs.svg","Songs"));
- items.append(new LeftBarItem("genres",":res/img/genres.svg","Genres"));
+ items.append(new LeftBarItem("artists",":/Resources/Images/artists.svg","Artists"));
+ items.append(new LeftBarItem("albums",":/Resources/Images/albums.svg","Albums"));
+ items.append(new LeftBarItem("songs",":/Resources/Images/songs.svg","Songs"));
+ items.append(new LeftBarItem("genres",":/Resources/Images/genres.svg","Genres"));
 
 
  libraryLayout->setMargin(0);
@@ -40,10 +40,10 @@ LeftBar::LeftBar()
      connect(item,SIGNAL(selected(QString)),this,SLOT(itemSelected(QString)));
  }
 
- items.append(new LeftBarItem("0",":res/img/playlist.svg","Eduardo's playlist"));
- items.append(new LeftBarItem("1",":res/img/playlist.svg","Viaje"));
- items.append(new LeftBarItem("2",":res/img/playlist.svg","Inspiración"));
- items.append(new LeftBarItem("3",":res/img/playlist.svg","Cásicos"));
+ items.append(new LeftBarItem("0",":/Resources/Images/playlist.svg","Eduardo's playlist"));
+ items.append(new LeftBarItem("1",":/Resources/Images/playlist.svg","Viaje"));
+ items.append(new LeftBarItem("2",":/Resources/Images/playlist.svg","Inspiración"));
+ items.append(new LeftBarItem("3",":/Resources/Images/playlist.svg","Cásicos"));
 
  for(int i = 4; i<=7; i++){
      playlistsLayout->addWidget(items[i]);

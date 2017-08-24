@@ -100,7 +100,7 @@ public:
         year->setFixedWidth(50);
         year->setValidator( new QIntValidator(1000, 3000, year) );
         artWork->setFixedSize(200,200);
-        artWork->setStyleSheet("border-image:url(\":res/img/artWork.png\");border-radius:4px");
+        artWork->setStyleSheet("border-image:url(\":/Resources/Images/artWork.png\");border-radius:4px");
         layout->addRow(new QLabel("Title"),title);
         layout->addRow(new QLabel("Artist"),artist);
         layout->addRow(new QLabel("Album"),album);
@@ -192,7 +192,7 @@ public:
 
         if(varAlbum || varArtist)
         {
-            artWork->setStyleSheet("border-image:url(\":res/img/artWork.png\");border-radius:4px");
+            artWork->setStyleSheet("border-image:url(\":/Resources/Images/artWork.png\");border-radius:4px");
         }
         else
         {

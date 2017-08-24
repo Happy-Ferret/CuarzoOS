@@ -248,6 +248,7 @@ void CPushButton::setup()
     _icon->setScaledContents(true);
     _opacity->setOpacity(1.0);
 
+    setFixedHeight(30);
     setGraphicsEffect(_opacity);
     setMouseTracking(true);
     setDisplayMode(CPushButton::textOnly);

@@ -7,7 +7,9 @@ ICON = $$PWD/Resources/Icons/icon.icns
 INCLUDEPATH += $$PWD/Headers
 INCLUDEPATH += $$PWD/Libraries/TagLib.zlib/include/
 INCLUDEPATH += $$PWD/Libraries/VLC-Qt.zlib/include/
-INCLUDEPATH += $$PWD/Frameworks/CFramework/
+
+INCLUDEPATH += /home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include
+LIBS += -L/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/lib -lCFramework
 
 LIBS += -L$$OUT_PWD../Libraries/VLC-Qt.zlib/lib/ -lVLCQtCore
 
@@ -80,6 +82,9 @@ SOURCES += \
     Sources/timebar.cpp \
     Sources/titlebar.cpp \
     Sources/volumebar.cpp \
+
+RESOURCES += \
+    resources.qrc
 
 
 

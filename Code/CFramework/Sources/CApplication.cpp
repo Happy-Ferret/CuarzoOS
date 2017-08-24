@@ -58,44 +58,49 @@ void CApplication::messageIn()
         // Parse Message
         RegisteredSurfaceStruct *reply = (RegisteredSurfaceStruct*)message.data();
 
-        // Search the registered widget
-        Q_FOREACH(QWidget *wid, allWidgets())
-        {
-            if(wid->winId() == reply->id)
-            {
-                CWindow *widget = qobject_cast<CWindow*>(wid);
+        // Gets the widget
+        CWindow *widget = findCWindowById(reply->id);
 
-                // Send Surface Configuration
-                SurfaceConfigStruct conf;
-                conf.id = wid->winId();
-                conf.x = wid->pos().x();
-                conf.y = wid->pos().y();
-                conf.role = widget->mode();
-                strcpy(conf.title,widget->windowTitle().toUtf8());
+        // Send Surface Configuration
+        SurfaceConfigStruct conf;
+        conf.id = widget ->winId();
+        conf.x = widget->pos().x();
+        conf.y = widget->pos().y();
+        conf.role = widget->mode();
+        strcpy(conf.title,widget->windowTitle().toUtf8());
 
-                // Copy message to a char pointer
-                char data[sizeof(SurfaceConfigStruct)];
-                memcpy(data,&conf,sizeof(SurfaceConfigStruct));
+        // Copy message to a char pointer
+        char data[sizeof(SurfaceConfigStruct)];
+        memcpy(data,&conf,sizeof(SurfaceConfigStruct));
 
-                // Send message
-                socket->write(data,sizeof(SurfaceConfigStruct));
+        // Send message
+        socket->write(data,sizeof(SurfaceConfigStruct));
 
-                // Connects widget's events
-                connect(widget,SIGNAL(positionChanged(QPoint)),this,SLOT(sendPosition(QPoint)));
-                connect(widget,SIGNAL(titleChanged(QString)),this,SLOT(titleChanged(QString)));
-                connect(widget,SIGNAL(modeChanged(uint)),this,SLOT(modeChanged(uint)));
-                connect(widget,SIGNAL(blurStateChanged(bool)),this,SLOT(blurStateChanged(bool)));
-                connect(widget,SIGNAL(opacityChanged(uint)),this,SLOT(opacityChanged(uint)));
+        // Connects widget's events
+        connect(widget,SIGNAL(positionChanged(QPoint)),this,SLOT(sendPosition(QPoint)));
+        connect(widget,SIGNAL(titleChanged(QString)),this,SLOT(titleChanged(QString)));
+        connect(widget,SIGNAL(modeChanged(uint)),this,SLOT(modeChanged(uint)));
+        connect(widget,SIGNAL(blurStateChanged(bool)),this,SLOT(blurStateChanged(bool)));
+        connect(widget,SIGNAL(opacityChanged(uint)),this,SLOT(opacityChanged(uint)));
 
 
-                return;
-            }
+    }break;
+    case SURFACE_SCALED:{
 
-        }
+        // Parse Message
+        SurfaceScaledStruct *req = (SurfaceScaledStruct*)message.data();
+
+        // Gets the widget
+        CWindow *widget = findCWindowById(req->id);
+
+        qDebug() << req->height;
+
+        // Apply the changes
+        widget->resize(req->width,req->height);
+
     }break;
 
     }
-
 
 }
 
@@ -184,4 +189,12 @@ void CApplication::blurStateChanged(bool mode)
 
     // Send message
     socket->write(data,sizeof(SurfaceBlurStruct));
+}
+
+// Search the registered widget
+CWindow *CApplication::findCWindowById(uint id)
+{
+    Q_FOREACH(QWidget *wid, allWidgets())
+        if(wid->winId() == id)
+           return qobject_cast<CWindow*>(wid);
 }

@@ -32,7 +32,7 @@ void ArtistListItem::setData(QVariantMap data)
 
     }
     else{
-        icon->setStyleSheet("#Ic{border-image:url(\":res/img/artWork.png\"); background-position: center;border-radius:4px}");
+        icon->setStyleSheet("#Ic{border-image:url(\":/Resources/Images/artWork.png\"); background-position: center;border-radius:4px}");
 
     }
 }

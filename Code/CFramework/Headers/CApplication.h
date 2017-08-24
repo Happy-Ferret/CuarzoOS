@@ -28,6 +28,7 @@ public slots:
 
 private:
     QLocalSocket *socket = new QLocalSocket(this);
+    CWindow *findCWindowById(uint id);
 
 signals:
     void run();

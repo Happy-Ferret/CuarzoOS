@@ -43,7 +43,8 @@ void PlayerWindow::setupUI()
     setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     setMinimumSize(1000,600);
     move(screen.width()/2-500,screen.height()/2-300);
-    setCentralWidget(frame);
+    mainLayout->setMargin(0);
+    mainLayout->addWidget(frame);
     installEventFilter(this);
     frame->setObjectName("MainFrame");
     frame->setStyleSheet("#MainFrame{background:#FFF}");
@@ -95,13 +96,14 @@ void PlayerWindow::setupTopBarMenus()
     connect(exitAct, SIGNAL(triggered(bool)), this, SLOT(quitApp()));
 
     //CREATES MENUS
-
-    fileMenu = menuBar()->addMenu(tr("&File"));
+/*
+    //fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(addMusicAct);
     fileMenu->addAction(exitAct);
-    accountMenu = menuBar()->addMenu(tr("&Account"));
+    //accountMenu = menuBar()->addMenu(tr("&Account"));
     accountMenu->addAction(logoutAct);
     accountMenu->addAction(loginAct);
+    */
 }
 
 void PlayerWindow::setupConnections()
@@ -159,7 +161,7 @@ void PlayerWindow::setupConnections()
         loginAct->setVisible(true);
         logoutAct->setVisible(false);
         //topBar->modeList->hide();
-        topBar->userPicture->image->setPixmap(QPixmap(":res/img/user.svg"));
+        topBar->userPicture->image->setPixmap(QPixmap(":/Resources/Images/user.svg"));
         topBar->addAccount->show();
         topBar->storageBar->hide();
         connect(topBar->addAccount,SIGNAL(released()),this,SIGNAL(showLoginWindow()));

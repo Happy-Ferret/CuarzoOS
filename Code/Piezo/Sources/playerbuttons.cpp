@@ -15,8 +15,8 @@ PlayerButtons::PlayerButtons(QWidget *parent) : QWidget(parent)
 
 void PlayerButtons::setPlay(bool playing){
     if(playing){
-        play->setIcon(QIcon(":res/img/pause.svg"));
+        play->setIcon(QIcon(":/Resources/Images/pause.svg"));
     }else{
-        play->setIcon(QIcon(":res/img/play.svg"));
+        play->setIcon(QIcon(":/Resources/Images/play.svg"));
     }
 }

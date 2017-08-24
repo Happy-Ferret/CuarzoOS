@@ -1,7 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include "CWidget.h"
+#include "CWindow.h"
 #include <QBoxLayout>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -20,7 +20,7 @@
 #include <QNetworkRequest>
 #include <QJsonDocument>
 
-class Login : public CWidget
+class Login : public CWindow
 {
     Q_OBJECT
 public:

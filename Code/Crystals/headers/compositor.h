@@ -104,8 +104,8 @@ private slots:
     void onWlShellCreated(QWaylandWlShellSurface *wlShellSurface);
 
 
-    void onSubsurfaceChanged(QWaylandSurface *child, QWaylandSurface *parent);
-    void onSubsurfacePositionChanged(const QPoint &position);
+   // void onSubsurfaceChanged(QWaylandSurface *child, QWaylandSurface *parent);
+    //void onSubsurfacePositionChanged(const QPoint &position);
 
     void updateCursor();
 private:

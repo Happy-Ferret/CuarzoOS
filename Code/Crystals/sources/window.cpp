@@ -507,7 +507,7 @@ View *Window::viewAt(const QPointF &point)
             continue;
 
         // Check if point is in view rect
-        QRectF geom(view->position(), view->size());
+        QRectF geom(view->position() - QPointF(5,5), view->size() + QSizeF(10,10));
         if (geom.contains(point))
             ret = view;
     }
@@ -536,38 +536,93 @@ void Window::startDrag(View *dragIcon)
 
 void Window::mousePressEvent(QMouseEvent *e)
 {
-    if (mouseGrab())
-        return;
-    if (mouseView.isNull()) {
-        mouseView = viewAt(e->localPos());
-        if (!mouseView) {
+    // Find view at mouse position
+    mouseView = viewAt(e->localPos());
+
+    // If there is a view
+    if (mouseView)
+    {
+        QPointF pos = mouseView->position();
+        QSize siz = mouseView->size();
+        int margin = 5;
+
+        // TopLeft corner
+        if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        {
+            setCursor(Qt::SizeFDiagCursor);
             return;
         }
-        if (e->modifiers() == Qt::AltModifier || e->modifiers() == Qt::MetaModifier)
-            grabState = MoveGrab; //start move
+        // TopRight corner
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        {
+            setCursor(Qt::SizeBDiagCursor);
+            return;
+        }
+        // BottomRight corner
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+        {
+            setCursor(Qt::SizeFDiagCursor);
+            return;
+        }
+        // BottomLeft corner
+        else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+        {
+            setCursor(Qt::SizeBDiagCursor);
+            return;
+        }
+        // Left border
+        else if ( e->pos().x() - margin <= pos.x())
+        {
+            setCursor(Qt::SizeHorCursor);
+        }
+        // Right border
+        else if ( e->pos().x() + margin >= pos.x() + siz.width())
+        {
+            initialViewSize = mouseView->size();
+            initialMousePos = e->pos();
+            grabState = RightResize;
+            return;
+        }
+        // Top border
+        else if ( e->pos().y() - margin <= pos.y() && mouseView->role == TITLEBAR_MODE)
+        {
+            setCursor(Qt::SizeVerCursor);
+        }
+        // Bottom border
+        else if ( e->pos().y() + margin >= pos.y() + siz.height() && mouseView->role == WINDOW_MODE)
+        {
+            initialViewSize = mouseView->size();
+            initialMousePos = e->pos();
+            grabState = BottomResize;
+            return;
+        }
         else
-            compositor->raise(mouseView);
-        initialMousePos = e->localPos();
-        mouseOffset = e->localPos() - mouseView->position();
+        {
+            // Raise views
+            if(mouseView->role == TITLEBAR_MODE)
+            {
+                compositor->raise(mouseView->titleBarParent);
 
-        QMouseEvent moveEvent(QEvent::MouseMove, e->localPos(), e->globalPos(), Qt::NoButton, Qt::NoButton, e->modifiers());
-        sendMouseEvent(&moveEvent, mouseView);
+                // Save mouse press position
+                initialViewPosition = mouseView->titleBarParent->position();
+                initialMousePos = e->pos();
+                mouseOffset = e->localPos() - mouseView->position();
+                grabState = MoveGrab;
+            }
+        }
+        compositor->defaultSeat()->setKeyboardFocus(mouseView->surface());
+        compositor->defaultSeat()->setMouseFocus(mouseView);
+        compositor->raise(mouseView);
+        compositor->triggerRender();
     }
+    // Send mouse press event
     sendMouseEvent(e, mouseView);
 }
 
 void Window::mouseReleaseEvent(QMouseEvent *e)
 {
-    if (!mouseGrab())
-        sendMouseEvent(e, mouseView);
-    if (e->buttons() == Qt::NoButton) {
-        if (grabState == DragGrab) {
-            View *view = viewAt(e->localPos());
-            compositor->handleDrag(view, e);
-        }
-        mouseView = 0;
-        grabState = NoGrab;
-    }
+    grabState = NoGrab;
+    sendMouseEvent(e, mouseView);
 }
 
 void Window::mouseMoveEvent(QMouseEvent *e)
@@ -575,19 +630,82 @@ void Window::mouseMoveEvent(QMouseEvent *e)
     switch (grabState)
     {
     case NoGrab: {
-        View *view = mouseView ? mouseView.data() : viewAt(e->localPos());
-        sendMouseEvent(e, view);
-        if (!view)
+
+        mouseView = viewAt(e->localPos());
+
+        if (!mouseView)
+        {
             setCursor(Qt::ArrowCursor);
+            return;
+        }
+        QPointF pos = mouseView->position();
+        QSize siz = mouseView->size();
+        int margin = 5;
+
+        // TopLeft corner
+        if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        {
+            setCursor(Qt::SizeFDiagCursor);
+            return;
+        }
+        // TopRight corner
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        {
+            setCursor(Qt::SizeBDiagCursor);
+            return;
+        }
+        // BottomRight corner
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+        {
+            setCursor(Qt::SizeFDiagCursor);
+            return;
+        }
+        // BottomLeft corner
+        else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+        {
+            setCursor(Qt::SizeBDiagCursor);
+            return;
+        }
+        // Left border
+        else if ( e->pos().x() - margin <= pos.x())
+        {
+            setCursor(Qt::SizeHorCursor);
+        }
+        // Right border
+        else if ( e->pos().x() + margin >= pos.x() + siz.width())
+        {
+            setCursor(Qt::SizeHorCursor);
+        }
+        // Top border
+        else if ( e->pos().y() - margin <= pos.y() && mouseView->role == TITLEBAR_MODE)
+        {
+            setCursor(Qt::SizeVerCursor);
+        }
+        // Bottom border
+        else if ( e->pos().y() + margin >= pos.y() + siz.height() && mouseView->role == WINDOW_MODE)
+        {
+            setCursor(Qt::SizeVerCursor);
+        }
+        else
+        {
+            setCursor(Qt::ArrowCursor);
+            sendMouseEvent(e, mouseView);
+        }
     }
         break;
     case MoveGrab: {
-        mouseView->setPosition(e->localPos() - mouseOffset);
+        mouseView->titleBarParent->setPosition(initialViewPosition + e->localPos() - initialMousePos);
         update();
     }
         break;
-    case ResizeGrab: {
-        //QPoint delta = (e->localPos() - initialMousePos).toPoint();
+    case BottomResize:
+    {
+        mouseView->setSize(QSize(initialViewSize.width(), initialViewSize.height() + e->localPos().y() - initialMousePos.y()));
+    }
+        break;
+    case RightResize:
+    {
+        mouseView->setSize(QSize(initialViewSize.width()+ e->localPos().x() - initialMousePos.x(), initialViewSize.height()));
     }
         break;
     case DragGrab: {
@@ -600,6 +718,11 @@ void Window::mouseMoveEvent(QMouseEvent *e)
     }
         break;
     }
+}
+
+void Window::wheelEvent(QWheelEvent *e)
+{
+    compositor->defaultSeat()->sendMouseWheelEvent(e->orientation(),e->delta()/10);
 }
 
 // Send mouse event to the compositor

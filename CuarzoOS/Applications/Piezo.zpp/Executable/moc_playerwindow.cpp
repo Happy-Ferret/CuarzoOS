@@ -285,7 +285,7 @@ void PlayerWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
 }
 
 const QMetaObject PlayerWindow::staticMetaObject = {
-    { &CWidget::staticMetaObject, qt_meta_stringdata_PlayerWindow.data,
+    { &CWindow::staticMetaObject, qt_meta_stringdata_PlayerWindow.data,
       qt_meta_data_PlayerWindow,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -300,12 +300,12 @@ void *PlayerWindow::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_PlayerWindow.stringdata0))
         return static_cast<void*>(const_cast< PlayerWindow*>(this));
-    return CWidget::qt_metacast(_clname);
+    return CWindow::qt_metacast(_clname);
 }
 
 int PlayerWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = CWidget::qt_metacall(_c, _id, _a);
+    _id = CWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

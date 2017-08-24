@@ -17,7 +17,7 @@ public:
     {
         setFixedWidth(180);
         artWork = new QLabel();
-        artWork->setPixmap(r.borderRadius(QImage(":res/img/artWork.png"),10));
+        artWork->setPixmap(r.borderRadius(QImage(":/Resources/Images/artWork.png"),10));
         artWork->setScaledContents(true);
         artWork->setFixedSize(50,50);
         song = new CropLabel("Song","font-size:11px;color:#444;font-weight:bold");
@@ -45,14 +45,14 @@ public slots:
         if(data["artWork"].toBool()){
             artWork->setPixmap(r.borderRadius(QImage(path + "/Cuarzo Player/Artwork/" + data["artist"].toString() + "/" + data["album"].toString() + ".jpg") ,10));
         }else{
-            artWork->setPixmap(r.borderRadius(QImage(":res/img/artWork.png") ,10));
+            artWork->setPixmap(r.borderRadius(QImage(":/Resources/Images/artWork.png") ,10));
 
         }
         song->changeText(data["title"].toString());
         artist->changeText(data["artist"].toString());
     }
     void clear(){
-        artWork->setPixmap(r.borderRadius(QImage(":res/img/artWork.png") ,10));
+        artWork->setPixmap(r.borderRadius(QImage(":/Resources/Images/artWork.png") ,10));
         song->changeText("Song");
         artist->changeText("Artist");
     }

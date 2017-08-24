@@ -19,7 +19,7 @@ Login::Login()
     QRect screen = QApplication::desktop()->screenGeometry();
     setStyleSheet("Login{background:#FFF}");
     setMinimumSize(500,600);
-    logo->setPixmap(QPixmap(":res/img/icon.png"));
+    logo->setPixmap(QPixmap(":/Resources/Images/icon.png"));
     QWidget *logoFrame = new QWidget();
     QBoxLayout *logoLayout = new QBoxLayout(QBoxLayout::LeftToRight,logoFrame);
     logoLayout->setAlignment(Qt::AlignCenter);

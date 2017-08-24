@@ -100,6 +100,13 @@ void CrystalsGui::newMessage()
         TitleBar *titleBar = findTitlebarByIdAndPid(req->forId,req->forPid);
         titleBar->setFixedWidth(req->width);
     }break;
+    case TITLEBAR_TITLE:{
+        // Parse the message
+        TitlebarTitleStruct *req = (TitlebarTitleStruct*)data.data();
+        TitleBar *titleBar = findTitlebarByIdAndPid(req->forId,req->forPid);
+        titleBar->title->setText(req->title);
+    }break;
+
     }
 }
 

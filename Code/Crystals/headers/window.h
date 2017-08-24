@@ -25,6 +25,7 @@ protected:
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void mouseMoveEvent(QMouseEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
 
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
@@ -72,7 +73,7 @@ private:
 
     Background *background = new Background(this);
 
-    enum GrabState { NoGrab, MoveGrab, ResizeGrab, DragGrab };
+    enum GrabState { NoGrab, MoveGrab, ResizeGrab, DragGrab , LeftResize, TopResize, RightResize, BottomResize};
 
     View *viewAt(const QPointF &point);
     bool mouseGrab() const { return grabState != NoGrab ;}
@@ -83,10 +84,10 @@ private:
     Compositor *compositor;
     QPointer<View> mouseView;
     GrabState grabState = NoGrab;
-    QSize initialSize, blurSize;
+    QSize initialSize, blurSize, initialViewSize;
     int resizeEdge;
     bool resizeAnchored;
-    QPointF resizeAnchorPosition, mouseOffset, initialMousePos;
+    QPointF resizeAnchorPosition, mouseOffset, initialMousePos, initialViewPosition;
     View *dragIconView;
 };
 

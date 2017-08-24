@@ -20,7 +20,7 @@ Compositor::Compositor():QWaylandCompositor()
     connect(this, &QWaylandCompositor::surfaceCreated, this, &Compositor::onSurfaceCreated);
 
     // Event when wayland subsurface has changed
-    connect(this, &QWaylandCompositor::subsurfaceChanged, this, &Compositor::onSubsurfaceChanged);
+    //connect(this, &QWaylandCompositor::subsurfaceChanged, this, &Compositor::onSubsurfaceChanged);
 
     // Event when surface wants to change the cursor
     connect(defaultSeat(), &QWaylandSeat::cursorSurfaceRequest, this, &Compositor::adjustCursorSurface);
@@ -124,11 +124,11 @@ void Compositor::newClientMessage()
             // Assign the surface position
             view->setPosition(QPointF(message->x,message->y));
 
+            // Assign surface title
+            view->title = message->title;
+
             // Assign the surface role
             view->setRole(message->role);
-
-            // Assign surface title
-            view->setTitle(message->title);
 
             // Triggers OpenGL render
             triggerRender();
@@ -218,6 +218,26 @@ void Compositor::newClientMessage()
 
         }break;
 
+        // Title change request
+        case SURFACE_TITLE:{
+
+            // Parse the message
+            SurfaceTitleStruct *msg = (SurfaceTitleStruct*)data.data();
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->id,socket->processID);
+
+            // Set surface blur state
+            view->setTitle(msg->title);
+
+            // Triggers OpenGL render
+            triggerRender();
+
+            // Prints the event
+            qDebug() << "Surface Title Changed";
+
+        }break;
+
         // Titlebar created
         case TITLEBAR_CREATED:{
 
@@ -235,6 +255,9 @@ void Compositor::newClientMessage()
 
             // Assigns the titlebar to the view
             view->titleBar = titleBar;
+
+            // Assigns the view to the titlebar
+            titleBar->titleBarParent = view;
 
             // Now view is configured
             view->configured = true;
@@ -268,7 +291,8 @@ void Compositor::onSurfaceCreated(QWaylandSurface *surface)
     connect(surface, &QWaylandSurface::surfaceDestroyed, this, &Compositor::surfaceDestroyed);
     connect(surface, &QWaylandSurface::hasContentChanged, this, &Compositor::surfaceHasContentChanged);
     connect(surface, &QWaylandSurface::redraw, this, &Compositor::triggerRender);
-    connect(surface, &QWaylandSurface::subsurfacePositionChanged, this, &Compositor::onSubsurfacePositionChanged);
+    connect(surface, &QWaylandSurface::damaged, this, &Compositor::triggerRender);
+    //connect(surface, &QWaylandSurface::subsurfacePositionChanged, this, &Compositor::onSubsurfacePositionChanged);
     connect(surface, &QWaylandSurface::sizeChanged, this, &Compositor::surfaceSizeChanged);
 
     View *view = new View(this);
@@ -371,7 +395,7 @@ View * Compositor::findView(const QWaylandSurface *s) const
     return Q_NULLPTR;
 }
 
-
+/*
 void Compositor::onSubsurfaceChanged(QWaylandSurface *child, QWaylandSurface *parent)
 {
     View *view = findView(child);
@@ -389,7 +413,7 @@ void Compositor::onSubsurfacePositionChanged(const QPoint &position)
     view->setPosition(position);
     triggerRender();
 }
-
+*/
 void Compositor::triggerRender()
 {
     window->requestUpdate();
@@ -438,6 +462,8 @@ void Compositor::readyToLaunchApps()
 {
     // Launch a Demo App
     man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+    man.launchZpp(SYSTEM_PATH + "/Applications/Piezo.zpp");
+
 }
 
 

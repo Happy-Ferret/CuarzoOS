@@ -37,6 +37,7 @@ public:
     void setRole(uint newRole);
     void setTitle(const QString &newTitle);
     void setOpacity(uint newOpacity);
+    void setSize(const QSize &size);
 
     // OpenGL functions
     void calcVertexPos(); // Calculates all the vertex positions and colors of the view
@@ -48,10 +49,16 @@ public:
 
     // Elements
     View *titleBar = nullptr;
+    View *titleBarParent = nullptr;
 
     QOpenGLTexture *getTexture();
     QPointF position() const { return m_position; }
-    void setPosition(const QPointF &pos) { m_position = pos; }
+    void setPosition(const QPointF &pos)
+    {
+        m_position = pos;
+        if(titleBar != nullptr)
+            titleBar->setPosition(QPointF(pos.x(),pos.y() - 40));
+    }
     QSize size() const;
     bool isCursor() const;
     void setParentView(View *parent) { m_parentView = parent; }

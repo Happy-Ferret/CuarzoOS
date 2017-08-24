@@ -15,11 +15,11 @@ class TitleBar : public CWindow
 public:
     TitleBar();
     TitleBarButton *close, *minimize, *expand;
-    CLabel *title = new CLabel("Untitled");
+    CLabel *title = new CLabel("");
     uint surfaceID;
     uint processID;
 
-
+    void setFixedWidth(int size);
 };
 
 #endif // TITLEBAR_H

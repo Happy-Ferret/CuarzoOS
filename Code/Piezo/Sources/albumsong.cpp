@@ -13,7 +13,7 @@ AlbumSong::AlbumSong(QVariantMap data, bool logged)
     duration->setStyleSheet("color:#888");
     layout->setMargin(8);
     if(logged){
-        sync = new OpButton(":res/img/upload-border.png", bSize, bSize);
+        sync = new OpButton(":/Resources/Images/upload-border.png", bSize, bSize);
         connect(sync,SIGNAL(pressed()),this,SLOT(syncClicked()));
         layout->addWidget(sync);
     }
@@ -35,15 +35,15 @@ void AlbumSong::setData(QVariantMap data)
 
     if(!data["local"].toBool())
     {
-        //sync->setIcon(QIcon(":res/img/download-border.svg"));
+        //sync->setIcon(QIcon(":/Resources/Images/download-border.svg"));
     }
     else if(!data["cloud"].toBool())
     {
-        //sync->setIcon(QIcon(":res/img/upload-border.svg"));
+        //sync->setIcon(QIcon(":/Resources/Images/upload-border.svg"));
     }
     else if(data["cloud"].toBool() && data["local"].toBool())
     {
-        //sync->setIcon(QIcon(":res/img/success.svg"));
+        //sync->setIcon(QIcon(":/Resources/Images/success.svg"));
     }
 }
 
@@ -59,7 +59,7 @@ void AlbumSong::setLocation(QString location)
     }
     else if(location == "cloud")
     {
-        //new OpButton(":res/img/upload-border.png", bSize, bSize)
+        //new OpButton(":/Resources/Images/upload-border.png", bSize, bSize)
     }
     else if(location == "all")
     {
@@ -80,13 +80,13 @@ void AlbumSong::setSelected(bool op)
         number->setStyleSheet("color:#FFF");
         name->setStyleSheet("color:#FFF");
         if(sync != nullptr)
-            sync->setIcon(QIcon(":res/img/upload-border-sel.png"));
+            sync->setIcon(QIcon(":/Resources/Images/upload-border-sel.png"));
         if(pie != nullptr)
             pie->setColor(Qt::white);
         if(status != nullptr)
-            status->setPixmap(QPixmap(":res/img/volume-high-sel.png"));
+            status->setPixmap(QPixmap(":/Resources/Images/volume-high-sel.png"));
         if(more != nullptr)
-            more->setIcon(QIcon(":res/img/more-sel.png"));
+            more->setIcon(QIcon(":/Resources/Images/more-sel.png"));
     }
     else
     {
@@ -95,13 +95,13 @@ void AlbumSong::setSelected(bool op)
         number->setStyleSheet("color:#888");
         name->setStyleSheet("color:#444");
         if(sync != nullptr)
-            sync->setIcon(QIcon(":res/img/upload-border.png"));
+            sync->setIcon(QIcon(":/Resources/Images/upload-border.png"));
         if(pie != nullptr)
             pie->setColor(Qt::gray);
         if(status != nullptr)
-            status->setPixmap(QPixmap(":res/img/volume-high.png"));
+            status->setPixmap(QPixmap(":/Resources/Images/volume-high.png"));
         if(more != nullptr)
-            more->setIcon(QIcon(":res/img/more-small.png"));
+            more->setIcon(QIcon(":/Resources/Images/more-small.png"));
         //if(data["local"] && !data["cloud"]) sync->setColor(blue);
         //if(!data["local"] && data["cloud"]) sync->setColor(red);
         //if(data["local"] && data["cloud"]) sync->setColor(blue);
@@ -117,8 +117,8 @@ void AlbumSong::setPlaying(bool isPlaying)
     if(isPlaying)
     {
 
-        if(isSelected)status = new Icon(":res/img/volume-high-sel.png",bSize, bSize);
-        if(!isSelected)status = new Icon(":res/img/volume-high.png",bSize, bSize);
+        if(isSelected)status = new Icon(":/Resources/Images/volume-high-sel.png",bSize, bSize);
+        if(!isSelected)status = new Icon(":/Resources/Images/volume-high.png",bSize, bSize);
         layout->insertWidget(1,status);
         number->hide();
         status->show();
@@ -179,11 +179,11 @@ void AlbumSong::mouseDoubleClickEvent(QMouseEvent *event)
 void AlbumSong::enterEvent(QEvent * event)
 {
     if(isSelected){
-        more = new OpButton(":res/img/more-sel.png", bSize, bSize);
+        more = new OpButton(":/Resources/Images/more-sel.png", bSize, bSize);
     }
     else
     {
-        more = new OpButton(":res/img/more-small.png", bSize, bSize);
+        more = new OpButton(":/Resources/Images/more-small.png", bSize, bSize);
     }
     connect(more,SIGNAL(released()),this,SLOT(morePressed()));
     layout->insertWidget(layout->count()-1,more);

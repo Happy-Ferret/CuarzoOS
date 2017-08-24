@@ -39,12 +39,43 @@ void View::setTitle(const QString &newTitle)
 {
     title = newTitle;
     titleChanged(newTitle);
+
+    TitlebarTitleStruct msg;
+    msg.forPid = surface()->client()->processId();
+    msg.forId = surfaceId;
+    strcpy(msg.title,title.toUtf8());
+
+    // Copy message to a char pointer
+    char data[sizeof(TitlebarTitleStruct )];
+    memcpy(data,&msg,sizeof(TitlebarTitleStruct));
+
+    // Send message
+    compositor->crystalsGuiSocket->socket->write(data,sizeof(TitlebarTitleStruct));
+
+    // Print event
+    qDebug() << "TitleBar title sent";
 }
 
 void View::setOpacity(uint newOpacity)
 {
     opacity = newOpacity;
     opacityChanged(newOpacity);
+}
+
+void View::setSize(const QSize &size)
+{
+    SurfaceScaledStruct msg;
+    msg.id = surfaceId;
+    msg.height = size.height();
+    msg.width = size.width();
+
+    // Copy message to a char pointer
+    char data[sizeof(SurfaceScaledStruct)];
+    memcpy(data,&msg,sizeof(SurfaceScaledStruct));
+
+    // Sends the message
+    compositor->findSocketByPId(surface()->client()->processId())->socket->write(data,sizeof(SurfaceScaledStruct));
+
 }
 
 void View::calcVertexPos()

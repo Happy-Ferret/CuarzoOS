@@ -28,13 +28,13 @@
 #include "songmenu.h"
 #include "tageditor.h"
 
-#include "CWidget.h"
+#include "CWindow.h"
 #ifdef Q_OS_MAC
     #include "objectivec.h"
 #endif
 
 
-class PlayerWindow : public CWidget
+class PlayerWindow : public CWindow
 {
     Q_OBJECT
 public:
@@ -81,6 +81,8 @@ public:
     BottomBar *bottomBar = new BottomBar();
     MiddleView *middleView = new MiddleView();
     QBoxLayout *frameLayout = new QBoxLayout(QBoxLayout::TopToBottom,frame);
+    QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom,this);
+
 
 
     //EVENTS

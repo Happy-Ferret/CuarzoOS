@@ -11,6 +11,7 @@ CWindow::CWindow(QWidget *parent)
 
     // Asigns parent
     QWidget::setParent(parent);
+
 }
 
 // Assign and send position to Crystals

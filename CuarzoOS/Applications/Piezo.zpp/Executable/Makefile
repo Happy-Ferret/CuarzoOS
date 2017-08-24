@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../../../../Code/Piezo -I. -I../../../../Code/Piezo/Headers -I../../../../Code/Piezo/Libraries/TagLib.zlib/include -I../../../../Code/Piezo/Libraries/VLC-Qt.zlib/include -I../../../../Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
+INCPATH       = -I../../../../Code/Piezo -I. -I../../../../Code/Piezo/Headers -I../../../../Code/Piezo/Libraries/TagLib.zlib/include -I../../../../Code/Piezo/Libraries/VLC-Qt.zlib/include -I../../../System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
 QMAKE         = /usr/local/Qt-5.9.1/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = Piezo1.0.0
 DISTDIR = /home/e/Escritorio/CuarzoOS/CuarzoOS/Applications/Piezo.zpp/Executable/.tmp/Piezo1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/usr/local/Qt-5.9.1/lib
-LIBS          = $(SUBLIBS) -L/Libraries/VLC-Qt.zlib/lib/ -L/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/lib/ -lVLCQtCore -L/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/lib/ -ltag -L/usr/lib/ -L/usr/local/ -lz -L/usr/local/Qt-5.9.1/lib -lQt5Svg -lQt5Widgets -lQt5Multimedia -lQt5Gui -lQt5Network -lQt5Concurrent -lQt5Core -lGLESv2 -lpthread 
+LIBS          = $(SUBLIBS) -L/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/lib -lCFramework -L/Libraries/VLC-Qt.zlib/lib/ -L/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/lib/ -lVLCQtCore -L/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/lib/ -ltag -L/usr/lib/ -L/usr/local/ -lz -L/usr/local/Qt-5.9.1/lib -lQt5Svg -lQt5Widgets -lQt5Multimedia -lQt5Gui -lQt5Network -lQt5Concurrent -lQt5Core -lGLESv2 -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -66,7 +66,8 @@ SOURCES       = ../../../../Code/Piezo/Sources/albumsong.cpp \
 		../../../../Code/Piezo/Sources/searchbar.cpp \
 		../../../../Code/Piezo/Sources/timebar.cpp \
 		../../../../Code/Piezo/Sources/titlebar.cpp \
-		../../../../Code/Piezo/Sources/volumebar.cpp moc_album.cpp \
+		../../../../Code/Piezo/Sources/volumebar.cpp qrc_resources.cpp \
+		moc_album.cpp \
 		moc_albumsong.cpp \
 		moc_artistlistitem.cpp \
 		moc_artistview.cpp \
@@ -117,6 +118,7 @@ OBJECTS       = albumsong.o \
 		timebar.o \
 		titlebar.o \
 		volumebar.o \
+		qrc_resources.o \
 		moc_album.o \
 		moc_albumsong.o \
 		moc_artistlistitem.o \
@@ -467,6 +469,7 @@ Makefile: ../../../../Code/Piezo/Piezo.pro /usr/local/Qt-5.9.1/mkspecs/linux-g++
 		/usr/local/Qt-5.9.1/mkspecs/features/yacc.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/lex.prf \
 		../../../../Code/Piezo/Piezo.pro \
+		../../../../Code/Piezo/resources.qrc \
 		/usr/local/Qt-5.9.1/lib/libQt5Svg.prl \
 		/usr/local/Qt-5.9.1/lib/libQt5Widgets.prl \
 		/usr/local/Qt-5.9.1/lib/libQt5Multimedia.prl \
@@ -600,6 +603,7 @@ Makefile: ../../../../Code/Piezo/Piezo.pro /usr/local/Qt-5.9.1/mkspecs/linux-g++
 /usr/local/Qt-5.9.1/mkspecs/features/yacc.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/lex.prf:
 ../../../../Code/Piezo/Piezo.pro:
+../../../../Code/Piezo/resources.qrc:
 /usr/local/Qt-5.9.1/lib/libQt5Svg.prl:
 /usr/local/Qt-5.9.1/lib/libQt5Widgets.prl:
 /usr/local/Qt-5.9.1/lib/libQt5Multimedia.prl:
@@ -621,6 +625,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../../../../Code/Piezo/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Code/Piezo/Headers/album.h ../../../../Code/Piezo/Headers/albumsong.h ../../../../Code/Piezo/Headers/artistlistitem.h ../../../../Code/Piezo/Headers/artistview.h ../../../../Code/Piezo/Headers/artistviewtitle.h ../../../../Code/Piezo/Headers/bottombar.h ../../../../Code/Piezo/Headers/croplabel.h ../../../../Code/Piezo/Headers/filemanager.h ../../../../Code/Piezo/Headers/googledrive.h ../../../../Code/Piezo/Headers/icon.h ../../../../Code/Piezo/Headers/init.h ../../../../Code/Piezo/Headers/leftbar.h ../../../../Code/Piezo/Headers/leftbaritem.h ../../../../Code/Piezo/Headers/library.h ../../../../Code/Piezo/Headers/login.h ../../../../Code/Piezo/Headers/maths.h ../../../../Code/Piezo/Headers/menu.h ../../../../Code/Piezo/Headers/middleview.h ../../../../Code/Piezo/Headers/network.h ../../../../Code/Piezo/Headers/opbutton.h ../../../../Code/Piezo/Headers/pie.h ../../../../Code/Piezo/Headers/pix.h ../../../../Code/Piezo/Headers/player.h ../../../../Code/Piezo/Headers/playerbuttons.h ../../../../Code/Piezo/Headers/playerwindow.h ../../../../Code/Piezo/Headers/rectpix.h ../../../../Code/Piezo/Headers/reply.h ../../../../Code/Piezo/Headers/searchbar.h ../../../../Code/Piezo/Headers/selectlist.h ../../../../Code/Piezo/Headers/selectlistitem.h ../../../../Code/Piezo/Headers/songinfo.h ../../../../Code/Piezo/Headers/songmenu.h ../../../../Code/Piezo/Headers/storagebar.h ../../../../Code/Piezo/Headers/tableview.h ../../../../Code/Piezo/Headers/tageditor.h ../../../../Code/Piezo/Headers/timebar.h ../../../../Code/Piezo/Headers/titlebar.h ../../../../Code/Piezo/Headers/topbar.h ../../../../Code/Piezo/Headers/userpicture.h ../../../../Code/Piezo/Headers/volumebar.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Code/Piezo/Sources/albumsong.cpp ../../../../Code/Piezo/Sources/artistlistitem.cpp ../../../../Code/Piezo/Sources/bottombar.cpp ../../../../Code/Piezo/Sources/googledrive.cpp ../../../../Code/Piezo/Sources/leftbar.cpp ../../../../Code/Piezo/Sources/leftbaritem.cpp ../../../../Code/Piezo/Sources/library.cpp ../../../../Code/Piezo/Sources/login.cpp ../../../../Code/Piezo/Sources/main.cpp ../../../../Code/Piezo/Sources/menu.cpp ../../../../Code/Piezo/Sources/player.cpp ../../../../Code/Piezo/Sources/playerbuttons.cpp ../../../../Code/Piezo/Sources/playerwindow.cpp ../../../../Code/Piezo/Sources/searchbar.cpp ../../../../Code/Piezo/Sources/timebar.cpp ../../../../Code/Piezo/Sources/titlebar.cpp ../../../../Code/Piezo/Sources/volumebar.cpp $(DISTDIR)/
@@ -647,8 +652,58 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_resources.cpp
+qrc_resources.cpp: ../../../../Code/Piezo/resources.qrc \
+		/usr/local/Qt-5.9.1/bin/rcc \
+		../../../../Code/Piezo/Resources/Images/listArrow.svg \
+		../../../../Code/Piezo/Resources/Images/songs.svg \
+		../../../../Code/Piezo/Resources/Images/upload-border-sel.png \
+		../../../../Code/Piezo/Resources/Images/no-user.jpg \
+		../../../../Code/Piezo/Resources/Images/more-big.svg \
+		../../../../Code/Piezo/Resources/Images/success.svg \
+		../../../../Code/Piezo/Resources/Images/all.svg \
+		../../../../Code/Piezo/Resources/Images/loop-one.svg \
+		../../../../Code/Piezo/Resources/Images/play.svg \
+		../../../../Code/Piezo/Resources/Images/cloud-border.svg \
+		../../../../Code/Piezo/Resources/Images/volume-medium.svg \
+		../../../../Code/Piezo/Resources/Images/volume-high.png \
+		../../../../Code/Piezo/Resources/Images/cloud.svg \
+		../../../../Code/Piezo/Resources/Images/volume-high-sel.png \
+		../../../../Code/Piezo/Resources/Images/google-logo.png \
+		../../../../Code/Piezo/Resources/Images/upload.svg \
+		../../../../Code/Piezo/Resources/Images/user.svg \
+		../../../../Code/Piezo/Resources/Images/pause.svg \
+		../../../../Code/Piezo/Resources/Images/more-sel.png \
+		../../../../Code/Piezo/Resources/Images/icon.png \
+		../../../../Code/Piezo/Resources/Images/more-small.png \
+		../../../../Code/Piezo/Resources/Images/ready.svg \
+		../../../../Code/Piezo/Resources/Images/artists.svg \
+		../../../../Code/Piezo/Resources/Images/search.svg \
+		../../../../Code/Piezo/Resources/Images/local.svg \
+		../../../../Code/Piezo/Resources/Images/sync-border.svg \
+		../../../../Code/Piezo/Resources/Images/upload-border.svg \
+		../../../../Code/Piezo/Resources/Images/logos.png \
+		../../../../Code/Piezo/Resources/Images/checked.svg \
+		../../../../Code/Piezo/Resources/Images/playlist.svg \
+		../../../../Code/Piezo/Resources/Images/download-border.svg \
+		../../../../Code/Piezo/Resources/Images/back.svg \
+		../../../../Code/Piezo/Resources/Images/artWork.png \
+		../../../../Code/Piezo/Resources/Images/sync.svg \
+		../../../../Code/Piezo/Resources/Images/more.svg \
+		../../../../Code/Piezo/Resources/Images/loop.svg \
+		../../../../Code/Piezo/Resources/Images/download.svg \
+		../../../../Code/Piezo/Resources/Images/genres.svg \
+		../../../../Code/Piezo/Resources/Images/add.svg \
+		../../../../Code/Piezo/Resources/Images/next.svg \
+		../../../../Code/Piezo/Resources/Images/albums.svg \
+		../../../../Code/Piezo/Resources/Images/shuffle.svg \
+		../../../../Code/Piezo/Resources/Images/volume-low.svg \
+		../../../../Code/Piezo/Resources/Images/upload-border.png \
+		../../../../Code/Piezo/Resources/Images/volume-high.svg
+	/usr/local/Qt-5.9.1/bin/rcc -name resources ../../../../Code/Piezo/resources.qrc -o qrc_resources.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -792,7 +847,7 @@ moc_album.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/album.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/album.h -o moc_album.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/album.h -o moc_album.cpp
 
 moc_albumsong.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -931,7 +986,7 @@ moc_albumsong.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		../../../../Code/Piezo/Headers/albumsong.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/albumsong.h -o moc_albumsong.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/albumsong.h -o moc_albumsong.cpp
 
 moc_artistlistitem.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -1055,7 +1110,7 @@ moc_artistlistitem.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		../../../../Code/Piezo/Headers/artistlistitem.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/artistlistitem.h -o moc_artistlistitem.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/artistlistitem.h -o moc_artistlistitem.cpp
 
 moc_artistview.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -1194,7 +1249,7 @@ moc_artistview.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/artistview.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/artistview.h -o moc_artistview.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/artistview.h -o moc_artistview.cpp
 
 moc_artistviewtitle.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -1327,7 +1382,7 @@ moc_artistviewtitle.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		../../../../Code/Piezo/Headers/artistviewtitle.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/artistviewtitle.h -o moc_artistviewtitle.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/artistviewtitle.h -o moc_artistviewtitle.cpp
 
 moc_bottombar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
@@ -1471,7 +1526,7 @@ moc_bottombar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
 		../../../../Code/Piezo/Headers/bottombar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/bottombar.h -o moc_bottombar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/bottombar.h -o moc_bottombar.cpp
 
 moc_croplabel.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
@@ -1578,7 +1633,7 @@ moc_croplabel.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		../../../../Code/Piezo/Headers/croplabel.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/croplabel.h -o moc_croplabel.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/croplabel.h -o moc_croplabel.cpp
 
 moc_filemanager.cpp: /usr/local/Qt-5.9.1/include/QtCore/QCryptographicHash \
 		/usr/local/Qt-5.9.1/include/QtCore/qcryptographichash.h \
@@ -1730,7 +1785,7 @@ moc_filemanager.cpp: /usr/local/Qt-5.9.1/include/QtCore/QCryptographicHash \
 		../../../../Code/Piezo/Headers/filemanager.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/filemanager.h -o moc_filemanager.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/filemanager.h -o moc_filemanager.cpp
 
 moc_init.cpp: /usr/local/Qt-5.9.1/include/QtCore/QObject \
 		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
@@ -1899,12 +1954,13 @@ moc_init.cpp: /usr/local/Qt-5.9.1/include/QtCore/QObject \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QMessageBox \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmessagebox.h \
 		../../../../Code/Piezo/Headers/login.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
+		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
@@ -1978,7 +2034,6 @@ moc_init.cpp: /usr/local/Qt-5.9.1/include/QtCore/QObject \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qaction.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qactiongroup.h \
 		../../../../Code/Piezo/Headers/titlebar.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtCore/QEvent \
 		../../../../Code/Piezo/Headers/topbar.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QJsonObject \
@@ -2068,7 +2123,7 @@ moc_init.cpp: /usr/local/Qt-5.9.1/include/QtCore/QObject \
 		../../../../Code/Piezo/Headers/init.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/init.h -o moc_init.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/init.h -o moc_init.cpp
 
 moc_leftbar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -2190,7 +2245,7 @@ moc_leftbar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/leftbar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/leftbar.h -o moc_leftbar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/leftbar.h -o moc_leftbar.cpp
 
 moc_leftbaritem.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -2307,7 +2362,7 @@ moc_leftbaritem.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/leftbaritem.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/leftbaritem.h -o moc_leftbaritem.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/leftbaritem.h -o moc_leftbaritem.cpp
 
 moc_library.cpp: /usr/local/Qt-5.9.1/include/QtCore/QString \
 		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
@@ -2477,10 +2532,10 @@ moc_library.cpp: /usr/local/Qt-5.9.1/include/QtCore/QString \
 		../../../../Code/Piezo/Headers/library.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/library.h -o moc_library.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/library.h -o moc_library.cpp
 
-moc_login.cpp: ../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CCore.h \
+moc_login.cpp: ../../../System/Library/Frameworks/CFramework/include/CWindow.h \
+		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -2584,6 +2639,7 @@ moc_login.cpp: ../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
@@ -2666,7 +2722,7 @@ moc_login.cpp: ../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
 		../../../../Code/Piezo/Headers/login.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/login.h -o moc_login.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/login.h -o moc_login.cpp
 
 moc_menu.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -2778,7 +2834,7 @@ moc_menu.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/menu.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/menu.h -o moc_menu.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/menu.h -o moc_menu.cpp
 
 moc_middleview.cpp: ../../../../Code/Piezo/Headers/leftbar.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
@@ -2945,7 +3001,7 @@ moc_middleview.cpp: ../../../../Code/Piezo/Headers/leftbar.h \
 		../../../../Code/Piezo/Headers/middleview.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/middleview.h -o moc_middleview.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/middleview.h -o moc_middleview.cpp
 
 moc_network.cpp: /usr/local/Qt-5.9.1/include/QtNetwork/QNetworkAccessManager \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qnetworkaccessmanager.h \
@@ -3037,7 +3093,7 @@ moc_network.cpp: /usr/local/Qt-5.9.1/include/QtNetwork/QNetworkAccessManager \
 		../../../../Code/Piezo/Headers/network.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/network.h -o moc_network.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/network.h -o moc_network.cpp
 
 moc_opbutton.cpp: /usr/local/Qt-5.9.1/include/QtCore/QPropertyAnimation \
 		/usr/local/Qt-5.9.1/include/QtCore/qpropertyanimation.h \
@@ -3159,7 +3215,7 @@ moc_opbutton.cpp: /usr/local/Qt-5.9.1/include/QtCore/QPropertyAnimation \
 		../../../../Code/Piezo/Headers/opbutton.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/opbutton.h -o moc_opbutton.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/opbutton.h -o moc_opbutton.cpp
 
 moc_pie.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QPushButton \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qpushbutton.h \
@@ -3275,7 +3331,7 @@ moc_pie.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QPushButton \
 		../../../../Code/Piezo/Headers/pie.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/pie.h -o moc_pie.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/pie.h -o moc_pie.cpp
 
 moc_player.cpp: /usr/local/Qt-5.9.1/include/QtCore/QObject \
 		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
@@ -3415,7 +3471,7 @@ moc_player.cpp: /usr/local/Qt-5.9.1/include/QtCore/QObject \
 		../../../../Code/Piezo/Headers/player.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/player.h -o moc_player.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/player.h -o moc_player.cpp
 
 moc_playerbuttons.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -3539,7 +3595,7 @@ moc_playerbuttons.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/playerbuttons.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/playerbuttons.h -o moc_playerbuttons.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/playerbuttons.h -o moc_playerbuttons.cpp
 
 moc_playerwindow.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
@@ -3850,8 +3906,8 @@ moc_playerwindow.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		../../../../Code/Piezo/Libraries/VLC-Qt.zlib/include/Config.h \
 		../../../../Code/Piezo/Headers/login.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
+		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QUrlQuery \
 		/usr/local/Qt-5.9.1/include/QtGui/QDesktopServices \
 		/usr/local/Qt-5.9.1/include/QtGui/qdesktopservices.h \
@@ -3876,7 +3932,7 @@ moc_playerwindow.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		../../../../Code/Piezo/Headers/playerwindow.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/playerwindow.h -o moc_playerwindow.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/playerwindow.h -o moc_playerwindow.cpp
 
 moc_reply.cpp: /usr/local/Qt-5.9.1/include/QtNetwork/QNetworkReply \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qnetworkreply.h \
@@ -3972,7 +4028,7 @@ moc_reply.cpp: /usr/local/Qt-5.9.1/include/QtNetwork/QNetworkReply \
 		../../../../Code/Piezo/Headers/reply.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/reply.h -o moc_reply.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/reply.h -o moc_reply.cpp
 
 moc_searchbar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QLineEdit \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlineedit.h \
@@ -4088,7 +4144,7 @@ moc_searchbar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QLineEdit \
 		../../../../Code/Piezo/Headers/searchbar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/searchbar.h -o moc_searchbar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/searchbar.h -o moc_searchbar.cpp
 
 moc_selectlist.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -4210,7 +4266,7 @@ moc_selectlist.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		../../../../Code/Piezo/Headers/selectlist.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/selectlist.h -o moc_selectlist.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/selectlist.h -o moc_selectlist.cpp
 
 moc_selectlistitem.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -4328,7 +4384,7 @@ moc_selectlistitem.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/selectlistitem.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/selectlistitem.h -o moc_selectlistitem.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/selectlistitem.h -o moc_selectlistitem.cpp
 
 moc_songinfo.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -4452,7 +4508,7 @@ moc_songinfo.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/songinfo.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/songinfo.h -o moc_songinfo.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/songinfo.h -o moc_songinfo.cpp
 
 moc_songmenu.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QMenu \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmenu.h \
@@ -4561,7 +4617,7 @@ moc_songmenu.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QMenu \
 		../../../../Code/Piezo/Headers/songmenu.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/songmenu.h -o moc_songmenu.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/songmenu.h -o moc_songmenu.cpp
 
 moc_tableview.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QTableWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtablewidget.h \
@@ -4697,7 +4753,7 @@ moc_tableview.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QTableWidget \
 		../../../../Code/Piezo/Headers/tableview.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/tableview.h -o moc_tableview.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/tableview.h -o moc_tableview.cpp
 
 moc_tageditor.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QDialog \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qdialog.h \
@@ -4863,7 +4919,7 @@ moc_tageditor.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QDialog \
 		../../../../Code/Piezo/Headers/tageditor.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/tageditor.h -o moc_tageditor.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/tageditor.h -o moc_tageditor.cpp
 
 moc_timebar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -4986,7 +5042,7 @@ moc_timebar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/timebar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/timebar.h -o moc_timebar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/timebar.h -o moc_timebar.cpp
 
 moc_titlebar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -5100,7 +5156,7 @@ moc_titlebar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/titlebar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/titlebar.h -o moc_titlebar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/titlebar.h -o moc_titlebar.cpp
 
 moc_topbar.cpp: /usr/local/Qt-5.9.1/include/QtCore/QJsonObject \
 		/usr/local/Qt-5.9.1/include/QtCore/qjsonobject.h \
@@ -5247,7 +5303,7 @@ moc_topbar.cpp: /usr/local/Qt-5.9.1/include/QtCore/QJsonObject \
 		../../../../Code/Piezo/Headers/topbar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/topbar.h -o moc_topbar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/topbar.h -o moc_topbar.cpp
 
 moc_userpicture.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
@@ -5370,7 +5426,7 @@ moc_userpicture.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		../../../../Code/Piezo/Headers/userpicture.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/userpicture.h -o moc_userpicture.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/userpicture.h -o moc_userpicture.cpp
 
 moc_volumebar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
@@ -5486,7 +5542,7 @@ moc_volumebar.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		../../../../Code/Piezo/Headers/volumebar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Frameworks/CFramework -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/volumebar.h -o moc_volumebar.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Piezo -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Headers -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/TagLib.zlib/include -I/home/e/Escritorio/CuarzoOS/Code/Piezo/Libraries/VLC-Qt.zlib/include -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtSvg -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtMultimedia -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtConcurrent -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../../../Code/Piezo/Headers/volumebar.h -o moc_volumebar.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -5498,7 +5554,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -6310,8 +6366,8 @@ library.o: ../../../../Code/Piezo/Sources/library.cpp ../../../../Code/Piezo/Hea
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o library.o ../../../../Code/Piezo/Sources/library.cpp
 
 login.o: ../../../../Code/Piezo/Sources/login.cpp ../../../../Code/Piezo/Headers/login.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
+		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -6415,6 +6471,7 @@ login.o: ../../../../Code/Piezo/Sources/login.cpp ../../../../Code/Piezo/Headers
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
@@ -6671,12 +6728,13 @@ main.o: ../../../../Code/Piezo/Sources/main.cpp /usr/local/Qt-5.9.1/include/QtWi
 		/usr/local/Qt-5.9.1/include/QtWidgets/QMessageBox \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmessagebox.h \
 		../../../../Code/Piezo/Headers/login.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
+		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
@@ -6743,7 +6801,6 @@ main.o: ../../../../Code/Piezo/Sources/main.cpp /usr/local/Qt-5.9.1/include/QtWi
 		/usr/local/Qt-5.9.1/include/QtWidgets/qaction.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qactiongroup.h \
 		../../../../Code/Piezo/Headers/titlebar.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtCore/QEvent \
 		../../../../Code/Piezo/Headers/topbar.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QJsonObject \
@@ -6830,11 +6887,17 @@ main.o: ../../../../Code/Piezo/Sources/main.cpp /usr/local/Qt-5.9.1/include/QtWi
 		/usr/local/Qt-5.9.1/include/QtWidgets/qformlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QLayout \
 		/usr/local/Qt-5.9.1/include/QtGui/QIntValidator \
-		../../../../Code/Piezo/Frameworks/CFramework/CApplication.h \
+		../../../System/Library/Frameworks/CFramework/include/CApplication.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QLibrary \
-		/usr/local/Qt-5.9.1/include/QtCore/qlibrary.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QWindow \
+		/usr/local/Qt-5.9.1/include/QtGui/qwindow.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QMargins \
+		/usr/local/Qt-5.9.1/include/QtCore/QRect \
+		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QStyleFactory \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qstylefactory.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontDatabase \
 		/usr/local/Qt-5.9.1/include/QtGui/qfontdatabase.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../../../Code/Piezo/Sources/main.cpp
@@ -7525,8 +7588,8 @@ playerwindow.o: ../../../../Code/Piezo/Sources/playerwindow.cpp ../../../../Code
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		../../../../Code/Piezo/Libraries/VLC-Qt.zlib/include/Config.h \
 		../../../../Code/Piezo/Headers/login.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CWidget.h \
-		../../../../Code/Piezo/Frameworks/CFramework/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
+		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QUrlQuery \
 		/usr/local/Qt-5.9.1/include/QtGui/QDesktopServices \
 		/usr/local/Qt-5.9.1/include/QtGui/qdesktopservices.h \
@@ -8014,6 +8077,9 @@ volumebar.o: ../../../../Code/Piezo/Sources/volumebar.cpp ../../../../Code/Piezo
 		/usr/local/Qt-5.9.1/include/QtWidgets/qabstractslider.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o volumebar.o ../../../../Code/Piezo/Sources/volumebar.cpp
+
+qrc_resources.o: qrc_resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
 
 moc_album.o: moc_album.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_album.o moc_album.cpp

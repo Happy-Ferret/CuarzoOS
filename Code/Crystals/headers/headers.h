@@ -15,6 +15,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QTouchEvent>
+#include <QWheelEvent>
 
 // Wayland
 #include <QtWaylandCompositor/QWaylandCompositor>
@@ -152,7 +153,7 @@ typedef struct{
 
 
 
-/* ------------------ Out Messages Types ------------------ */
+/* ------------------ Messages to Clients ------------------ */
 
 // Messages Out
 
@@ -179,6 +180,14 @@ typedef struct{
     unsigned char pixels[4*64*64]; // 64x64 Image (RGBA 255)
 }SurfaceBlurImageStruct;
 
+// Surface Escaled
+#define SURFACE_SCALED 3
+typedef struct{
+    unsigned int type = SURFACE_SCALED; // Message type
+    unsigned int id; // Surface id
+    unsigned int width; // X position
+   unsigned  int height; // Y position
+}SurfaceScaledStruct;
 
 /* ------------------ Messages to GUI ------------------ */
 
@@ -200,6 +209,15 @@ typedef struct{
     unsigned int forId; // Id of the surface
     unsigned int width; // Surface width
 }TitlebarWidthStruct;
+
+// Change titlebar title
+#define TITLEBAR_TITLE 22
+typedef struct{
+    unsigned int type = TITLEBAR_TITLE; // Message type
+    unsigned int forPid; // Process id of the surface
+    unsigned int forId; // Id of the surface
+    char title[128]; // Surface Title
+}TitlebarTitleStruct;
 
 /* ------------------ Messages from GUI ------------------ */
 

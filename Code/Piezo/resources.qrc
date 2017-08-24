@@ -1,0 +1,50 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/Images/more-sel.png</file>
+        <file>Resources/Images/more-small.png</file>
+        <file>Resources/Images/more.svg</file>
+        <file>Resources/Images/ready.svg</file>
+        <file>Resources/Images/checked.svg</file>
+        <file>Resources/Images/play.svg</file>
+        <file>Resources/Images/add.svg</file>
+        <file>Resources/Images/back.svg</file>
+        <file>Resources/Images/next.svg</file>
+        <file>Resources/Images/success.svg</file>
+        <file>Resources/Images/volume-medium.svg</file>
+        <file>Resources/Images/volume-low.svg</file>
+        <file>Resources/Images/more-big.svg</file>
+        <file>Resources/Images/songs.svg</file>
+        <file>Resources/Images/all.svg</file>
+        <file>Resources/Images/listArrow.svg</file>
+        <file>Resources/Images/search.svg</file>
+        <file>Resources/Images/loop.svg</file>
+        <file>Resources/Images/user.svg</file>
+        <file>Resources/Images/cloud.svg</file>
+        <file>Resources/Images/pause.svg</file>
+        <file>Resources/Images/loop-one.svg</file>
+        <file>Resources/Images/albums.svg</file>
+        <file>Resources/Images/volume-high-sel.png</file>
+        <file>Resources/Images/volume-high.svg</file>
+        <file>Resources/Images/upload-border-sel.png</file>
+        <file>Resources/Images/no-user.jpg</file>
+        <file>Resources/Images/sync.svg</file>
+        <file>Resources/Images/upload-border.svg</file>
+        <file>Resources/Images/local.svg</file>
+        <file>Resources/Images/volume-high.png</file>
+        <file>Resources/Images/upload-border.png</file>
+        <file>Resources/Images/artists.svg</file>
+        <file>Resources/Images/download-border.svg</file>
+        <file>Resources/Images/Copia de cloud.svg</file>
+        <file>Resources/Images/cloud-border.svg</file>
+        <file>Resources/Images/genres.svg</file>
+        <file>Resources/Images/download.svg</file>
+        <file>Resources/Images/shuffle.svg</file>
+        <file>Resources/Images/sync-border.svg</file>
+        <file>Resources/Images/upload.svg</file>
+        <file>Resources/Images/playlist.svg</file>
+        <file>Resources/Images/google-logo.png</file>
+        <file>Resources/Images/logos.png</file>
+        <file>Resources/Images/artWork.png</file>
+        <file>Resources/Images/icon.png</file>
+    </qresource>
+</RCC>

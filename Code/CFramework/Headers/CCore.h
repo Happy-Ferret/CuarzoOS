@@ -21,6 +21,8 @@
 #define VIOLET QString("#963D96")
 #define RED QString("#E03A3E")
 #define GREEN QString("#61BE4B")
+#define YELLOW QString("#FCB827")
+
 
 // System root path ( For developing propouse )
 
@@ -141,7 +143,7 @@ typedef struct{
     unsigned int type; // Message type
     unsigned int id; // Surface id
     unsigned int width; // X position
-   unsigned  int height; // Y position
+    unsigned  int height; // Y position
 }SurfaceScaledStruct;
 
 // Surface Closed

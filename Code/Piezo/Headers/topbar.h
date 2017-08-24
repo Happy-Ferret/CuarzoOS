@@ -22,13 +22,13 @@ public:
         setStyleSheet("TopBar{border:none;background:transparent;border-bottom:1px solid #DDD;}");
         /*
         json data;
-        data[0]["icon"] = ":res/img/local.svg";
+        data[0]["icon"] = ":/Resources/Images/local.svg";
         data[0]["text"] = "Local";
         data[0]["selected"] = true;
-        data[1]["icon"] = ":res/img/cloud.svg";
+        data[1]["icon"] = ":/Resources/Images/cloud.svg";
         data[1]["text"] = "Cloud";
         data[1]["selected"] = false;
-        data[2]["icon"] = ":res/img/all.svg";
+        data[2]["icon"] = ":/Resources/Images/all.svg";
         data[2]["text"] = "All";
         data[2]["selected"] = false;
 
@@ -57,7 +57,7 @@ public:
     OpButton *addAccount = new OpButton("Add Google Drive","font-size:11px;color:#888");
     StorageBar *storageBar = new StorageBar();
     SearchBar *searchBar = new SearchBar();
-    OpButton *addButton = new OpButton(":res/img/add.svg",35,35);
+    OpButton *addButton = new OpButton(":/Resources/Images/add.svg",35,35);
     Pie *pie = new Pie(0,30);
 };
 

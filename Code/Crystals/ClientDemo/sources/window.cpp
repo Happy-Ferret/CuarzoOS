@@ -4,8 +4,9 @@
 Window::Window()
 {
   move(200,200);
-  setFixedSize(800,500);
-  connect(mov,SIGNAL(pressed()),this,SLOT(moveWindow()));
+  resize(800,500);
+
+  setWindowTitle("Hello World Application");
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));
   connect(del,SIGNAL(pressed()),this,SLOT(deleteWindow()));
   connect(mod,SIGNAL(pressed()),this,SLOT(changeMode()));
@@ -13,12 +14,13 @@ Window::Window()
   connect(opa,SIGNAL(pressed()),this,SLOT(changeOpacity()));
   connect(tit,SIGNAL(pressed()),this,SLOT(changeTitle()));
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
-  connect(time,SIGNAL(timeout()),this,SLOT(timeStopped()));
 
   home->setFrameColor(GREEN);
-  mov->setFrameColor(RED);
+  cre->setFrameColor(VIOLET);
+  del->setFrameColor(RED);
+  siz->setFrameColor(YELLOW);
+
   layout->addWidget(wel);
-  layout->addWidget(mov);
   layout->addWidget(home);
   layout->addWidget(siz);
   layout->addWidget(cre);
@@ -27,14 +29,8 @@ Window::Window()
   layout->addWidget(opa);
   layout->addWidget(tit);
   layout->addWidget(del);
-  label->enableEllipsis(true);
-  layout->addWidget(label);
-  setMouseTracking(true);
 }
-void Window::moveWindow()
-{
-    movee = true;
-}
+
 void Window::createWindow()
 {
     Window *w = new Window();
@@ -70,8 +66,4 @@ void Window::deleteWindow()
 {
     close();
 }
-void Window::timeStopped()
-{
-    move(pos() + QPoint(1,1));
-    time->start(1);
-}
+

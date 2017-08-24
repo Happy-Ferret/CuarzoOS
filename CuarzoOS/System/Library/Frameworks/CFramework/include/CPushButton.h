@@ -79,7 +79,7 @@ private:
     bool _mouseOver = false;
     bool _iconColorEnabled = false;
 
-    uint _borderRadius = 5;
+    uint _borderRadius = 8;
     uint _borderWidth = 1;
 
     QTimer *timer = new QTimer(this);

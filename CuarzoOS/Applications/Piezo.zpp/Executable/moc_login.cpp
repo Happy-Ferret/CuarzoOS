@@ -126,7 +126,7 @@ void Login::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
 }
 
 const QMetaObject Login::staticMetaObject = {
-    { &CWidget::staticMetaObject, qt_meta_stringdata_Login.data,
+    { &CWindow::staticMetaObject, qt_meta_stringdata_Login.data,
       qt_meta_data_Login,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -141,12 +141,12 @@ void *Login::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_Login.stringdata0))
         return static_cast<void*>(const_cast< Login*>(this));
-    return CWidget::qt_metacast(_clname);
+    return CWindow::qt_metacast(_clname);
 }
 
 int Login::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = CWidget::qt_metacall(_c, _id, _a);
+    _id = CWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

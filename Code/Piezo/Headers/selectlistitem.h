@@ -41,7 +41,8 @@ public:
     Icon *selectIcon;
     CropLabel *text;
 
-    void enterEvent(QEvent * event){
+    void enterEvent(QEvent * event)
+    {
         icon->setColor("#FFF");
         text->setStyleSheet("color:#FFF");
         QPalette pal = palette();
