@@ -17,11 +17,12 @@ QString path = QDir::homePath() + "/Music";
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+    qputenv("QT_SCALE_FACTOR", "1");
+
     CApplication a(argc, argv);
     QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Coves/Coves Light.otf");
 
-    a.setAttribute(Qt::AA_UseHighDpiPixmaps);
-    a.setAttribute(Qt::AA_EnableHighDpiScaling);
     a.setQuitOnLastWindowClosed(true);
     Init run;
     return a.exec();

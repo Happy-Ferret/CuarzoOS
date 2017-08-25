@@ -1,5 +1,4 @@
 #include "CCore.h"
-#include <QMainWindow>
 #include <QWidget>
 
 #ifndef CWINDOW
@@ -17,8 +16,6 @@ public:
     void move(const QPoint &pos);
     void move(int x, int y);
     void setWindowTitle(const QString &title);
-    void resize(const QSize &size);
-    void resize(int x, int y);
     void setMode(unsigned int mode = WINDOW_MODE);
     void setBlur(bool mode);
     void setWindowOpacity(uint opacity = 255);
@@ -38,7 +35,7 @@ signals:
     void blurStateChanged(bool);
 
 private:
-    QString localTitle = "";
+    QString localTitle = QString("");
     uint localMode = WINDOW_MODE;
     uint localOpacity = 255;
     bool localBlur = false;

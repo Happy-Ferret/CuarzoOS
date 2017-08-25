@@ -43,6 +43,10 @@ public:
 
     // Special sockets
     Socket *crystalsGuiSocket = nullptr;
+    Socket *paradisoSocket = nullptr;
+
+    // Number of system applications ready
+    uint readyApps = 0;
 
     // Wayland cursor surface
     QWaylandView cursor;

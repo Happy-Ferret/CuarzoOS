@@ -19,9 +19,6 @@ Compositor::Compositor():QWaylandCompositor()
     // Event when wayland surface is created
     connect(this, &QWaylandCompositor::surfaceCreated, this, &Compositor::onSurfaceCreated);
 
-    // Event when wayland subsurface has changed
-    //connect(this, &QWaylandCompositor::subsurfaceChanged, this, &Compositor::onSubsurfaceChanged);
-
     // Event when surface wants to change the cursor
     connect(defaultSeat(), &QWaylandSeat::cursorSurfaceRequest, this, &Compositor::adjustCursorSurface);
 
@@ -87,7 +84,7 @@ void Compositor::newClientMessage()
             // If is the Crystals Gui Application
             if(socket->appType  == CRYSTALS_TYPE)
             {
-                // Remove the socket from the client list
+                // Save socket
                 crystalsGuiSocket = socket;
 
                 // Now can open apps
@@ -95,6 +92,19 @@ void Compositor::newClientMessage()
 
                 // Prints the event
                 qDebug() << "Crystals Gui Connected";
+            }
+
+            // If is the Paradiso Application
+             else if(socket->appType  == PARADISO_TYPE)
+            {
+                // Save socket
+                paradisoSocket = socket;
+
+                // Now can open apps
+                readyToLaunchApps();
+
+                // Prints the event
+                qDebug() << "Paradiso Connected";
             }
 
             // Sends confirmation response
@@ -130,11 +140,14 @@ void Compositor::newClientMessage()
             // Assign the surface role
             view->setRole(message->role);
 
+            if(message->role == PARADISO_MODE)
+                window->paradisoView = view;
+
             // Triggers OpenGL render
             triggerRender();
 
             // Prints the event
-            qDebug() << "Surface Title Changed";
+            qDebug() << "Surface Configured";
 
         }break;
 
@@ -270,8 +283,19 @@ void Compositor::newClientMessage()
 
         }break;
     }
-
 }
+
+// System app is launched
+void Compositor::readyToLaunchApps()
+{
+    readyApps++;
+
+    if(readyApps == 1) // Launch Paradiso
+        man.launchZpp(SYSTEM_PATH + "/System/Applications/Paradiso.zpp");
+    if(readyApps == 2) // Launch a Demo App
+        man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+}
+
 
 // Client disconnected
 
@@ -288,19 +312,16 @@ void Compositor::socketDisconnected()
 
 void Compositor::onSurfaceCreated(QWaylandSurface *surface)
 {
-    connect(surface, &QWaylandSurface::surfaceDestroyed, this, &Compositor::surfaceDestroyed);
-    connect(surface, &QWaylandSurface::hasContentChanged, this, &Compositor::surfaceHasContentChanged);
-    connect(surface, &QWaylandSurface::redraw, this, &Compositor::triggerRender);
-    connect(surface, &QWaylandSurface::damaged, this, &Compositor::triggerRender);
-    //connect(surface, &QWaylandSurface::subsurfacePositionChanged, this, &Compositor::onSubsurfacePositionChanged);
-    connect(surface, &QWaylandSurface::sizeChanged, this, &Compositor::surfaceSizeChanged);
-
     View *view = new View(this);
     view->setSurface(surface);
     view->setOutput(outputFor(window));
     views << view;
-    connect(view, &QWaylandView::surfaceDestroyed, this, &Compositor::viewSurfaceDestroyed);
 
+    connect(view, &QWaylandView::surfaceDestroyed, this, &Compositor::viewSurfaceDestroyed);
+    connect(surface, &QWaylandSurface::surfaceDestroyed, this, &Compositor::surfaceDestroyed);
+    connect(surface, &QWaylandSurface::hasContentChanged, this, &Compositor::surfaceHasContentChanged);
+    connect(surface, &QWaylandSurface::redraw, this, &Compositor::triggerRender);
+    connect(surface, &QWaylandSurface::sizeChanged, this, &Compositor::surfaceSizeChanged);
 }
 
 void Compositor::onWlShellCreated(QWaylandWlShellSurface *wlShellSurface)
@@ -343,7 +364,7 @@ void Compositor::surfaceHasContentChanged()
             defaultSeat()->setKeyboardFocus(surface);
         }
     }
-    triggerRender();
+    //triggerRender();
 
 }
 
@@ -373,6 +394,8 @@ void Compositor::surfaceSizeChanged()
     // Ask the surface for a full configuration
     crystalsGuiSocket->socket->write(data,sizeof(TitlebarWidthStruct));
 
+    triggerRender();
+
     qDebug() << "Surface Size Changed: ";
 
 }
@@ -395,43 +418,11 @@ View * Compositor::findView(const QWaylandSurface *s) const
     return Q_NULLPTR;
 }
 
-/*
-void Compositor::onSubsurfaceChanged(QWaylandSurface *child, QWaylandSurface *parent)
-{
-    View *view = findView(child);
-    View *parentView = findView(parent);
-    view->setParentView(parentView);
-}
-
-void Compositor::onSubsurfacePositionChanged(const QPoint &position)
-{
-    QWaylandSurface *surface = qobject_cast<QWaylandSurface*>(sender());
-    if (!surface)
-        return;
-
-    View *view = findView(surface);
-    view->setPosition(position);
-    triggerRender();
-}
-*/
 void Compositor::triggerRender()
 {
     window->requestUpdate();
 }
 
-void Compositor::startRender()
-{
-    QWaylandOutput *out = defaultOutput();
-    if (out)
-        out->frameStarted();
-}
-
-void Compositor::endRender()
-{
-    QWaylandOutput *out = defaultOutput();
-    if (out)
-        out->sendFrameCallbacks();
-}
 
 void Compositor::updateCursor()
 {
@@ -458,13 +449,7 @@ void Compositor::adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int
         updateCursor();
 }
 
-void Compositor::readyToLaunchApps()
-{
-    // Launch a Demo App
-    man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
-    man.launchZpp(SYSTEM_PATH + "/Applications/Piezo.zpp");
 
-}
 
 
 void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)

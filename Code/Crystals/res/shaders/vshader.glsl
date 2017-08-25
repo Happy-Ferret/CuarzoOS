@@ -1,29 +1,27 @@
-#define SHADER_NORMAL 0
-#define SHADER_BACKGROUND 1
-#define SHADER_HBLUR 2
-#define SHADER_VBLUR 3
-#define SHADER_FINAL 4
-#define SHADER_BLUR_RECT 5
-#define SHADER_DRAW_BLUR 6
-#define SHADER_TITLEBAR 7
-#define SHADER_BOTTOM_SHADOW 8
-#define SHADER_TOP_SHADOW 9
+#define SHADER_DRAW_SURFACE 0
+#define SHADER_DRAW_BACKGROUND 1
+#define SHADER_DRAW_SHADOW 2
+#define SHADER_DRAW_BLUR 3
 
-attribute vec4 pos;
-attribute vec4 col;
-attribute highp vec2 texCoordsIn;
+#define BLUR_RECT 0
+#define BLUR_HORIZONTAL 1
+#define BLUR_VERTICAL 2
 
-varying vec4 finalColor;
-varying highp vec2 texCoordsOut;
+// Get GLSL Uniforms Locations
 
-uniform vec2 screenSize;
-uniform vec2 viewSize;
-uniform vec2 viewOffset;
-uniform lowp int Mode;
-uniform bool inverted;
-uniform float blurRadius;
-
-uniform highp vec2 textureSize;
+uniform int Mode;
+uniform ivec2 Screen;
+uniform ivec2 Size;
+uniform ivec2 Position;
+uniform bvec4 Borders;
+uniform float BorderRadius;
+uniform int Opacity;
+uniform float BlurWhite;
+uniform float BlurLevel;
+uniform int BlurStage;
+uniform int BlurIteration;
+uniform int ShadowSize;
+uniform float ShadowIntensity;
 
 varying highp vec2 blurTextureCoords[11];
 

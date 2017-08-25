@@ -1,13 +1,11 @@
-#define SHADER_NORMAL 0
-#define SHADER_BACKGROUND 1
-#define SHADER_HBLUR 2
-#define SHADER_VBLUR 3
-#define SHADER_FINAL 4
-#define SHADER_BLUR_RECT 5
-#define SHADER_DRAW_BLUR 6
-#define SHADER_TITLEBAR 7
-#define SHADER_BOTTOM_SHADOW 8
-#define SHADER_TOP_SHADOW 9
+#define SHADER_DRAW_SURFACE 0
+#define SHADER_DRAW_BACKGROUND 1
+#define SHADER_DRAW_SHADOW 2
+#define SHADER_DRAW_BLUR 3
+
+#define BLUR_RECT 0
+#define BLUR_HORIZONTAL 1
+#define BLUR_VERTICAL 2
 
 
 uniform highp vec2 textureSize;
@@ -24,7 +22,7 @@ varying highp vec2 texCoordsOut;
 varying highp vec2 blurTextureCoords[11];
 
 // Shadow
-highp float radius = 8.0;
+highp float radius = 12.0;
 highp float margin = 256.0;
 highp float streight = 0.3;
 
@@ -87,9 +85,6 @@ void blur()
     sum += texture2D(Texture, blurTextureCoords[9]) * 0.028002f;
     sum += texture2D(Texture, blurTextureCoords[10]) * 0.0093f;
 
-    sum = sum*1.03f ;
-    sum.a = 1.0;
-
     gl_FragColor = sum;
 }
 
@@ -115,7 +110,7 @@ void blurRect()
 void finalBlur()
 {
     vec4 px = texture2D(Texture,texCoordsOut);
-    px = px*0.5 + vec4(0.55);
+    px = px*0.7 + vec4(0.35);
     px.a = 1.0;
     vec4 color = finalColor;
     color.a = color.a * (float(viewOpacity) / 255.0);

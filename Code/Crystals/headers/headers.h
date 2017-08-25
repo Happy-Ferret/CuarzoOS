@@ -48,20 +48,22 @@
 
 #define CLIENT_TYPE 0
 #define CRYSTALS_TYPE 1
+#define PARADISO_TYPE 2
 
 #endif
 
 #ifndef SURFACE_MODES
 #define SURFACE_MODES
 
-// The way Crystals recognize the surface role
+// Way Crystals identify a surface
 
-    #define WINDOW_MODE 0
-    #define FRAMELESS_MODE 1
-    #define TOPBAR_MODE 2
-    #define FILEMANAGER_MODE 3
-    #define DOCK_MODE 4
-    #define TITLEBAR_MODE 5
+#define WINDOW_MODE 0
+#define FRAMELESS_MODE 1
+#define TITLEBAR_MODE 2
+#define FILEMANAGER_MODE 3
+#define DOCK_MODE 4
+#define PARADISO_MODE 5
+
 #endif
 
 // System root path
@@ -249,22 +251,19 @@ enum ViewMode { Image, Color, Gradient };
 // Background image size mode
 enum ImageMode { ResizeToFill, KeepRatioToFill };
 
-// IPC messages
-enum MessageType{ Caca };
-
 // View type
 enum ViewType{ Paradiso, TitleBar, Roller };
 
 // Selected Shader Mode
-#define SHADER_NORMAL 0
-#define SHADER_BACKGROUND 1
-#define SHADER_HBLUR 2
-#define SHADER_VBLUR 3
-#define SHADER_FINAL 4
-#define SHADER_BLUR_RECT 5
-#define SHADER_DRAW_BLUR 6
-#define SHADER_TITLEBAR 7
-#define SHADER_BOTTOM_SHADOW 8
-#define SHADER_TOP_SHADOW 9
+#define SHADER_DRAW_SURFACE 0
+#define SHADER_DRAW_BACKGROUND 1
+#define SHADER_DRAW_SHADOW 2
+#define SHADER_DRAW_BLUR 3
+
+#define BLUR_RECT 0
+#define BLUR_HORIZONTAL 1
+#define BLUR_VERTICAL 2
+
+
 
 #endif

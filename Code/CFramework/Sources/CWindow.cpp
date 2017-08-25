@@ -39,18 +39,6 @@ QString CWindow::windowTitle()
     return localTitle;
 }
 
-// Resize
-void CWindow::resize(const QSize &size)
-{
-    QWidget::resize(size);
-}
-
-// Resize
-void CWindow::resize(int x, int y)
-{
-    QWidget::resize(x,y);
-}
-
 // Sends surface mode
 void CWindow::setMode(unsigned int mode)
 {

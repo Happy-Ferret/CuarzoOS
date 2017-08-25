@@ -1,5 +1,6 @@
 #ifndef CCORE
 #define CCORE
+#include <QWidget>
 
 /* ------------------ CCore ------------------ */
 
@@ -7,6 +8,8 @@
 
 #define CLIENT_TYPE 0
 #define CRYSTALS_TYPE 1
+#define PARADISO_TYPE 2
+
 
 // Way Crystals identify a surface
 
@@ -15,6 +18,8 @@
 #define TOPBAR_MODE 2
 #define FILEMANAGER_MODE 3
 #define DOCK_MODE 4
+#define PARADISO_MODE 5
+
 
 // Cuarzo Colors
 #define BLUE QString("#009DDC")

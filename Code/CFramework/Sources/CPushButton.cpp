@@ -10,7 +10,6 @@ CPushButton::CPushButton(const QString &text, QWidget *parent)
 {
     QFrame::setParent(parent);
     setup();
-
     setDisplayMode(CPushButton::textOnly);
     setText(text);
 }
@@ -19,7 +18,8 @@ CPushButton::CPushButton(QPixmap icon, QWidget *parent)
 {
     QFrame::setParent(parent);
     setup();
-
+    setFixedSize(40,40);
+    _icon->setFixedSize(20,20);
     setDisplayMode(CPushButton::iconOnly);
     setIcon(icon);
 }
@@ -28,11 +28,14 @@ CPushButton::CPushButton(const QString &text, QPixmap icon, IconPosition positio
 {
     setup();
     QFrame::setParent(parent);
-    setTextColor(QColor("#444"));
-    setFrameColor(QColor("#DDD"));
     setDisplayMode(CPushButton::textAndIcon);
-    setText(text);
     setIcon(icon);
+    enableIconColor(true);
+    _icon->setFixedSize(15,15);
+    setIconColor(QColor("#FFFFFF"));
+    setTextColor(QColor("#FFFFFF"));
+    setFrameColor(QColor(BLUE));
+    setText(text);
 }
 
 void CPushButton::setDisplayMode(CPushButton::DisplayMode mode)
@@ -41,16 +44,19 @@ void CPushButton::setDisplayMode(CPushButton::DisplayMode mode)
 
     switch (mode) {
     case CPushButton::textOnly:
+        _text->setAlignment(Qt::AlignCenter);
         _icon->hide();
         _text->show();
         resetStyle();
         break;
     case CPushButton::textAndIcon:
+        _icon->setAlignment(Qt::AlignLeft);
         _icon->show();
         _text->show();
         resetStyle();
         break;
     case CPushButton::iconOnly:
+        _icon->setAlignment(Qt::AlignCenter);
         _icon->show();
         _text->show();
         resetStyle();
@@ -70,11 +76,13 @@ void CPushButton::setIconPosition(IconPosition position)
     {
         layout->addWidget(_icon);
         layout->addWidget(_text,1);
+        _text->setAlignment(Qt::AlignLeft);
     }
     else
     {
         layout->addWidget(_text);
         layout->addWidget(_icon,1);
+        _text->setAlignment(Qt::AlignRight);
     }
 }
 

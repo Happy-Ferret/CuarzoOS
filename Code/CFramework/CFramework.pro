@@ -21,11 +21,13 @@ HEADERS += \
     Headers/CLabel.h \
     Headers/CWindow.h \
     Headers/CPushButton.h \
-    Headers/CImage.h
+    Headers/CImage.h \
+    Headers/CProtocol.h
 
 SOURCES += \
     Sources/CApplication.cpp \
     Sources/CWindow.cpp \
     Sources/CLabel.cpp \
     Sources/CPushButton.cpp \
-    Sources/CImage.cpp
+    Sources/CImage.cpp \
+    Sources/CProtocol.cpp

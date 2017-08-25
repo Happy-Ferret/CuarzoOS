@@ -18,8 +18,8 @@ class Window : public CWindow
 public:
     Window();
 
-    CPushButton *home = new CPushButton("Pico",this);
-    CPushButton *wel = new CPushButton("Welcome",this);
+    CPushButton *home = new CPushButton("Icon and Text",QPixmap("/home/e/icon.svg"));
+    CPushButton *wel = new CPushButton(QPixmap("/home/e/icon.svg"),this);
 
     CPushButton *cre = new CPushButton("Crear",this);
     CPushButton *opa = new CPushButton("Opacidad",this);

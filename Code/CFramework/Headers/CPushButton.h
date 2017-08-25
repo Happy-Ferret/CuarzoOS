@@ -49,9 +49,10 @@ public:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
-    QHBoxLayout *layout = new QHBoxLayout(this);
-    CLabel *_text = new CLabel(this);
-    QLabel *_icon = new QLabel(this);
+    QHBoxLayout *buttonLayout(){return layout;}
+    CLabel *label(){ return _text; }
+    QLabel *icon(){ return _icon; }
+
 
 signals:
     void mouseEnter();
@@ -65,6 +66,10 @@ public slots:
 private:
     void setup();
     void resetStyle();
+
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    CLabel *_text = new CLabel(this);
+    QLabel *_icon = new QLabel(this);
 
 
     QGraphicsOpacityEffect *_opacity = new QGraphicsOpacityEffect(this);
@@ -86,7 +91,7 @@ private:
 
     QColor _textColor = Qt::white;
     QColor _frameColor = QColor(BLUE);
-    QColor _iconColor = QColor("#444444");
+    QColor _iconColor = Qt::white;
 
     QPixmap _pixmap;
 };
