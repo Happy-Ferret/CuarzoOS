@@ -256,9 +256,8 @@ enum ViewType{ Paradiso, TitleBar, Roller };
 
 // Selected Shader Mode
 #define SHADER_DRAW_SURFACE 0
-#define SHADER_DRAW_BACKGROUND 1
-#define SHADER_DRAW_SHADOW 2
-#define SHADER_DRAW_BLUR 3
+#define SHADER_DRAW_SHADOW 1
+#define SHADER_DRAW_BLUR 2
 
 #define BLUR_RECT 0
 #define BLUR_HORIZONTAL 1

@@ -268,6 +268,7 @@ void Compositor::newClientMessage()
 
             // Assigns the titlebar to the view
             view->titleBar = titleBar;
+            view->setPosition(view->position());
 
             // Assigns the view to the titlebar
             titleBar->titleBarParent = view;
@@ -364,8 +365,7 @@ void Compositor::surfaceHasContentChanged()
             defaultSeat()->setKeyboardFocus(surface);
         }
     }
-    //triggerRender();
-
+    triggerRender();
 }
 
 void Compositor::surfaceDestroyed()

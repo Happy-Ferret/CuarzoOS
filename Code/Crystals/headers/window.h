@@ -66,6 +66,7 @@ private:
     GLuint ModeUniform;
     GLuint ScreenUniform;
     GLuint SizeUniform;
+    GLuint InvertedUniform;
     GLuint PositionUniform;
     GLuint BorderRadiusActiveCornersUniform;
     GLuint BorderRadiusSizeUniform;
@@ -91,8 +92,8 @@ private:
     void drawBackground();
     void drawParadiso();
 
-    void drawSurface(const QRectF &rect, uint opacity,GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius);
-    void drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius);
+    void drawSurface(const QRectF &rect, uint opacity,GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted);
+    void drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, bool TL, bool TR, bool BR, bool BL, float borderRadius);
     void drawShadow(const QRectF &rect, float intensity, uint opacity, float size, bool TL, bool TR, bool BR, bool BL, float borderRadius);
 
     // Event Variables

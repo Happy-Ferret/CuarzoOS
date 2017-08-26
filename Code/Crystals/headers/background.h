@@ -25,7 +25,7 @@ public:
     void setImageMode( ImageMode mode );
 
 private:
-    void setVertexPos(int index, float x, float y, float z = -1);
+    void setVertexPos(int index, float x, float y, float z = 1.0);
     void setTextureCord(int index, float x, float y);
 
 

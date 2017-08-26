@@ -54,6 +54,7 @@ void Window::initShaders()
     ModeUniform = glGetUniformLocation(program.programId(), "Mode");
     ScreenUniform = glGetUniformLocation(program.programId(), "Screen");
     SizeUniform = glGetUniformLocation(program.programId(), "Size");
+    InvertedUniform = glGetUniformLocation(program.programId(), "Inverted");
     PositionUniform = glGetUniformLocation(program.programId(), "Position");
     BorderRadiusActiveCornersUniform = glGetUniformLocation(program.programId(), "Borders");
     BorderRadiusSizeUniform = glGetUniformLocation(program.programId(), "BorderRadius");
@@ -127,7 +128,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Sea 2.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Valparaiso 1.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
@@ -150,37 +151,43 @@ void Window::drawBackground()
     // Binds the offscreen framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER,offscreenBuffer);
 
+    drawSurface(QRectF(0,0,width(),height()), 1.0, background->texture->textureId(), false, false, false, false, 0.0, false);
+
     // Selects background texture
-    glBindTexture(GL_TEXTURE_2D, background->texture->textureId());
+    //glBindTexture(GL_TEXTURE_2D, background->texture->textureId());
 
     // Set OpenGL to background mode
-    glUniform1i(ModeUniform, SHADER_DRAW_BACKGROUND);
+    //glUniform1i(ModeUniform, SHADER_DRAW_BACKGROUND);
 
     // Tells OpenGL the background size
-    glUniform2ui(SizeUniform,background->texture->width(),background->texture->height());
+    //glUniform2ui(SizeUniform,background->texture->width(),background->texture->height());
 
     // Send the vertex list
-    glBufferData(GL_ARRAY_BUFFER, sizeof(background->vertices), background->vertices, GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(background->vertices), background->vertices, GL_STATIC_DRAW);
 
     //Draw Background to the offscreen buffer
-    glDrawElements(GL_TRIANGLES, sizeof(GLubyte)*6,GL_UNSIGNED_BYTE, 0);
+    //glDrawElements(GL_TRIANGLES, sizeof(GLubyte)*6,GL_UNSIGNED_BYTE, 0);
 
 }
 
 void Window::drawWindow(View *view)
 {
     QRectF viewRect = QRectF(view->position().x(),view->position().y(),view->size().width(),view->size().height());
+
     // Draws  blur
-    if( view->blur ) drawBlur( viewRect, 0.7, 1.0, 0.2, view->opacity, view->getTexture()->textureId(), false, false, true, true, 12.0);
+    if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, false, false, 12.0);
 
     // Draws  shadow
-    drawShadow( viewRect, 1.0, view->opacity, 100.0, true, true, true, true, 12.0);
+    drawShadow( QRectF( viewRect.x(), viewRect.y() - 40, viewRect.width(), viewRect.height() + 40), 0.15, view->opacity, 200.0, true, true, true, true, 12.0);
+
+    // Selects blur framebuffer
+    glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
 
     // Draws surface
-    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), false, false , true, true, 12.0);
+    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), false, false , true, true, 12.0, false);
 
     // Draws title bar
-    drawSurface( QRectF( view->position().x(), view->position().y() - 40, view->size().width(), 40), 255, view->titleBar->getTexture()->textureId(), true, true , false, false, 12.0);
+   drawSurface( QRectF( view->position().x(), view->position().y() - 40, view->size().width(), 40), 255, view->titleBar->getTexture()->textureId(), true, true , false, false, 12.0, false);
 
     view->previusPosition = view->position();
 }
@@ -190,16 +197,26 @@ void Window::drawParadiso()
 
 }
 
-void Window::drawSurface(const QRectF &rect, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius)
+void Window::drawSurface(const QRectF &rect, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted)
 {
+
+    // Send the vertex data
+    glBufferData( GL_ARRAY_BUFFER, sizeof( fullRectVertices ), fullRectVertices, GL_STATIC_DRAW );
+
     // Tells OpenGL the view position
-    glUniform2i(PositionUniform, rect.x(), rect.y());
+    glUniform2f(PositionUniform, rect.x(), rect.y() );
 
     // Tells OpenGL the view size
-    glUniform2ui(SizeUniform, rect.width(), rect.height());
+    glUniform2f(SizeUniform, rect.width(), rect.height());
+
+    // Set OpenGL to blur mode
+    glUniform2f(ScreenUniform, width(), height());
 
     // Tells OpenGL the view opacity
-    glUniform1ui(OpacityUniform, opacity);
+    glUniform1f(OpacityUniform, opacity);
+
+    // Inverts Y axis
+    glUniform1ui(InvertedUniform, inverted);
 
     // Tells OpenGL the active borders
     glUniform4ui(BorderRadiusActiveCornersUniform, TL, TR, BR, BL);
@@ -207,17 +224,20 @@ void Window::drawSurface(const QRectF &rect, uint opacity, GLuint textureId, boo
     // Tells OpenGL the active borders
     glUniform1f(BorderRadiusSizeUniform, borderRadius);
 
+    // Sets render size
+    glViewport( 0, 0, width(), height());
+
     // Select current view texture
     glBindTexture(GL_TEXTURE_2D, textureId);
 
     // Set OpenGL Mode
-    glUniform1ui(ModeUniform,SHADER_DRAW_SURFACE);
+    glUniform1i(ModeUniform,SHADER_DRAW_SURFACE);
 
     // Draw Surface
     glDrawArrays(GL_TRIANGLE_FAN,0,4);
 }
 
-void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius)
+void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, bool TL, bool TR, bool BR, bool BL, float borderRadius)
 {
     // Selects blur framebuffer
     glBindFramebuffer( GL_FRAMEBUFFER, blurBuffer );
@@ -231,17 +251,36 @@ void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel,
     // Set OpenGL to blur mode
     glUniform1i( ModeUniform, SHADER_DRAW_BLUR );
 
+    // Set OpenGL to blur mode
+    glUniform1f( BlurLevelUniform, blurLevel );
+
+    // Tells OpenGL the view position
+    glUniform2f(PositionUniform, rect.x(), rect.y() );
+
+    // Tells OpenGL the view size
+    glUniform2f(SizeUniform, rect.width(), rect.height());
+
+    // Set OpenGL to blur mode
+    glUniform2f(ScreenUniform, width(), height());
+
+    // White tint
+    glUniform1f(BlurWhiteIntensityUniform, whiteIntensity);
+
     // Set blur stage
     glUniform1i( BlurStageUniform, BLUR_RECT);
 
     // Set offscreen texture
     glBindTexture( GL_TEXTURE_2D, offscreenTexture );
 
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,   GL_MIRRORED_REPEAT);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,   GL_MIRRORED_REPEAT);
+
     // Sets render size
     glViewport( 0, 0, rect.width() * quality, rect.height() * quality);
 
     // Send the vertex data
     glBufferData( GL_ARRAY_BUFFER, sizeof( fullRectVertices ), fullRectVertices, GL_STATIC_DRAW );
+
 
     // Draw texture
     glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
@@ -252,22 +291,25 @@ void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel,
     // Set horizontal texture
     glBindTexture( GL_TEXTURE_2D, blurTexture );
 
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,   GL_MIRRORED_REPEAT);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,   GL_MIRRORED_REPEAT);
 
     // Apply the vertical and horizontal blur
-
     for( int i = 1;  i <= 13; i+=6 )
     {
         // Set OpenGL to blur mode
         glUniform1i( BlurIterationUniform, i );
 
+
+
         // Set OpenGL to blur mode
-        glUniform1i( BlurStageUniform, BLUR_HORIZONTAL );
+        glUniform1i( BlurStageUniform, BLUR_VERTICAL );
 
         // Draw texture
         glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 
         // Set OpenGL to blur mode
-        glUniform1i( BlurStageUniform, BLUR_VERTICAL );
+        glUniform1i( BlurStageUniform, BLUR_HORIZONTAL );
 
         // Draw texture
         glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
@@ -283,23 +325,23 @@ void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel,
     glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
 
     // Draws final blur
-   drawSurface( rect, opacity, blurTexture, TL, TR, BR, BL, borderRadius);
+   drawSurface( rect, opacity, blurTexture, TL, TR, BR, BL, borderRadius, true);
 }
 
 void Window::drawShadow(const QRectF &rect, float intensity, uint opacity, float size, bool TL, bool TR, bool BR, bool BL, float borderRadius)
 {
 
     // Tells OpenGL the view position
-    glUniform2i(PositionUniform, rect.x(), rect.y());
+    glUniform2f(PositionUniform, rect.x(), rect.y());
 
     // Tells OpenGL the view size
-    glUniform2i(SizeUniform, rect.width(), rect.height());
+    glUniform2f(SizeUniform, rect.width(), rect.height());
 
     // Tells OpenGL the view opacity
-    glUniform1i(OpacityUniform, opacity);
+    glUniform1f(OpacityUniform, opacity);
 
     // Tells OpenGL the active borders
-    glUniform4i(BorderRadiusActiveCornersUniform, TL, TR, BR, BL);
+    glUniform4ui(BorderRadiusActiveCornersUniform, TL, TR, BR, BL);
 
     // Tells OpenGL the active borders
     glUniform1f(ShadowSizeUniform, size);
@@ -323,6 +365,19 @@ void Window::drawShadow(const QRectF &rect, float intensity, uint opacity, float
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void Window::drawFinalView()
+{
+
+    // Sets render size
+    glViewport( 0, 0, width() , height());
+
+    // Selects screen buffer
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+   // Draw Final View
+    drawSurface(QRectF(0,0,width(),height()), 1.0, offscreenTexture, false, false, false, false , 0.0, true);
+
+}
 
 
 void Window::setBackground(QString path)
@@ -400,18 +455,6 @@ void Window::paintGL()
 
 }
 
-void Window::drawFinalView()
-{
-    // Sets render size
-    glViewport( 0, 0, width() , height());
-
-    // Selects screen buffer
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-   // Draw Final View
-    drawSurface(QRectF(0,0,width(),height()), 1.0, offscreenTexture, false, false, false, false , 0.0);
-
-}
 void Window::resizeGL(int, int)
 {
     // Adjust background
@@ -465,36 +508,40 @@ void Window::startDrag(View *dragIcon)
 void Window::calcfullRectVertices()
 {
     // Top left
-    fullRectVertices[0].position[0] = -1.0f;
-    fullRectVertices[0].position[1] =  1.0f;
-    fullRectVertices[0].position[2] = 0.0f;
+    fullRectVertices[0].position[0] =-1.0;
+    fullRectVertices[0].position[1] = 1.0;
+    fullRectVertices[0].position[2] = 0.0;
 
     fullRectVertices[0].texture[0] = 0.0f;
     fullRectVertices[0].texture[1] = 1.0f;
 
     // Bottom left
-    fullRectVertices[1].position[0] = -1.0f;
-    fullRectVertices[1].position[1] = -1.0f;
-    fullRectVertices[1].position[2] = 0.0f;
+    fullRectVertices[1].position[0] = -1.0;
+    fullRectVertices[1].position[1] = -1.0;
+    fullRectVertices[1].position[2] = 0.0;
 
     fullRectVertices[1].texture[0] = 0.0f;
     fullRectVertices[1].texture[1] = 0.0f;
 
     // Bottom right
-    fullRectVertices[2].position[0] =  1.0f;
-    fullRectVertices[2].position[1] = -1.0f;
-    fullRectVertices[2].position[2] = 0.0f;
+    fullRectVertices[2].position[0] =  1.0;
+    fullRectVertices[2].position[1] = -1.0;
+    fullRectVertices[2].position[2] =  0.0;
 
     fullRectVertices[2].texture[0] = 1.0f;
     fullRectVertices[2].texture[1] = 0.0f;
 
     // Top right
-    fullRectVertices[3].position[0] = 1.0f;
-    fullRectVertices[3].position[1] = 1.0f ;
-    fullRectVertices[3].position[2] = 0.0f;
+    fullRectVertices[3].position[0] = 1.0;
+    fullRectVertices[3].position[1] = 1.0;
+    fullRectVertices[3].position[2] = 0.0;
 
     fullRectVertices[3].texture[0] = 1.0f;
     fullRectVertices[3].texture[1] = 1.0f;
+
+
+
+
 }
 
 

@@ -1,18 +1,19 @@
 #define SHADER_DRAW_SURFACE 0
-#define SHADER_DRAW_BACKGROUND 1
-#define SHADER_DRAW_SHADOW 2
-#define SHADER_DRAW_BLUR 3
+#define SHADER_DRAW_SHADOW 1
+#define SHADER_DRAW_BLUR 2
 
 #define BLUR_RECT 0
 #define BLUR_HORIZONTAL 1
 #define BLUR_VERTICAL 2
 
-// Get GLSL Uniforms Locations
+precision mediump float;
+precision mediump int;
 
 uniform int Mode;
-uniform ivec2 Screen;
-uniform ivec2 Size;
-uniform ivec2 Position;
+uniform bool Inverted;
+uniform vec2 Screen;
+uniform vec2 Size;
+uniform vec2 Position;
 uniform bvec4 Borders;
 uniform float BorderRadius;
 uniform int Opacity;
@@ -20,171 +21,100 @@ uniform float BlurWhite;
 uniform float BlurLevel;
 uniform int BlurStage;
 uniform int BlurIteration;
-uniform int ShadowSize;
+uniform float ShadowSize;
 uniform float ShadowIntensity;
 
+attribute vec4 VertexPosition;
+attribute vec4 VertexColor;
+attribute vec2 TextureCoords;
+
 varying highp vec2 blurTextureCoords[11];
-
-// Shadow
-float margin = 256.0;
+varying vec2 TextureCoordsOut;
 
 
-void calcBlurRect()
+vec4 calculateVertexPosition( float borderSize )
 {
-    texCoordsOut.x = texCoordsIn.x/screenSize.x;
-    texCoordsOut.y =  texCoordsIn.y/screenSize.y;
-    gl_Position = pos;
-}
+   vec4 finalPosition;
 
-void calcSurfacePosition()
-{
-    gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x + pos.x) - 1.0f;
-    gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y);
-    gl_Position.z = pos.z;
-    gl_Position.w = 1.0f;
-}
+    if ( VertexPosition.x < 0.0 )
+        finalPosition.x = ( 2.0 / Screen.x ) * ( Position.x - borderSize ) - 1.0;
+    else
+        finalPosition.x = ( 2.0 / Screen.x ) * ( Position.x + Size.x + borderSize ) - 1.0;
 
-void horizontalBlur()
-{
-    // Calculates the vertex size
-    float pixelSize = blurRadius / viewSize.x;
+    if ( VertexPosition.y < 0.0 )
+        finalPosition.y = 1.0 - ( 2.0 / Screen.y ) * ( Position.y - borderSize );
+    else
+        finalPosition.y = 1.0- ( 2.0 / Screen.y ) * ( Position.y + Size.y + borderSize );
 
-    // Loop the 11 vertices
-    for( int i = -5; i <= 5; i++ )
-    {
-        // Calculates the x offset
-        blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( pixelSize * float( i ) , 0.0 );
-    }
+    finalPosition.w = 1.0;
+    finalPosition.z = -1.0;
 
-    // Sends vertex position
-    gl_Position= pos;
-}
-
-void verticalBlur()
-{
-    // Calculates the vertex size
-    float pixelSize = blurRadius / viewSize.y;
-
-    // Loop the 11 vertices
-    for( int i = -5; i <= 5; i++ )
-    {
-        // Calculates the y offset
-        blurTextureCoords[ i + 5 ] = texCoordsIn + vec2( 0.0 ,pixelSize * float( i ) );
-    }
-
-    // Sends vertex position
-    gl_Position= pos;
-}
-
-void drawBlur()
-{
-    calcSurfacePosition();
-
-    // Set Texture Vertex Position
-   // texCoordsOut.x = ( pos.x + 150.0 ) / (viewSize.x + 300.0) ;
-    //texCoordsOut.y = ( pos.y + 150.0 ) / (viewSize.y + 300.0) ;
-
-    texCoordsOut = texCoordsIn;
-
+    return finalPosition;
 }
 
 void drawSurface()
 {
-    calcSurfacePosition();
+    gl_Position = calculateVertexPosition( 0.0 );
+    TextureCoordsOut = TextureCoords;
 
-     // Set Texture Vertex Position
-    texCoordsOut = texCoordsIn;
+    if(Inverted)
+        if (VertexPosition.y > 0.0)
+            TextureCoordsOut.y = 0.0;
+        else
+            TextureCoordsOut.y = 1.0;
 }
 
-
-void drawBackground()
+void drawShadow()
 {
-    texCoordsOut = texCoordsIn;
-    if(inverted)
+    gl_Position = calculateVertexPosition( ShadowSize );
+    TextureCoordsOut = TextureCoords;
+}
+
+void drawBlur()
+{
+    if ( BlurStage == 0)
     {
-        texCoordsOut.y = 1.0f - texCoordsIn.y;
+        if(TextureCoords.x == 0.0)
+            TextureCoordsOut.x = Position.x / Screen.x;
+        else
+            TextureCoordsOut.x = ( Position.x + Size.x ) / Screen.x;
+
+        if(TextureCoords.y == 1.0)
+            TextureCoordsOut.y = 1.0 - Position.y / Screen.y;
+        else
+            TextureCoordsOut.y = 1.0 -( Position.y + Size.y ) / Screen.y;
+
+    }
+    if( BlurStage == 1)
+    {
+        // Calculates the vertex size
+        float pixelSize = BlurLevel * float(BlurIteration) / Size.x;
+
+        // Loop the 11 vertices
+        for( int i = -5; i <= 5; i++ )
+            blurTextureCoords[ i + 5 ] = TextureCoords+ vec2( pixelSize * float( i ) , 0.0 );
     }
 
-    gl_Position = pos;
-}
+    if( BlurStage == 2)
+    {
+        // Calculates the vertex size
+        float pixelSize =  BlurLevel * float(BlurIteration) / Size.y;
 
-void drawScreen()
-{
-    texCoordsOut = texCoordsIn;
-    gl_Position = pos;
-}
+        // Loop the 11 vertices
+        for( int i = -5; i <= 5; i++ )
+            blurTextureCoords[ i + 5 ] = TextureCoords + vec2( 0.0 ,pixelSize * float( i ) );
 
-void drawBottomShadow()
-{
-    if( pos.x == 0.0 )
-        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x - margin) - 1.0f;
-    else
-        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x + pos.x + margin) - 1.0f;
+    }
 
-    if( pos.y == 0.0 )
-        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y);
-    else
-        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y + margin);
+    gl_Position= VertexPosition;
 
-    gl_Position.z = pos.z;
-    gl_Position.w = 1.0f;
-
-    texCoordsOut = texCoordsIn;
-}
-
-void drawTopShadow()
-{
-    if( pos.x == 0.0 )
-        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x - margin) - 1.0f;
-    else
-        gl_Position.x = (2.0f/screenSize.x)*(viewOffset.x + pos.x + margin) - 1.0f;
-
-    if( pos.y == 0.0 )
-        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y - margin);
-    else
-        gl_Position.y = 1.0f - (2.0f/screenSize.y)*(viewOffset.y + pos.y);
-
-    gl_Position.z = pos.z;
-    gl_Position.w = 1.0f;
-
-    texCoordsOut = texCoordsIn;
 }
 
 void main(void)
 {
-    // Set vertex color
-    finalColor = col;
-
-    // Draws surface
     if(Mode == 0) drawSurface();
-
-    // Draws background
-    if(Mode == 1) drawBackground();
-
-    // Calc horizontal blur
-    if(Mode == 2) horizontalBlur();
-
-    // Calc vertical blur
-    if(Mode == 3) verticalBlur();
-
-    // Draws finall view to screen
-    if(Mode == 4) drawScreen();
-
-    // Calc blurRect
-    if(Mode == 5) calcBlurRect();
-
-    // Draws blur
-    if(Mode == 6) drawBlur();
-
-    // Draws title bar
-    if(Mode == 7) drawSurface();
-
-    // Draws bottom shadow
-    if(Mode == 8) drawBottomShadow();
-
-    // Draws top shadow
-    if(Mode == 9) drawTopShadow();
-
+    if(Mode == 1) drawShadow();
+    if(Mode == 2) drawBlur();
 }
 
 
