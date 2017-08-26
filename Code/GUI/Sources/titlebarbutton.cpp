@@ -10,7 +10,7 @@ TitleBarButton::TitleBarButton(const QString &path, QWidget *parent)
     opacity->setOpacity(1.0);
     setPixmap(QPixmap(path));
     setScaledContents(true);
-    resize(30,30);
+    resize(22,22);
     show();
 }
 

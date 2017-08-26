@@ -48,7 +48,7 @@ public:
     {
         m_position = pos;
         if(titleBar != nullptr)
-            titleBar->setPosition(QPointF(pos.x(),pos.y() - 40));
+            titleBar->setPosition(QPointF(pos.x(),pos.y() - titleBar->size().height()));
     }
     QSize size() const;
     bool isCursor() const;

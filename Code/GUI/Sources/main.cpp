@@ -6,7 +6,12 @@ int main(int argc, char *argv[])
     // Creates application
     QApplication a(argc, argv);
 
-    QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Coves/Coves Light.otf");
+    // Configure screen
+    a.setAttribute(Qt::AA_EnableHighDpiScaling);
+    a.setAttribute(Qt::AA_UseHighDpiPixmaps);
+    a.setAttribute(Qt::AA_UseOpenGLES);
+
+    QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Lucida/Regular.ttf");
 
     // Creates the interface manager
     CrystalsGui *gui = new CrystalsGui();

@@ -19,8 +19,8 @@ public:
     void mouseReleaseEvent(QMouseEvent*);
     float opacityScale = 0.01;
     int scale = 1;
-    int big = 32;
-    int small = 28;
+    int big = 24;
+    int small = 22;
     bool mouseOver =  false;
     bool pressing = false;
     QPoint initialPosition;

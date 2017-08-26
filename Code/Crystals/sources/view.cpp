@@ -19,7 +19,7 @@ void View::setRole(uint newRole)
             TitlebarRequestStruct msg;
             msg.forPid = surface()->client()->processId();
             msg.forId = surfaceId;
-            msg.width = size().width();
+            msg.width = size().width() / compositor->ratio;
             strcpy(msg.title,title.toUtf8());
 
             // Copy message to a char pointer
@@ -66,8 +66,8 @@ void View::setSize(const QSize &size)
 {
     SurfaceScaledStruct msg;
     msg.id = surfaceId;
-    msg.height = size.height();
-    msg.width = size.width();
+    msg.height = size.height() / compositor->ratio;
+    msg.width = size.width() / compositor->ratio;
 
     // Copy message to a char pointer
     char data[sizeof(SurfaceScaledStruct)];

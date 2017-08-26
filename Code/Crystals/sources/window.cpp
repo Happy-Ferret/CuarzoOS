@@ -108,9 +108,6 @@ void Window::initializeGL()
     // Set offscreen texture as our colour attachement
     glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,blurTexture,0);
 
-    // Set texture borders type
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,   GL_CLAMP_TO_EDGE);
-
     // Set the list of draw buffers.
     glDrawBuffers(1, DrawBuffers);
 
@@ -153,21 +150,6 @@ void Window::drawBackground()
 
     drawSurface(QRectF(0,0,width(),height()), 1.0, background->texture->textureId(), false, false, false, false, 0.0, false);
 
-    // Selects background texture
-    //glBindTexture(GL_TEXTURE_2D, background->texture->textureId());
-
-    // Set OpenGL to background mode
-    //glUniform1i(ModeUniform, SHADER_DRAW_BACKGROUND);
-
-    // Tells OpenGL the background size
-    //glUniform2ui(SizeUniform,background->texture->width(),background->texture->height());
-
-    // Send the vertex list
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(background->vertices), background->vertices, GL_STATIC_DRAW);
-
-    //Draw Background to the offscreen buffer
-    //glDrawElements(GL_TRIANGLES, sizeof(GLubyte)*6,GL_UNSIGNED_BYTE, 0);
-
 }
 
 void Window::drawWindow(View *view)
@@ -175,29 +157,36 @@ void Window::drawWindow(View *view)
     QRectF viewRect = QRectF(view->position().x(),view->position().y(),view->size().width(),view->size().height());
 
     // Draws  blur
-    if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, false, false, 12.0);
+    if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, false, false, 8.0);
 
     // Draws  shadow
-    drawShadow( QRectF( viewRect.x(), viewRect.y() - 40, viewRect.width(), viewRect.height() + 40), 0.15, view->opacity, 200.0, true, true, true, true, 12.0);
+    drawShadow( QRectF( viewRect.x(), viewRect.y() -  view->titleBar->size().height(), viewRect.width(), viewRect.height() +  view->titleBar->size().height()), 0.15, view->opacity, 200.0, true, true, true, true, 8.0);
 
     // Selects blur framebuffer
     glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
 
     // Draws surface
-    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), false, false , true, true, 12.0, false);
+    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), false, false , true, true, 8.0, false);
 
     // Draws title bar
-   drawSurface( QRectF( view->position().x(), view->position().y() - 40, view->size().width(), 40), 255, view->titleBar->getTexture()->textureId(), true, true , false, false, 12.0, false);
+   drawSurface( QRectF(
+                    view->position().x(),
+                    view->position().y() - view->titleBar->size().height(),
+                    view->size().width(),
+                    view->titleBar->size().height()), 255, view->titleBar->getTexture()->textureId(), true, true , false, false, 8.0, false);
 
     view->previusPosition = view->position();
 }
 
 void Window::drawParadiso()
 {
-
+    QRect rect = QRect( 0, 0, width(), paradisoView->size().height());
+    drawBlur(rect, 0.7, 0.6, 0.3, 1.0, false, false, false, false, 0.0);
+    drawSurface( rect, 1.0, paradisoView->getTexture()->textureId(), false, false, false, false, 0.0, false );
+    drawShadow( rect, 0.1, 0.5, 50, false, false, false, false, 0.0);
 }
 
-void Window::drawSurface(const QRectF &rect, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted)
+void Window::drawSurface(QRectF rect, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted)
 {
 
     // Send the vertex data
@@ -319,7 +308,7 @@ void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel,
     /* ------- Draws the final  blur ------*/
 
     // Sets render size
-    glViewport( 0, 0, width(), height() );
+    glViewport( 0, 0, width(), height());
 
     // Selects main framebuffer
     glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
@@ -367,9 +356,6 @@ void Window::drawShadow(const QRectF &rect, float intensity, uint opacity, float
 
 void Window::drawFinalView()
 {
-
-    // Sets render size
-    glViewport( 0, 0, width() , height());
 
     // Selects screen buffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -448,7 +434,7 @@ void Window::paintGL()
     }
 
     // Draw paradiso
-    if(paradisoView) drawParadiso();
+    if( paradisoView != nullptr ) drawParadiso();
 
     // Draw offscreen framebuffer
     drawFinalView();
@@ -467,7 +453,6 @@ void Window::resizeGL(int, int)
     // Sets texture size
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, width(), height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
-    glViewport(0,0,width(),height());
 }
 
 View *Window::viewAt(const QPointF &point)

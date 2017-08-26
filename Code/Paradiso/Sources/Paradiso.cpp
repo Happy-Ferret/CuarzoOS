@@ -4,7 +4,8 @@ Paradiso::Paradiso()
 {
     // Configure Paradiso
     setMode(PARADISO_MODE);
-    setFixedSize(QApplication::primaryScreen()->size().width(), 40);
+    setFixedSize(QApplication::primaryScreen()->size().width(), 28);
+    setPalette(Qt::transparent);
 
     // Event when connects to Crystals
     connect(crystalsSocket,SIGNAL(connected()),this,SLOT(connectedToCrystals()));
@@ -51,9 +52,6 @@ void Paradiso::messageFromCrystals()
 
         switch (type)
         {
-            case REGISTERED_APP:{
-                qDebug() << "Paradiso to Crystals";
-            }break;
             case REGISTERED_SURFACE:{
 
                 // Parse Message
@@ -62,8 +60,9 @@ void Paradiso::messageFromCrystals()
                 CWindow *widget = nullptr;
 
                 // Gets the widget
-                if(reply->id == winId())
+                if(reply->id == winId() )
                 {
+                    qDebug() << "HELLO PARADISO";
                     widget = this;
                 }
 

@@ -248,8 +248,8 @@ void CPushButton::setup()
     layout->addWidget(_text);
 
     _text->setFontColor(_textColor);
-    _text->setFontFamily("Coves");
-    _text->setFontWeight("bold");
+    _text->setFontFamily("Lucida");
+    _text->setFontWeight("light");
     _text->enableEllipsis(true);
     _text->setAlignment(Qt::AlignCenter);
 

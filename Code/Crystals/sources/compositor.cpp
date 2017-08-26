@@ -293,8 +293,10 @@ void Compositor::readyToLaunchApps()
 
     if(readyApps == 1) // Launch Paradiso
         man.launchZpp(SYSTEM_PATH + "/System/Applications/Paradiso.zpp");
-    if(readyApps == 2) // Launch a Demo App
+    if(readyApps == 2) {// Launch a Demo App
         man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+        man.launchZpp(SYSTEM_PATH + "/Applications/Piezo.zpp");
+}
 }
 
 
@@ -385,7 +387,7 @@ void Compositor::surfaceSizeChanged()
     TitlebarWidthStruct request;
     request.forId = view->surfaceId;
     request.forPid = surface->client()->processId();
-    request.width = view->size().width();
+    request.width = view->size().width() / ratio;
 
     // Copy message to a char pointer
     char data[sizeof(TitlebarWidthStruct)];
@@ -404,7 +406,11 @@ void Compositor::viewSurfaceDestroyed()
 {
     View *view = qobject_cast<View*>(sender());
     view->setBufferLocked(true);
+    views.removeAll(view->titleBar);
+    views.removeAll(view->titleBarParent);
     views.removeAll(view);
+    delete view->titleBar;
+    delete view->titleBarParent;
     delete view;
 }
 
@@ -455,6 +461,7 @@ void Compositor::adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int
 void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)
 {
 
+    me->setLocalPos(me->localPos() / ratio);
     QWaylandSeat *input = defaultSeat();
     QWaylandSurface *surface = target ? target->surface() : nullptr;
     switch (me->type()) {
@@ -572,6 +579,12 @@ void Compositor::setScreenResolution(QSize size)
     QWaylandOutputMode mode = QWaylandOutputMode(size, 60000);
     output->addMode(mode, true);
     output->setCurrentMode(mode);
+    if(QGuiApplication::primaryScreen()->physicalDotsPerInch() >= 190)
+        ratio = 2.0;
+    else
+        ratio = 1.0;
+
+    output->setScaleFactor(ratio);
 }
 
 

@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[])
 {
+
     // Non Widgets Application
     QGuiApplication app(argc, argv);
 

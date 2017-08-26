@@ -15,7 +15,8 @@ TitleBar::TitleBar()
     minimize->setParent(this);
     expand->setParent(this);
 
-    title->setFontWeight("bold");
+    title->setFontWeight("light");
+    title->setFontSize(15);
     title->setFontColor(QColor("#666"));
     title->setAlignment(Qt::AlignCenter);
     title->enableEllipsis(true);
@@ -24,11 +25,11 @@ TitleBar::TitleBar()
 
     // Set buttons positions
     close->move(10,6);
-    minimize->move(50,6);
-    expand->move(90,6);
+    minimize->move(45,6);
+    expand->move(80,6);
 
     // Set titlebar size
-    setFixedHeight(40);
+    setFixedHeight(32);
 
     show();
 }
@@ -36,7 +37,7 @@ TitleBar::TitleBar()
 void TitleBar::setFixedWidth(int size)
 {
     QWidget::setFixedWidth(size);
-    title->move(150,13);
+    title->move(150,8);
     title->setFixedWidth(width() - 300);
 }
 

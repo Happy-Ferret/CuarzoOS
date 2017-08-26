@@ -47,6 +47,7 @@ public:
 
     // Number of system applications ready
     uint readyApps = 0;
+    float ratio = 2.0;
 
     // Wayland cursor surface
     QWaylandView cursor;

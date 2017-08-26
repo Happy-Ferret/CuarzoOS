@@ -92,7 +92,7 @@ private:
     void drawBackground();
     void drawParadiso();
 
-    void drawSurface(const QRectF &rect, uint opacity,GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted);
+    void drawSurface(QRectF rect, uint opacity,GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted);
     void drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, bool TL, bool TR, bool BR, bool BL, float borderRadius);
     void drawShadow(const QRectF &rect, float intensity, uint opacity, float size, bool TL, bool TR, bool BR, bool BL, float borderRadius);
 
