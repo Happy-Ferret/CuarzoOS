@@ -1,6 +1,7 @@
 #include "headers/window.h"
 #include <QScreen>
 #include "CCore.h"
+#include <QMovie>
 Window::Window()
 {
   move(200,200);
@@ -20,6 +21,9 @@ Window::Window()
   del->setFrameColor(RED);
   siz->setFrameColor(YELLOW);
 
+  QMovie *movie = new QMovie("/home/e/jobs.gif");
+  movieFrame->setMovie(movie);
+
   layout->addWidget(wel);
   layout->addWidget(home);
   layout->addWidget(siz);
@@ -29,6 +33,8 @@ Window::Window()
   layout->addWidget(opa);
   layout->addWidget(tit);
   layout->addWidget(del);
+  layout->addWidget(movieFrame);
+  movie->start();
 }
 
 void Window::createWindow()

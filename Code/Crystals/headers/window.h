@@ -23,6 +23,9 @@ public:
     View *paradisoView = nullptr;
     View *dragIconView = nullptr;
 
+    int fps = 0;
+    QTimer *fpsTimer = new QTimer();
+
 protected:
 
     // OpenGL functions
@@ -47,6 +50,7 @@ protected:
 private slots:
     void startMove();
     void startDrag(View *dragIcon);
+    void displayFps();
 
 private:
     // OpenGL Programs

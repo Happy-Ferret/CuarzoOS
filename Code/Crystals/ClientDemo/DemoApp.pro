@@ -2,7 +2,6 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-#INCLUDEPATH += /CFramework
 INCLUDEPATH += $$PWD/headers
 
 INCLUDEPATH += /home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include

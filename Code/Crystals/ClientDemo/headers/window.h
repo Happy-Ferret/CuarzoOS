@@ -29,6 +29,8 @@ public:
     CPushButton *siz = new CPushButton("Resize",this);
     CPushButton *del = new CPushButton("Delete",this);
 
+    QLabel *movieFrame = new QLabel(this);
+
     QHBoxLayout *layout = new QHBoxLayout(this);
 
 

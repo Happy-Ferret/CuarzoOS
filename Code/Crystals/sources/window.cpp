@@ -12,11 +12,16 @@ Window::Window(Compositor *_compositor)
     // Drag event
     connect(compositor, &Compositor::dragStarted, this, &Window::startDrag);
 
+    connect(fpsTimer,SIGNAL(timeout()),this,SLOT(displayFps()));
+
+    fpsTimer->start(1);
+
     // Set screen
     QWindow::setScreen(QGuiApplication::primaryScreen());
 
     // Show window
     QWindow::show();
+
 }
 
 void Window::initShaders()
@@ -79,8 +84,8 @@ void Window::initializeGL()
     // Create offscreen texture
     glGenTextures(1,&offscreenTexture);
     glBindTexture(GL_TEXTURE_2D, offscreenTexture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     // Create the offscreen buffer
     glGenFramebuffers(1, &offscreenBuffer);
@@ -98,8 +103,8 @@ void Window::initializeGL()
     // Create blur texture
     glGenTextures(1,&blurTexture);
     glBindTexture(GL_TEXTURE_2D, blurTexture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     // Create the offscreen buffer
     glGenFramebuffers(1, &blurBuffer);
@@ -154,6 +159,8 @@ void Window::drawBackground()
 
 void Window::drawWindow(View *view)
 {
+
+
     QRectF viewRect = QRectF(view->position().x(),view->position().y(),view->size().width(),view->size().height());
 
     // Draws  blur
@@ -357,11 +364,15 @@ void Window::drawShadow(const QRectF &rect, float intensity, uint opacity, float
 void Window::drawFinalView()
 {
 
-    // Selects screen buffer
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    // Disable blending
+    glDisable(GL_BLEND);
+
+   // Selects screen buffer
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
    // Draw Final View
-    drawSurface(QRectF(0,0,width(),height()), 1.0, offscreenTexture, false, false, false, false , 0.0, true);
+   drawSurface(QRectF(0,0,width(),height()), 1.0, offscreenTexture, false, false, false, false , 0.0, true);
+
 
 }
 
@@ -383,11 +394,11 @@ void Window::setBackground(QString path)
 
 void Window::paintGL()
 {
+
+    fps++;
+
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Enable alpha blending
-    glEnable(GL_BLEND);
 
     // Set blend mode
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -398,6 +409,9 @@ void Window::paintGL()
     // Draw Background Image
     drawBackground();
 
+    // Enable alpha blending
+    glEnable(GL_BLEND);
+
     // Draw all views
     Q_FOREACH (View *view, compositor->views) {
 
@@ -406,9 +420,7 @@ void Window::paintGL()
             continue;
 
         // Skip if no texture
-        auto texture = view->getTexture();
-        if (!texture)
-            continue;
+        QOpenGLTexture *texture = view->getTexture();
 
         // Select current surface
         QWaylandSurface *surface = view->surface();
@@ -451,7 +463,7 @@ void Window::resizeGL(int, int)
     glBindTexture(GL_TEXTURE_2D, offscreenTexture);
 
     // Sets texture size
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, width(), height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, width(), height(), 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, 0);
 
 }
 
@@ -489,6 +501,13 @@ void Window::startDrag(View *dragIcon)
     compositor->raise(dragIcon);
 }
 
+void Window::displayFps()
+{
+    this->setTitle(QString::number(fps));
+    fps = 0;
+    fpsTimer->start(1000);
+}
+
 // This method is called just once
 void Window::calcfullRectVertices()
 {
@@ -523,9 +542,6 @@ void Window::calcfullRectVertices()
 
     fullRectVertices[3].texture[0] = 1.0f;
     fullRectVertices[3].texture[1] = 1.0f;
-
-
-
 
 }
 
@@ -756,6 +772,9 @@ void Window::sendMouseEvent(QMouseEvent *e, View *target)
 // Send key press event to the compositor
 void Window::keyPressEvent(QKeyEvent *e)
 {
+    if(e->key() == Qt::Key_0)
+        compositor->man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+
     compositor->defaultSeat()->sendKeyPressEvent(e->nativeScanCode());
 }
 

@@ -294,8 +294,7 @@ void Compositor::readyToLaunchApps()
     if(readyApps == 1) // Launch Paradiso
         man.launchZpp(SYSTEM_PATH + "/System/Applications/Paradiso.zpp");
     if(readyApps == 2) {// Launch a Demo App
-        man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
-        man.launchZpp(SYSTEM_PATH + "/Applications/Piezo.zpp");
+        //man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
 }
 }
 
