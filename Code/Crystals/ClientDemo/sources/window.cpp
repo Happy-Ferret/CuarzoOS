@@ -2,8 +2,11 @@
 #include <QScreen>
 #include "CCore.h"
 #include <QMovie>
+#include <random>
 Window::Window()
 {
+
+  setCentralWidget(widget);
   move(200,200);
   resize(800,500);
 
@@ -17,9 +20,19 @@ Window::Window()
   connect(siz,SIGNAL(pressed()),this,SLOT(changeSize()));
 
   home->setFrameColor(GREEN);
-  cre->setFrameColor(VIOLET);
+  cre->setFrameColor(BLUE);
   del->setFrameColor(RED);
   siz->setFrameColor(YELLOW);
+
+
+  std::default_random_engine generator;
+  std::uniform_int_distribution<int> distribution(0,255);
+
+  uint r = distribution(generator);
+  uint g = distribution(generator);
+  uint b = distribution(generator);
+
+  setPalette( QColor( r, g, b ) );
 
   QMovie *movie = new QMovie("/home/e/jobs.gif");
   movieFrame->setMovie(movie);
@@ -35,6 +48,15 @@ Window::Window()
   layout->addWidget(del);
   layout->addWidget(movieFrame);
   movie->start();
+
+  wel->hide();
+  home->hide();
+  siz->hide();
+  mod->hide();
+  blu->hide();
+  opa->hide();
+  tit->hide();
+  del->hide();
 }
 
 void Window::createWindow()

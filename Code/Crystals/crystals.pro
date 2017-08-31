@@ -5,6 +5,7 @@ DISTFILES += \
     res/shaders/vshader.glsl
 
 INCLUDEPATH += $$PWD/headers
+INCLUDEPATH += /home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include
 
 HEADERS += \
     headers/background.h \

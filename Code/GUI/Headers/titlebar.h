@@ -2,20 +2,17 @@
 #define TITLEBAR_H
 
 #include "CWindow.h"
-#include "titlebarbutton.h"
 #include <QHBoxLayout>
 #include <QApplication>
 #include "CLabel.h"
 
 
-class TitleBar : public CWindow
+class TitleBar : public CLabel
 {
     Q_OBJECT
 
 public:
     TitleBar();
-    TitleBarButton *close, *minimize, *expand;
-    CLabel *title = new CLabel("");
     uint surfaceID;
     uint processID;
 

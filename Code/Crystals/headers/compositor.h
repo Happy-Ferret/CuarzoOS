@@ -72,10 +72,10 @@ public:
     void raise(View *view);
 
     // Find view by id
-    View *findViewById(uint id);
+    View *findViewById(int id);
 
     // Find view by id and pid
-    View *findViewByIdAndPid(uint id,uint pid);
+    View *findViewByIdAndPid(int id,int pid);
 
     // Find socket by pid
     Socket *findSocketByPId(uint id);

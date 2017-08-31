@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
+#include <QPainter>
 #include <QPointer>
 #include <QtMath>
 #include <QProcess>
@@ -41,201 +42,12 @@
 #include <QVector2D>
 #include <QVector3D>
 
-#ifndef APPLICATION_TYPES
-#define APPLICATION_TYPES
+// CuarzoOS
+#include "CCore.h"
 
-// The way Crystals recognize the application
+#ifndef DEFINITIONS
+#define DEFINITIONS
 
-#define CLIENT_TYPE 0
-#define CRYSTALS_TYPE 1
-#define PARADISO_TYPE 2
-
-#endif
-
-#ifndef SURFACE_MODES
-#define SURFACE_MODES
-
-// Way Crystals identify a surface
-
-#define WINDOW_MODE 0
-#define FRAMELESS_MODE 1
-#define TITLEBAR_MODE 2
-#define FILEMANAGER_MODE 3
-#define DOCK_MODE 4
-#define PARADISO_MODE 5
-
-#endif
-
-// System root path
-#define SYSTEM_PATH QString("/home/e/Escritorio/CuarzoOS/CuarzoOS")
-
-#ifndef MESSAGES
-#define MESSAGES
-
-
-/* ------------------ In Messages Types ------------------ */
-
-// Register App
-#define REGISTER_APP 0
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int pid; // App proccess Id
-    unsigned int appType; // Application Type
-}RegisterAppStruct;
-
-// Configure Surface
-#define SURFACE_CONFIG 1
-typedef struct{
-    unsigned int type = SURFACE_CONFIG; // Message type
-    unsigned int id; // Surface Id
-    unsigned int role; // Surface Role
-    unsigned int x; // X pos
-    unsigned int y; // Y pos
-    unsigned int opacity; // Surface Opacity
-    char title[128]; // Surface Title
-}SurfaceConfigStruct;
-
-// Send Surface Role
-#define SURFACE_ROLE 2
-typedef struct{
-    unsigned int type = SURFACE_ROLE; // Message type
-    unsigned int id; // Surface Id
-    unsigned int role; // Surface Role
-}SurfaceRoleStruct;
-
-// Send Surface Position
-#define SURFACE_POS 3
-typedef struct{
-    unsigned int type = SURFACE_POS; // Message type
-    unsigned int id; // Surface Id
-    int x; // X cords
-    int y; // Y cords
-}SurfacePosStruct;
-
-// Send Surface Title
-#define SURFACE_TITLE 4
-typedef struct{
-    unsigned int type = SURFACE_TITLE; // Message type
-    unsigned int id; // Surface Id
-    char title[128]; // Surface Title
-}SurfaceTitleStruct;
-
-// Send Surface Opacity
-#define SURFACE_OPACITY 5
-typedef struct{
-    unsigned int type = SURFACE_OPACITY; // Message type
-    unsigned int id; // Surface Id
-    unsigned int opacity; // Surface Opacity
-}SurfaceOpacityStruct;
-
-// Send Surface blur Request
-#define SURFACE_BLUR 6
-typedef struct{
-    unsigned int type = SURFACE_BLUR; // Message type
-    unsigned int id; // Surface Id
-    bool activate; // Turn ON/OFF blur
-}SurfaceBlurStruct;
-
-// Send Surface Minimize
-#define SURFACE_MINIMIZE 7
-typedef struct{
-    unsigned int type = SURFACE_MINIMIZE; // Message type
-    unsigned int id; // Surface Id
-    bool minimize; // Turn ON/OFF minimize
-}SurfaceMinimizeStruct;
-
-// Send Surface Expand
-#define SURFACE_EXPAND 8
-typedef struct{
-    unsigned int type = SURFACE_EXPAND; // Message type
-    unsigned int id; // Surface Id
-    bool expand; // Turn ON/OFF expand
-    unsigned int expandMode;
-}SurfaceExpandStruct;
-
-
-
-/* ------------------ Messages to Clients ------------------ */
-
-// Messages Out
-
-// App Registered Event
-#define REGISTERED_APP 0
-typedef struct{
-    unsigned int type = REGISTERED_APP; // Message type
-}RegisteredAppStruct;
-
-// Surface Id Registered
-#define REGISTERED_SURFACE 1
-typedef struct{
-    unsigned int type = REGISTERED_SURFACE; // Message type
-    unsigned int id; // Message type
-}RegisteredSurfaceStruct;
-
-// Surface Blur Image
-#define SURFACE_BLUR_IMAGE 2
-typedef struct{
-    unsigned int type = SURFACE_BLUR_IMAGE; // Message type
-    unsigned int id; // Surface desitnation
-    unsigned int width; // Pixels
-    unsigned int height; // Pixels
-    unsigned char pixels[4*64*64]; // 64x64 Image (RGBA 255)
-}SurfaceBlurImageStruct;
-
-// Surface Escaled
-#define SURFACE_SCALED 3
-typedef struct{
-    unsigned int type = SURFACE_SCALED; // Message type
-    unsigned int id; // Surface id
-    unsigned int width; // X position
-   unsigned  int height; // Y position
-}SurfaceScaledStruct;
-
-/* ------------------ Messages to GUI ------------------ */
-
-// Titlebar request
-#define TITLEBAR_REQUEST 20
-typedef struct{
-    unsigned int type = TITLEBAR_REQUEST; // Message type
-    unsigned int forPid; // Process id of the surface
-    unsigned int forId; // Surface which needs the titlebar
-    unsigned int width; // Surface width
-    char title[128]; // Surface Title
-}TitlebarRequestStruct;
-
-// Change titlebar width
-#define TITLEBAR_WIDTH 21
-typedef struct{
-    unsigned int type = TITLEBAR_WIDTH; // Message type
-    unsigned int forPid; // Process id of the surface
-    unsigned int forId; // Id of the surface
-    unsigned int width; // Surface width
-}TitlebarWidthStruct;
-
-// Change titlebar title
-#define TITLEBAR_TITLE 22
-typedef struct{
-    unsigned int type = TITLEBAR_TITLE; // Message type
-    unsigned int forPid; // Process id of the surface
-    unsigned int forId; // Id of the surface
-    char title[128]; // Surface Title
-}TitlebarTitleStruct;
-
-/* ------------------ Messages from GUI ------------------ */
-
-// Titlebar Created
-#define TITLEBAR_CREATED 20
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // TitleBar id
-    unsigned int forPid; // Process id of the surface
-    unsigned int forId; // Surface which needs the titlebar
-}TitlebarCreatedStruct;
-
-#endif
-
-#ifndef STRUCTURES
-#define STRUCTURES
 
 // Vertex structure
 struct Vertex
@@ -251,18 +63,16 @@ enum ViewMode { Image, Color, Gradient };
 // Background image size mode
 enum ImageMode { ResizeToFill, KeepRatioToFill };
 
-// View type
-enum ViewType{ Paradiso, TitleBar, Roller };
 
-// Selected Shader Mode
+// Shader Draw Mode
 #define SHADER_DRAW_SURFACE 0
 #define SHADER_DRAW_SHADOW 1
 #define SHADER_DRAW_BLUR 2
 
+// Shader Blur Modes
 #define BLUR_RECT 0
 #define BLUR_HORIZONTAL 1
 #define BLUR_VERTICAL 2
-
 
 
 #endif

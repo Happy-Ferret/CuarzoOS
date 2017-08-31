@@ -11,6 +11,8 @@ precision mediump int;
 
 uniform int Mode;
 uniform bool Inverted;
+uniform vec4 Color;
+uniform bool OnlyColor;
 uniform vec2 Screen;
 uniform vec2 Size;
 uniform vec2 Position;

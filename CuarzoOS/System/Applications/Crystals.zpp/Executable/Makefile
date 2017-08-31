@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_WAYLANDCOMPOSITOR_LIB -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I. -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
+INCPATH       = -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I. -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I../../../Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/local/Qt-5.9.1/mkspecs/linux-g++
 QMAKE         = /usr/local/Qt-5.9.1/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -786,6 +786,21 @@ moc_background.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -825,12 +840,6 @@ moc_background.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -844,7 +853,6 @@ moc_background.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -901,10 +909,11 @@ moc_background.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h -o moc_background.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h -o moc_background.cpp
 
 moc_compositor.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QGuiApplication \
@@ -998,6 +1007,21 @@ moc_compositor.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -1037,12 +1061,6 @@ moc_compositor.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -1056,7 +1074,6 @@ moc_compositor.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -1113,6 +1130,7 @@ moc_compositor.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h \
@@ -1129,7 +1147,7 @@ moc_compositor.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h 
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h -o moc_compositor.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h -o moc_compositor.cpp
 
 moc_socket.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QGuiApplication \
@@ -1223,6 +1241,21 @@ moc_socket.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -1262,12 +1295,6 @@ moc_socket.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -1281,7 +1308,6 @@ moc_socket.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -1338,6 +1364,7 @@ moc_socket.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
@@ -1354,7 +1381,7 @@ moc_socket.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/socket.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/socket.h -o moc_socket.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/socket.h -o moc_socket.cpp
 
 moc_view.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QGuiApplication \
@@ -1448,6 +1475,21 @@ moc_view.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -1487,12 +1529,6 @@ moc_view.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -1506,7 +1542,6 @@ moc_view.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -1563,6 +1598,7 @@ moc_view.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
@@ -1579,7 +1615,7 @@ moc_view.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h -o moc_view.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h -o moc_view.cpp
 
 moc_window.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QGuiApplication \
@@ -1673,6 +1709,21 @@ moc_window.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -1712,12 +1763,6 @@ moc_window.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -1731,7 +1776,6 @@ moc_window.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -1788,11 +1832,12 @@ moc_window.cpp: /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h -o moc_window.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Crystals -I/home/e/Escritorio/CuarzoOS/Code/Crystals/headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWaylandCompositor -I/usr/local/Qt-5.9.1/include/QtQuick -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtQml -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h -o moc_window.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1899,6 +1944,21 @@ background.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/background.cpp /
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -1938,12 +1998,6 @@ background.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/background.cpp /
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -1957,7 +2011,6 @@ background.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/background.cpp /
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -2013,7 +2066,8 @@ background.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/background.cpp /
 		/usr/local/Qt-5.9.1/include/QtGui/QOpenGLFunctions \
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
-		/usr/local/Qt-5.9.1/include/QtGui/QVector3D
+		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o background.o /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/background.cpp
 
 compositor.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/compositor.cpp /home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
@@ -2109,6 +2163,21 @@ compositor.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/compositor.cpp /
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -2148,12 +2217,6 @@ compositor.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/compositor.cpp /
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -2167,7 +2230,6 @@ compositor.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/compositor.cpp /
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -2224,6 +2286,7 @@ compositor.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/compositor.cpp /
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h \
@@ -2330,6 +2393,21 @@ main.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/main.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -2369,12 +2447,6 @@ main.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/main.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -2388,7 +2460,6 @@ main.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/main.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -2445,6 +2516,7 @@ main.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/main.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
@@ -2553,6 +2625,21 @@ socket.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/socket.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -2592,12 +2679,6 @@ socket.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/socket.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -2611,7 +2692,6 @@ socket.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/socket.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -2668,6 +2748,7 @@ socket.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/socket.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
@@ -2775,6 +2856,21 @@ view.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/view.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -2814,12 +2910,6 @@ view.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/view.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -2833,7 +2923,6 @@ view.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/view.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -2890,6 +2979,7 @@ view.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/view.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/window.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
@@ -2997,6 +3087,21 @@ window.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/window.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QDebug \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QPointer \
 		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QtMath \
@@ -3036,12 +3141,6 @@ window.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/window.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandOutputMode \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/qwaylandoutputmode.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QImage \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QLoggingCategory \
 		/usr/local/Qt-5.9.1/include/QtCore/qloggingcategory.h \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandSurface \
@@ -3055,7 +3154,6 @@ window.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/window.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtGui/qsurface.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qsurfaceformat.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QVariantMap \
 		/usr/local/Qt-5.9.1/include/QtWaylandCompositor/QWaylandView \
@@ -3112,6 +3210,7 @@ window.o: /home/e/Escritorio/CuarzoOS/Code/Crystals/sources/window.cpp /home/e/E
 		/usr/local/Qt-5.9.1/include/QtGui/qopenglfunctions.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector2D \
 		/usr/local/Qt-5.9.1/include/QtGui/QVector3D \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/background.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/compositor.h \
 		/home/e/Escritorio/CuarzoOS/Code/Crystals/headers/view.h \

@@ -22,9 +22,11 @@ public:
     // Special views
     View *paradisoView = nullptr;
     View *dragIconView = nullptr;
+    QPointer<View> mouseView;
 
-    int fps = 0;
-    QTimer *fpsTimer = new QTimer();
+    // Topbar grab
+    void mouseGrabBegin();
+
 
 protected:
 
@@ -39,6 +41,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e) override;
     void wheelEvent(QWheelEvent *e) override;
 
+
     // Key Events
     void keyPressEvent(QKeyEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
@@ -50,7 +53,6 @@ protected:
 private slots:
     void startMove();
     void startDrag(View *dragIcon);
-    void displayFps();
 
 private:
     // OpenGL Programs
@@ -81,6 +83,8 @@ private:
     GLuint BlurIterationUniform;
     GLuint ShadowSizeUniform;
     GLuint ShadowIntensityUniform;
+    GLuint OnlyColorUniform;
+    GLuint ColorUniform;
 
     // OpenGL Slots
     GLuint VertexPositionSlot;
@@ -91,26 +95,30 @@ private:
     Background *background = new Background(this);
     Compositor *compositor = nullptr;
 
+    QOpenGLTexture *closeButtonTexture;
+    QOpenGLTexture *minimizeButtonTexture;
+    QOpenGLTexture *expandButtonTexture;
+
     // Draw Functions
     void drawWindow(View *view);
     void drawBackground();
     void drawParadiso();
 
-    void drawSurface(QRectF rect, uint opacity,GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted);
+    void drawSurface(QRectF rect, uint opacity,GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted, bool solidColor = false, QColor color = Qt::white);
     void drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, bool TL, bool TR, bool BR, bool BL, float borderRadius);
     void drawShadow(const QRectF &rect, float intensity, uint opacity, float size, bool TL, bool TR, bool BR, bool BL, float borderRadius);
 
     // Event Variables
-    enum GrabState { NoGrab, MoveGrab, ResizeGrab, DragGrab , LeftResize, TopResize, RightResize, BottomResize};
+    enum GrabState { NoGrab, MoveGrab, DragGrab , LeftResize, TopResize, RightResize, BottomResize};
     QPointF mouseOffset, initialMousePos, initialViewPosition;
     QSize initialSize, blurSize, initialViewSize;
     GrabState grabState = NoGrab;
+    bool mousePressing = false;
 
     View *viewAt(const QPointF &point);
     bool mouseGrab() const { return grabState != NoGrab ;}
     void sendMouseEvent(QMouseEvent *e, View *target);
 
-    QPointer<View> mouseView;
 
 };
 

@@ -63,7 +63,7 @@ void TitleBar::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
 }
 
 const QMetaObject TitleBar::staticMetaObject = {
-    { &CWindow::staticMetaObject, qt_meta_stringdata_TitleBar.data,
+    { &CLabel::staticMetaObject, qt_meta_stringdata_TitleBar.data,
       qt_meta_data_TitleBar,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -78,12 +78,12 @@ void *TitleBar::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_TitleBar.stringdata0))
         return static_cast<void*>(const_cast< TitleBar*>(this));
-    return CWindow::qt_metacast(_clname);
+    return CLabel::qt_metacast(_clname);
 }
 
 int TitleBar::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = CWindow::qt_metacall(_c, _id, _a);
+    _id = CLabel::qt_metacall(_c, _id, _a);
     return _id;
 }
 QT_WARNING_POP

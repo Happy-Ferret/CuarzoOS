@@ -654,6 +654,8 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_window.cpp
 moc_window.cpp: ../../../System/Library/Frameworks/CFramework/include/CApplication.h \
 		../../../System/Library/Frameworks/CFramework/include/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -754,8 +756,6 @@ moc_window.cpp: ../../../System/Library/Frameworks/CFramework/include/CApplicati
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
-		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
@@ -819,6 +819,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Library/Frameworks/CFramework/include/CApplication.h \
 		../../../System/Library/Frameworks/CFramework/include/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -919,8 +921,6 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Li
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
-		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
@@ -971,6 +971,8 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Li
 window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Code/Crystals/ClientDemo/headers/window.h \
 		../../../System/Library/Frameworks/CFramework/include/CApplication.h \
 		../../../System/Library/Frameworks/CFramework/include/CCore.h \
+		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
+		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -1071,8 +1073,6 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
-		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
@@ -1121,7 +1121,16 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtCore/QRect \
 		/usr/local/Qt-5.9.1/include/QtCore/QSize \
 		/usr/local/Qt-5.9.1/include/QtCore/QSizeF \
-		/usr/local/Qt-5.9.1/include/QtGui/QTransform
+		/usr/local/Qt-5.9.1/include/QtGui/QTransform \
+		/usr/local/Qt-5.9.1/include/QtGui/QMovie \
+		/usr/local/Qt-5.9.1/include/QtGui/qmovie.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimagereader.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimageiohandler.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qplugin.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qpointer.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qjsonobject.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qjsonvalue.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qfactoryinterface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o ../../../../Code/Crystals/ClientDemo/sources/window.cpp
 
 moc_window.o: moc_window.cpp 

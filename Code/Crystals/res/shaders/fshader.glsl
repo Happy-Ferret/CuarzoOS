@@ -10,6 +10,8 @@ precision mediump float;
 precision mediump int;
 
 uniform int Mode;
+uniform vec4 Color;
+uniform bool OnlyColor;
 uniform vec2 Screen;
 uniform vec2 Size;
 uniform vec2 Position;
@@ -56,7 +58,10 @@ float borderRadius()
 
 void drawSurface()
 {
-    gl_FragColor =  texture2D(Texture,TextureCoordsOut) * borderRadius();
+    if( OnlyColor )
+        gl_FragColor =  Color * borderRadius();
+    else
+        gl_FragColor =  texture2D(Texture,TextureCoordsOut) * borderRadius();
 }
 
 void drawShadow()

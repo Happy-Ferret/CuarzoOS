@@ -14,7 +14,6 @@ public:
     CrystalsGui(); // Setup
     QLocalSocket *socket = new QLocalSocket(this); // Unix Socket for IPC with Crystals
     QList<TitleBar*>titleBars; // Stored title bars
-
     TitleBar *findTitlebarByIdAndPid(uint id, uint pid); // Returns the required TitleBar
 public slots:
 

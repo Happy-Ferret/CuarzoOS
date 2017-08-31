@@ -75,8 +75,8 @@ void CrystalsGui::newMessage()
             TitleBar *titleBar = new TitleBar();
             titleBar->surfaceID = message->forId;
             titleBar->processID = message->forPid;
-            titleBar->title->setText(message->title);
-            titleBar->setFixedWidth(message->width);
+            titleBar->setText(message->title);
+            titleBar->resize( message->width, 32 );
 
             titleBars.append(titleBar);
 
@@ -98,13 +98,13 @@ void CrystalsGui::newMessage()
         // Parse the message
         TitlebarWidthStruct *req = (TitlebarWidthStruct*)data.data();
         TitleBar *titleBar = findTitlebarByIdAndPid(req->forId,req->forPid);
-        titleBar->setFixedWidth(req->width);
+        titleBar->resize( req->width, 32 );
     }break;
     case TITLEBAR_TITLE:{
         // Parse the message
         TitlebarTitleStruct *req = (TitlebarTitleStruct*)data.data();
         TitleBar *titleBar = findTitlebarByIdAndPid(req->forId,req->forPid);
-        titleBar->title->setText(req->title);
+        titleBar->setText(req->title);
     }break;
 
     }

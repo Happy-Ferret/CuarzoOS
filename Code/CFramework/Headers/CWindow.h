@@ -1,5 +1,10 @@
 #include "CCore.h"
+#include "CLabel.h"
+#include "CPushButton.h"
+#include <QApplication>
 #include <QWidget>
+#include <QBoxLayout>
+#include <QMouseEvent>
 
 #ifndef CWINDOW
 #define CWINDOW
@@ -12,13 +17,14 @@ class CWindow: public QWidget
     Q_OBJECT
 
 public:
-    CWindow(QWidget *parent = nullptr);
+    CWindow();
     void move(const QPoint &pos);
     void move(int x, int y);
     void setWindowTitle(const QString &title);
     void setMode(unsigned int mode = WINDOW_MODE);
     void setBlur(bool mode);
-    void setWindowOpacity(uint opacity = 255);
+    void setWindowOpacity( float opacity = 1.0f );
+    void setCentralWidget( QWidget *widget );
 
     QString windowTitle();
     uint windowOpacity();
@@ -27,18 +33,49 @@ public:
 
     bool registeredSurface = false;
 
+    // Topbar items layout
+    QHBoxLayout *topBarContainer = new QHBoxLayout(topBarItems);
+
 signals:
     void positionChanged(const QPoint &pos);
-    void titleChanged(QString);
     void modeChanged(uint);
-    void opacityChanged(uint);
+    void opacityChanged(float);
     void blurStateChanged(bool);
+    void mouseGrabEvent();
+
 
 private:
-    QString localTitle = QString("");
+    void refreshtemsPositions();
+
+    // Separate the Titlebar from the central widget
+    QVBoxLayout *verticalLayout = new QVBoxLayout( this );
+
+    // Topbar widget
+    QWidget *topBar = new QWidget( this );
+
+    // Topbar items widget
+    QWidget *topBarItems = new QWidget( this );
+
+    // Topbar layout
+    QHBoxLayout *horizontalLayout= new QHBoxLayout(topBar);
+
+    // Title label
+    CLabel *_title = new CLabel( QApplication::applicationName(), topBar );
+
+    // Window buttons
+    CPushButton *closeButton, *minimizeButton, *expandButton;
+
+    // Resize event
+    void resizeEvent(QResizeEvent *);
+    bool eventFilter(QObject *watched, QEvent *event);
+
     uint localMode = WINDOW_MODE;
     uint localOpacity = 255;
     bool localBlur = false;
+
+
+
+
 };
 
 #endif

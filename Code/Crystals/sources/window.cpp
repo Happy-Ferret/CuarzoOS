@@ -12,10 +12,6 @@ Window::Window(Compositor *_compositor)
     // Drag event
     connect(compositor, &Compositor::dragStarted, this, &Window::startDrag);
 
-    connect(fpsTimer,SIGNAL(timeout()),this,SLOT(displayFps()));
-
-    fpsTimer->start(1);
-
     // Set screen
     QWindow::setScreen(QGuiApplication::primaryScreen());
 
@@ -70,6 +66,8 @@ void Window::initShaders()
     BlurIterationUniform = glGetUniformLocation(program.programId(), "BlurIteration");
     ShadowSizeUniform = glGetUniformLocation(program.programId(), "ShadowSize");
     ShadowIntensityUniform = glGetUniformLocation(program.programId(), "ShadowIntensity");
+    OnlyColorUniform = glGetUniformLocation(program.programId(), "OnlyColor");
+    ColorUniform = glGetUniformLocation(program.programId(), "Color");
 
 
 }
@@ -84,8 +82,8 @@ void Window::initializeGL()
     // Create offscreen texture
     glGenTextures(1,&offscreenTexture);
     glBindTexture(GL_TEXTURE_2D, offscreenTexture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     // Create the offscreen buffer
     glGenFramebuffers(1, &offscreenBuffer);
@@ -145,6 +143,14 @@ void Window::initializeGL()
     glVertexAttribPointer(VertexPositionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
     glVertexAttribPointer(VertexColorSlot, 4, GL_FLOAT, GL_FALSE,sizeof(Vertex), (GLvoid*) (sizeof(float) * 3));
     glVertexAttribPointer(TextureCoordsSlot, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) (sizeof(float) * 7));
+
+    // Create the titlebar buttons
+    QString path = QGuiApplication::applicationDirPath() + "/../Resources/Images/";
+
+    closeButtonTexture = new QOpenGLTexture( QImage( path + "window_close.png" ), QOpenGLTexture::DontGenerateMipMaps);
+    minimizeButtonTexture = new QOpenGLTexture( QImage( path + "window_minimize.png" ), QOpenGLTexture::DontGenerateMipMaps);
+    expandButtonTexture = new QOpenGLTexture( QImage( path + "window_expand.png" ), QOpenGLTexture::DontGenerateMipMaps);
+
 }
 
 void Window::drawBackground()
@@ -160,40 +166,33 @@ void Window::drawBackground()
 void Window::drawWindow(View *view)
 {
 
-
     QRectF viewRect = QRectF(view->position().x(),view->position().y(),view->size().width(),view->size().height());
 
     // Draws  blur
-    if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, false, false, 8.0);
+    if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, true, true, 8.0);
 
     // Draws  shadow
-    drawShadow( QRectF( viewRect.x(), viewRect.y() -  view->titleBar->size().height(), viewRect.width(), viewRect.height() +  view->titleBar->size().height()), 0.15, view->opacity, 200.0, true, true, true, true, 8.0);
+    drawShadow( viewRect,  0.15, view->opacity, 200.0, true, true, true, true, 8.0);
 
     // Selects blur framebuffer
     glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
 
     // Draws surface
-    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), false, false , true, true, 8.0, false);
+    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), true, true , true, true, 8.0, false);
 
-    // Draws title bar
-   drawSurface( QRectF(
-                    view->position().x(),
-                    view->position().y() - view->titleBar->size().height(),
-                    view->size().width(),
-                    view->titleBar->size().height()), 255, view->titleBar->getTexture()->textureId(), true, true , false, false, 8.0, false);
-
+    // Saves previus position
     view->previusPosition = view->position();
 }
 
 void Window::drawParadiso()
 {
     QRect rect = QRect( 0, 0, width(), paradisoView->size().height());
-    drawBlur(rect, 0.7, 0.6, 0.3, 1.0, false, false, false, false, 0.0);
+    drawBlur( rect, 0.7, 0.6, 0.3, 1.0, false, false, false, false, 0.0);
     drawSurface( rect, 1.0, paradisoView->getTexture()->textureId(), false, false, false, false, 0.0, false );
     drawShadow( rect, 0.1, 0.5, 50, false, false, false, false, 0.0);
 }
 
-void Window::drawSurface(QRectF rect, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted)
+void Window::drawSurface(QRectF rect, uint opacity, GLuint textureId, bool TL, bool TR, bool BR, bool BL, float borderRadius, bool inverted, bool solidColor, QColor color )
 {
 
     // Send the vertex data
@@ -223,15 +222,28 @@ void Window::drawSurface(QRectF rect, uint opacity, GLuint textureId, bool TL, b
     // Sets render size
     glViewport( 0, 0, width(), height());
 
-    // Select current view texture
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    // Enable or disable solid color
+    glUniform1ui( OnlyColorUniform, solidColor);
+
+    if ( ! solidColor )
+    {
+        // Select current view texture
+        glBindTexture(GL_TEXTURE_2D, textureId);
+    }
+    else
+    {
+        // Set surface color
+        glUniform4f( ColorUniform, color.redF(), color.greenF(), color.blueF(), color.alphaF());
+    }
 
     // Set OpenGL Mode
-    glUniform1i(ModeUniform,SHADER_DRAW_SURFACE);
+    glUniform1i( ModeUniform, SHADER_DRAW_SURFACE );
+
 
     // Draw Surface
-    glDrawArrays(GL_TRIANGLE_FAN,0,4);
+    glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 }
+
 
 void Window::drawBlur(const QRectF &rect, float whiteIntensity, float blurLevel, float quality, uint opacity, bool TL, bool TR, bool BR, bool BL, float borderRadius)
 {
@@ -373,7 +385,6 @@ void Window::drawFinalView()
    // Draw Final View
    drawSurface(QRectF(0,0,width(),height()), 1.0, offscreenTexture, false, false, false, false , 0.0, true);
 
-
 }
 
 
@@ -381,9 +392,6 @@ void Window::setBackground(QString path)
 {
 
     QOpenGLTexture *backgroundTexture = new QOpenGLTexture( QImage(path), QOpenGLTexture::DontGenerateMipMaps);
-    backgroundTexture->setMinificationFilter(QOpenGLTexture::Linear);
-    backgroundTexture->setMagnificationFilter(QOpenGLTexture::Linear);
-
     background->setImage(backgroundTexture);
     background->setMode(Image);
     background->setImageMode(KeepRatioToFill);
@@ -394,8 +402,6 @@ void Window::setBackground(QString path)
 
 void Window::paintGL()
 {
-
-    fps++;
 
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -416,11 +422,14 @@ void Window::paintGL()
     Q_FOREACH (View *view, compositor->views) {
 
         // Skip Special views
-        if (view->isCursor() || !view->configured || view->role == TITLEBAR_MODE || view->role == PARADISO_MODE || view->role == FRAMELESS_MODE)
+        if (view->isCursor() || !view->configured || view->role == PARADISO_MODE || view->role == FRAMELESS_MODE)
             continue;
 
-        // Skip if no texture
+        // Gets the texture
         QOpenGLTexture *texture = view->getTexture();
+
+        // Skip if no texture
+        if( !texture ) return;
 
         // Select current surface
         QWaylandSurface *surface = view->surface();
@@ -438,9 +447,9 @@ void Window::paintGL()
                 {
                     mouseView->setPosition(QPointF(initialViewPosition.x() - s.width() + initialViewSize.width(), initialViewPosition.y()));
                 }
+
                 // Draw view
                 drawWindow(view);
-
             }
         }
     }
@@ -501,13 +510,6 @@ void Window::startDrag(View *dragIcon)
     compositor->raise(dragIcon);
 }
 
-void Window::displayFps()
-{
-    this->setTitle(QString::number(fps));
-    fps = 0;
-    fpsTimer->start(1000);
-}
-
 // This method is called just once
 void Window::calcfullRectVertices()
 {
@@ -549,40 +551,46 @@ void Window::calcfullRectVertices()
 
 void Window::mousePressEvent(QMouseEvent *e)
 {
+    mousePressing = true;
 
     // If there is a view
-    if (mouseView)
+    if ( mouseView )
     {
         QPointF pos = mouseView->position();
         QSize siz = mouseView->size();
         int margin = 5;
+        bool isWindow = mouseView->role == WINDOW_MODE;
 
-        // TopLeft corner
-        if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        // Top Left corner
+        if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin &&  isWindow )
         {
             setCursor(Qt::SizeFDiagCursor);
             return;
         }
-        // TopRight corner
-        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+
+        // Top Right corner
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin &&  isWindow )
         {
             setCursor(Qt::SizeBDiagCursor);
             return;
         }
-        // BottomRight corner
-        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+
+        // Bottom Right corner
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin &&  isWindow )
         {
             setCursor(Qt::SizeFDiagCursor);
             return;
         }
-        // BottomLeft corner
-        else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+
+        // Bottom Left corner
+        else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin &&  isWindow )
         {
             setCursor(Qt::SizeBDiagCursor);
             return;
         }
+
         // Left border
-        else if ( e->pos().x() - margin <= pos.x())
+        else if ( e->pos().x() - margin <= pos.x() &&  isWindow )
         {
             initialViewSize = mouseView->size();
             initialViewPosition = mouseView->position();
@@ -590,21 +598,24 @@ void Window::mousePressEvent(QMouseEvent *e)
             grabState = LeftResize;
             return;
         }
+
         // Right border
-        else if ( e->pos().x() + margin >= pos.x() + siz.width())
+        else if ( e->pos().x() + margin >= pos.x() + siz.width() &&  isWindow )
         {
             initialViewSize = mouseView->size();
             initialMousePos = e->pos();
             grabState = RightResize;
             return;
         }
+
         // Top border
-        else if ( e->pos().y() - margin <= pos.y() && mouseView->role == TITLEBAR_MODE)
+        else if ( e->pos().y() - margin <= pos.y() && isWindow )
         {
             setCursor(Qt::SizeVerCursor);
         }
+
         // Bottom border
-        else if ( e->pos().y() + margin >= pos.y() + siz.height() && mouseView->role == WINDOW_MODE)
+        else if ( e->pos().y() + margin >= pos.y() + siz.height() && isWindow )
         {
             initialViewSize = mouseView->size();
             initialMousePos = e->pos();
@@ -613,24 +624,14 @@ void Window::mousePressEvent(QMouseEvent *e)
         }
         else
         {
-            // Raise views
-            if(mouseView->role == TITLEBAR_MODE)
-            {
-                compositor->raise(mouseView->titleBarParent);
-
-                // Save mouse press position
-                initialViewPosition = mouseView->titleBarParent->position();
-                initialMousePos = e->pos();
-                mouseOffset = e->localPos() - mouseView->position();
-                grabState = MoveGrab;
-            }
             if(mouseView->role == WINDOW_MODE)
             {
-                compositor->raise(mouseView->titleBar);
+                compositor->raise(mouseView);
 
                 // Save mouse press position
                 initialMousePos = e->pos();
                 mouseOffset = e->localPos() - mouseView->position();
+                initialViewPosition = mouseView->position();
             }
         }
         compositor->defaultSeat()->setKeyboardFocus(mouseView->surface());
@@ -644,13 +645,14 @@ void Window::mousePressEvent(QMouseEvent *e)
 
 void Window::mouseReleaseEvent(QMouseEvent *e)
 {
+    mousePressing = false;
     grabState = NoGrab;
     sendMouseEvent(e, mouseView);
 }
 
 void Window::mouseMoveEvent(QMouseEvent *e)
 {
-    switch (grabState)
+    switch ( grabState )
     {
     case NoGrab: {
 
@@ -664,48 +666,50 @@ void Window::mouseMoveEvent(QMouseEvent *e)
         QPointF pos = mouseView->position();
         QSize siz = mouseView->size();
         int margin = 5;
+        bool isWindow = mouseView->role == WINDOW_MODE;
+
 
         // TopLeft corner
-        if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && isWindow )
         {
             setCursor(Qt::SizeFDiagCursor);
             return;
         }
         // TopRight corner
-        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin && mouseView->role == TITLEBAR_MODE)
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin && isWindow )
         {
             setCursor(Qt::SizeBDiagCursor);
             return;
         }
         // BottomRight corner
-        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+        else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin && isWindow )
         {
             setCursor(Qt::SizeFDiagCursor);
             return;
         }
         // BottomLeft corner
-        else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin && mouseView->role == WINDOW_MODE)
+        else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin && isWindow )
         {
             setCursor(Qt::SizeBDiagCursor);
             return;
         }
         // Left border
-        else if ( e->pos().x() - margin <= pos.x())
+        else if ( e->pos().x() - margin <= pos.x() && isWindow )
         {
             setCursor(Qt::SizeHorCursor);
         }
         // Right border
-        else if ( e->pos().x() + margin >= pos.x() + siz.width())
+        else if ( e->pos().x() + margin >= pos.x() + siz.width() && isWindow )
         {
             setCursor(Qt::SizeHorCursor);
         }
         // Top border
-        else if ( e->pos().y() - margin <= pos.y() && mouseView->role == TITLEBAR_MODE)
+        else if ( e->pos().y() - margin <= pos.y() && isWindow )
         {
             setCursor(Qt::SizeVerCursor);
         }
         // Bottom border
-        else if ( e->pos().y() + margin >= pos.y() + siz.height() && mouseView->role == WINDOW_MODE)
+        else if ( e->pos().y() + margin >= pos.y() + siz.height() && isWindow )
         {
             setCursor(Qt::SizeVerCursor);
         }
@@ -717,10 +721,14 @@ void Window::mouseMoveEvent(QMouseEvent *e)
     }
         break;
     case MoveGrab: {
-        mouseView->titleBarParent->setPosition(initialViewPosition + e->localPos() - initialMousePos);
+        mouseView->setPosition(initialViewPosition + e->localPos() - initialMousePos);
         update();
     }
         break;
+    case TopResize:
+    {
+        //mouseView->setSize(QSize(initialViewSize.width() - e->localPos().x() + initialMousePos.x(), initialViewSize.height()));
+    }
     case LeftResize:
     {
         mouseView->setSize(QSize(initialViewSize.width() - e->localPos().x() + initialMousePos.x(), initialViewSize.height()));
@@ -769,11 +777,21 @@ void Window::sendMouseEvent(QMouseEvent *e, View *target)
     compositor->handleMouseEvent(target, &viewEvent);
 }
 
+void Window::mouseGrabBegin()
+{
+    if( mousePressing )
+    {
+        grabState = MoveGrab;
+    }
+}
+
 // Send key press event to the compositor
 void Window::keyPressEvent(QKeyEvent *e)
 {
     if(e->key() == Qt::Key_0)
         compositor->man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+    if(e->key() == Qt::Key_Escape)
+        QGuiApplication::exit();
 
     compositor->defaultSeat()->sendKeyPressEvent(e->nativeScanCode());
 }

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_View_t {
-    QByteArrayData data[8];
-    char stringdata0[74];
+    QByteArrayData data[6];
+    char stringdata0[52];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,14 +35,12 @@ QT_MOC_LITERAL(0, 0, 4), // "View"
 QT_MOC_LITERAL(1, 5, 11), // "roleChanged"
 QT_MOC_LITERAL(2, 17, 0), // ""
 QT_MOC_LITERAL(3, 18, 7), // "newRole"
-QT_MOC_LITERAL(4, 26, 12), // "titleChanged"
-QT_MOC_LITERAL(5, 39, 8), // "newTitle"
-QT_MOC_LITERAL(6, 48, 14), // "opacityChanged"
-QT_MOC_LITERAL(7, 63, 10) // "newOpacity"
+QT_MOC_LITERAL(4, 26, 14), // "opacityChanged"
+QT_MOC_LITERAL(5, 41, 10) // "newOpacity"
 
     },
-    "View\0roleChanged\0\0newRole\0titleChanged\0"
-    "newTitle\0opacityChanged\0newOpacity"
+    "View\0roleChanged\0\0newRole\0opacityChanged\0"
+    "newOpacity"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,22 +50,20 @@ static const uint qt_meta_data_View[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       3,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   29,    2, 0x06 /* Public */,
-       4,    1,   32,    2, 0x06 /* Public */,
-       6,    1,   35,    2, 0x06 /* Public */,
+       1,    1,   24,    2, 0x06 /* Public */,
+       4,    1,   27,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::UInt,    3,
-    QMetaType::Void, QMetaType::QString,    5,
-    QMetaType::Void, QMetaType::UInt,    7,
+    QMetaType::Void, QMetaType::UInt,    5,
 
        0        // eod
 };
@@ -79,8 +75,7 @@ void View::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->roleChanged((*reinterpret_cast< uint(*)>(_a[1]))); break;
-        case 1: _t->titleChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 2: _t->opacityChanged((*reinterpret_cast< uint(*)>(_a[1]))); break;
+        case 1: _t->opacityChanged((*reinterpret_cast< uint(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -94,16 +89,9 @@ void View::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
             }
         }
         {
-            typedef void (View::*_t)(const QString & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&View::titleChanged)) {
-                *result = 1;
-                return;
-            }
-        }
-        {
             typedef void (View::*_t)(uint );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&View::opacityChanged)) {
-                *result = 2;
+                *result = 1;
                 return;
             }
         }
@@ -135,13 +123,13 @@ int View::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }
@@ -154,17 +142,10 @@ void View::roleChanged(uint _t1)
 }
 
 // SIGNAL 1
-void View::titleChanged(const QString & _t1)
-{
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 1, _a);
-}
-
-// SIGNAL 2
 void View::opacityChanged(uint _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

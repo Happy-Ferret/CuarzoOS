@@ -1,6 +1,5 @@
 #ifndef CCORE
 #define CCORE
-#include <QWidget>
 
 /* ------------------ CCore ------------------ */
 
@@ -15,164 +14,191 @@
 
 #define WINDOW_MODE 0
 #define FRAMELESS_MODE 1
-#define TOPBAR_MODE 2
-#define FILEMANAGER_MODE 3
-#define DOCK_MODE 4
-#define PARADISO_MODE 5
+#define DOCK_MODE 2
+#define PARADISO_MODE 3
 
 
-// Cuarzo Colors
-#define BLUE QString("#009DDC")
-#define VIOLET QString("#963D96")
-#define RED QString("#E03A3E")
-#define GREEN QString("#61BE4B")
-#define YELLOW QString("#FCB827")
+// Materialize Colors
+#define RED QString("#f44336")
+#define PINK QString("#e91e63")
+#define PURPLE QString("#9c27b0")
+#define DEEP_PURPLE QString("#673ab7")
+#define INDIGO QString("#3f51b5")
+#define BLUE QString("#2196f3")
+#define LIGHT_BLUE QString("#03a9f4")
+#define CYAN QString("#00bcd4")
+#define TEAL QString("#009688")
+#define GREEN QString("#4caf50")
+#define LIGHT_GREEN QString("#8bc34a")
+#define LIME QString("#cddc39")
+#define YELLOW QString("#ffeb3b")
+#define AMBER QString("#ffc107")
+#define ORANGE QString("#ff9800")
+#define DEEP_ORANGE QString("#ff5722")
+#define BROWN QString("#795548")
+#define GRAY QString("#9e9e9e")
+#define BLUE_GRAY QString("#607d8b")
 
 
 // System root path ( For developing propouse )
 
 #define SYSTEM_PATH QString("/home/e/Escritorio/CuarzoOS/CuarzoOS")
 
-/* ------------------------------------------------------------------
-                       Messages to Crystals
- ------------------------------------------------------------------ */
 
-// Register App
+/* ------------------ Messages From Clients ------------------ */
+
 #define REGISTER_APP 0
-typedef struct{
-    unsigned int type = REGISTER_APP; // Message type
-    unsigned int pid; // App proccess Id
-    unsigned int appType; // Application Type
-}RegisterAppStruct;
-
-// Configure Surface
 #define SURFACE_CONFIG 1
-typedef struct{
-    unsigned int type = SURFACE_CONFIG; // Message type
-    unsigned int id; // Surface Id
-    unsigned int role; // Surface Role
-    unsigned int x; // X pos
-    unsigned int y; // Y pos
-    unsigned int opacity; // Opacity
-    char title[128]; // Surface Title
-}SurfaceConfigStruct;
-
-// Send Surface Role
 #define SURFACE_ROLE 2
-typedef struct{
-    unsigned int type = SURFACE_ROLE; // Message type
-    unsigned int id; // Surface Id
-    unsigned int role; // Surface Role
-}SurfaceRoleStruct;
-
-// Send Surface Position
 #define SURFACE_POS 3
-typedef struct{
-    unsigned int type = SURFACE_POS; // Message type
-    unsigned int id; // Surface Id
-    int x; // X cords
-    int y; // Y cords
-}SurfacePosStruct;
-
-// Send Surface Title
-#define SURFACE_TITLE 4
-typedef struct{
-    unsigned int type = SURFACE_TITLE; // Message type
-    unsigned int id; // Surface Id
-    char title[128]; // Surface Title
-}SurfaceTitleStruct;
-
-// Send Surface Opacity
+#define SURFACE_GRAB 4
 #define SURFACE_OPACITY 5
-typedef struct{
-    unsigned int type = SURFACE_OPACITY; // Message type
-    unsigned int id; // Surface Id
-    unsigned int opacity; // Surface Opacity
-}SurfaceOpacityStruct;
+#define SURFACE_MINIMIZE 6
+#define SURFACE_EXPAND 7
+#define SURFACE_BLUR_CREATE 8
+#define SURFACE_BLUR_TINT 9
+#define SURFACE_BLUR_LEVEL 10
+#define SURFACE_BLUR_RECT 11
+#define SURFACE_BLUR_REMOVE 12
 
-// Send Surface blur Request
-#define SURFACE_BLUR 6
-typedef struct{
-    unsigned int type = SURFACE_BLUR; // Message type
-    unsigned int id; // Surface Id
-    bool activate; // Turn ON/OFF blur
-}SurfaceBlurStruct;
+typedef struct
+{
+    unsigned int type = REGISTER_APP;
+    unsigned int pid;
+    unsigned int appType;
+}
+RegisterAppStruct;
 
-// Send Surface Minimize
-#define SURFACE_MINIMIZE 7
-typedef struct{
-    unsigned int type = SURFACE_MINIMIZE; // Message type
-    unsigned int id; // Surface Id
-    bool minimize; // Turn ON/OFF minimize
-}SurfaceMinimizeStruct;
+typedef struct
+{
+    unsigned int type = SURFACE_CONFIG;
+    unsigned int id;
+    unsigned int role;
+    int x;
+    int y;
+    unsigned int opacity;
+}
+SurfaceConfigStruct;
 
-// Send Surface Expand
-#define SURFACE_EXPAND 8
-typedef struct{
-    unsigned int type = SURFACE_EXPAND; // Message type
-    unsigned int id; // Surface Id
-    bool expand; // Turn ON/OFF expand
+typedef struct
+{
+    unsigned int type = SURFACE_ROLE;
+    unsigned int id;
+    unsigned int role;
+}
+SurfaceRoleStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_POS;
+    unsigned int id;
+    int x;
+    int y;
+}
+SurfacePosStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_GRAB;
+    unsigned int id;
+}
+SurfaceGrabStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_OPACITY;
+    unsigned int id;
+    unsigned int opacity;
+}
+SurfaceOpacityStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_MINIMIZE;
+    unsigned int id;
+    bool minimize;
+}
+SurfaceMinimizeStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_EXPAND;
+    unsigned int id;
+    bool expand;
     unsigned int expandMode;
-}SurfaceExpandStruct;
+}
+SurfaceExpandStruct;
 
-/* ------------------------------------------------------------------
-                       Messages from Crystals
- ------------------------------------------------------------------ */
+typedef struct
+{
+    unsigned int type = SURFACE_BLUR_CREATE;
+    unsigned int surfaceId;
+    unsigned int blurId;
+    unsigned int x;
+    unsigned int y;
+    unsigned int w;
+    unsigned int h;
+    float tint;
+    float level;
+}
+SurfaceBlurCreateStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_BLUR_TINT;
+    unsigned int surfaceId;
+    unsigned int blurId;
+    float tint;
+}
+SurfaceBlurTintStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_BLUR_LEVEL;
+    unsigned int surfaceId;
+    unsigned int blurId;
+    float level;
+}
+SurfaceBlurLevelStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_BLUR_REMOVE;
+    unsigned int surfaceId;
+    unsigned int blurId;
+}
+SurfaceBlurRemoveStruct;
 
 
-// App Registered Event
+
+/* ------------------ Messages to Clients ------------------ */
+
 #define REGISTERED_APP 0
-typedef struct{
-    unsigned int type; // Message type
-}RegisteredAppStruct;
-
-// Surface Id Registered
 #define REGISTERED_SURFACE 1
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // Message type
-}RegisteredSurfaceStruct;
+#define SURFACE_SCALED 2
 
-// Surface Moved
-#define SURFACE_MOVED 2
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // Surface id
-    int x; // X position
-    int y; // Y position
-}SurfaceMovedStruct;
+typedef struct
+{
+    unsigned int type = REGISTERED_APP;
+}
+RegisteredAppStruct;
 
-// Surface Escaled
-#define SURFACE_SCALED 3
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // Surface id
-    unsigned int width; // X position
-    unsigned  int height; // Y position
-}SurfaceScaledStruct;
+typedef struct
+{
+    unsigned int type = REGISTERED_SURFACE;
+    unsigned int id;
+}
+RegisteredSurfaceStruct;
 
-// Surface Closed
-#define SURFACE_CLOSED 4
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // Surface id
-}SurfaceClosedStruct;
+typedef struct
+{
+    unsigned int type = SURFACE_SCALED;
+    unsigned int id;
+    unsigned int width;
+    unsigned  int height;
+}
+SurfaceScaledStruct;
 
-// Surface Minimized
-#define SURFACE_MINIMIZED 5
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // Surface id
-    bool state; // Minimize Option
-}SurfaceMinimizedStruct;
-
-// Surface Expanded
-#define SURFACE_EXPANDED 6
-typedef struct{
-    unsigned int type; // Message type
-    unsigned int id; // Surface id
-    unsigned int mode; // Expand mode
-}SurfaceExpandedStruct;
 
 #endif
 

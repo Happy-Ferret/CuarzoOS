@@ -13,6 +13,7 @@ CProtocol::CProtocol(QApplication *)
 
     // Wait until connect to Crystals
     socket->waitForReadyRead();
+
 }
 
 void CProtocol::connected()
@@ -28,7 +29,6 @@ void CProtocol::connected()
     // Send message
     socket->write(data,sizeof(RegisterAppStruct));
 
-    qDebug() << "Connected to Crystals";
 }
 
 // Message from Crystals
@@ -53,13 +53,17 @@ void CProtocol::messageIn()
         // Gets the widget
         CWindow *widget = findCWindowById(reply->id);
 
+        if ( widget == nullptr ) return;
+
+        // Save the wiidget
+        windows.insert( reply->id, widget );
+
         // Send Surface Configuration
         SurfaceConfigStruct conf;
         conf.id = widget ->winId();
         conf.x = widget->pos().x();
         conf.y = widget->pos().y();
         conf.role = widget->mode();
-        strcpy(conf.title,widget->windowTitle().toUtf8());
 
         // Copy message to a char pointer
         char data[sizeof(SurfaceConfigStruct)];
@@ -70,10 +74,10 @@ void CProtocol::messageIn()
 
         // Connects widget's events
         connect(widget,SIGNAL(positionChanged(QPoint)),this,SLOT(sendPosition(QPoint)));
-        connect(widget,SIGNAL(titleChanged(QString)),this,SLOT(titleChanged(QString)));
         connect(widget,SIGNAL(modeChanged(uint)),this,SLOT(modeChanged(uint)));
         connect(widget,SIGNAL(blurStateChanged(bool)),this,SLOT(blurStateChanged(bool)));
-        connect(widget,SIGNAL(opacityChanged(uint)),this,SLOT(opacityChanged(uint)));
+        connect(widget,SIGNAL(opacityChanged(float)),this,SLOT(opacityChanged(float)));
+        connect(widget,SIGNAL(mouseGrabEvent()), this,SLOT(mouseGrab()));
 
 
     }break;
@@ -82,10 +86,10 @@ void CProtocol::messageIn()
         // Parse Message
         SurfaceScaledStruct *req = (SurfaceScaledStruct*)message.data();
 
-        // Gets the widget
-        CWindow *widget = findCWindowById(req->id);
+        if ( !windows.contains(req->id) ) return;
 
-        qDebug() << req->height;
+        // Gets the widget
+        CWindow *widget = windows[req->id];
 
         // Apply the changes
         widget->resize(req->width,req->height);
@@ -115,22 +119,6 @@ void CProtocol::sendPosition(const QPoint &pos)
     socket->write(data,sizeof(SurfacePosStruct));
 }
 
-void CProtocol::titleChanged(QString title)
-{
-    CWindow *widget = qobject_cast<CWindow*>(sender());
-
-    // Send surface title to Crystals
-    SurfaceTitleStruct message;
-    message.id = widget->winId();
-    strcpy(message.title,title.toUtf8());
-
-    // Copy message to a char pointer
-    char data[sizeof(SurfaceTitleStruct)];
-    memcpy(data,&message,sizeof(SurfaceTitleStruct));
-
-    // Send message
-    socket->write(data,sizeof(SurfaceTitleStruct));
-}
 
 void CProtocol::modeChanged(uint mode)
 {
@@ -149,7 +137,7 @@ void CProtocol::modeChanged(uint mode)
     socket->write(data,sizeof(SurfaceRoleStruct));
 }
 
-void CProtocol::opacityChanged(uint opacity)
+void CProtocol::opacityChanged(float opacity)
 {
     CWindow *widget = qobject_cast<CWindow*>(sender());
 
@@ -170,6 +158,7 @@ void CProtocol::blurStateChanged(bool mode)
 {
     CWindow *widget = qobject_cast<CWindow*>(sender());
 
+    /*
     // Send surface title to Crystals
     SurfaceBlurStruct message;
     message.id = widget->winId();
@@ -181,12 +170,34 @@ void CProtocol::blurStateChanged(bool mode)
 
     // Send message
     socket->write(data,sizeof(SurfaceBlurStruct));
+    */
+}
+
+void CProtocol::mouseGrab()
+{
+    CWindow *widget = qobject_cast<CWindow*>(sender());
+
+    // Send surface title to Crystals
+    SurfaceGrabStruct message;
+    message.id = widget->winId();
+
+    // Copy message to a char pointer
+    char data[sizeof(SurfaceGrabStruct)];
+    memcpy(data,&message,sizeof(SurfaceGrabStruct));
+
+    // Send message
+    socket->write(data,sizeof(SurfaceGrabStruct));
+
 }
 
 // Search the registered widget
 CWindow *CProtocol::findCWindowById(uint id)
 {
     Q_FOREACH(QWidget *wid, QApplication::allWidgets())
+    {
         if(wid->winId() == id)
            return qobject_cast<CWindow*>(wid);
+    }
+
+    return nullptr;
 }

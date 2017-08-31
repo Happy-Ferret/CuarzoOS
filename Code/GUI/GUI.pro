@@ -7,12 +7,10 @@ LIBS += -L/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramew
 HEADERS += \
     Headers/crystalsgui.h \
     Headers/headers.h \
-    Headers/titlebar.h \
-    Headers/titlebarbutton.h
+    Headers/titlebar.h
 
 SOURCES += \
     Sources/crystalsgui.cpp \
     Sources/main.cpp \
-    Sources/titlebar.cpp \
-    Sources/titlebarbutton.cpp
+    Sources/titlebar.cpp
 

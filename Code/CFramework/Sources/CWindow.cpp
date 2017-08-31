@@ -1,17 +1,55 @@
 #include "CWindow.h"
+#include <QDebug>
 
-
-CWindow::CWindow(QWidget *parent)
+CWindow::CWindow()
 {
     // Wrongly used to identify a surface
     QWidget::setWindowTitle(QString::number(winId()));
+
+    // Prevent app crash
+    move(winId(),winId());
 
     // Deletes blue Qt frame
     setWindowFlags(Qt::FramelessWindowHint);
 
     // Asigns parent
-    QWidget::setParent(parent);
+    QWidget::setParent(nullptr);
 
+    // Window icons
+    QString path = SYSTEM_PATH + "/System/Library/Icons/Crystals/";
+
+    closeButton = new CPushButton( QPixmap( path + "window_close.png" ) );
+    minimizeButton = new CPushButton( QPixmap( path + "window_minimize.png" ) );
+    expandButton = new CPushButton( QPixmap( path + "window_expand.png" ) );
+
+    QSize winBtn(24,24);
+
+    closeButton->setFixedSize( 30, 30 );
+    closeButton->setIconSize( winBtn );
+    minimizeButton->setFixedSize( 30, 30 );
+    minimizeButton->setIconSize( winBtn );
+    expandButton->setFixedSize( 30, 30 );
+    expandButton->setIconSize( winBtn );
+
+    horizontalLayout->setMargin(6);
+    horizontalLayout->addWidget(closeButton);
+    horizontalLayout->addWidget(minimizeButton);
+    horizontalLayout->addWidget(expandButton);
+    horizontalLayout->addWidget( topBarItems , 1);
+
+    _title->setAlignment( Qt::AlignCenter );
+    _title->enableEllipsis(true);
+    topBar->setObjectName("QZTP");
+    topBar->setStyleSheet("#QZTP{background:qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #EEE , stop:1 #DDD);}");
+    topBar->setAutoFillBackground(true);
+
+    verticalLayout->addWidget(topBar,0,Qt::AlignTop);
+    verticalLayout->setMargin(0);
+    verticalLayout->setSpacing(0);
+
+    topBar->installEventFilter(this);
+    installEventFilter(this);
+    refreshtemsPositions();
 }
 
 // Assign and send position to Crystals
@@ -29,14 +67,13 @@ void CWindow::move(int x, int y)
 // Sends title to Crystals
 void CWindow::setWindowTitle(const QString &title)
 {
-    localTitle = title;
-    titleChanged(title);
+    _title->setText(title);
 }
 
 // Gets local title
 QString CWindow::windowTitle()
 {
-    return localTitle;
+    return _title->text();
 }
 
 // Sends surface mode
@@ -57,14 +94,11 @@ void CWindow::setBlur(bool mode)
 {
     localBlur = mode;
     blurStateChanged(mode);
+
     if(mode)
-    {
         setPalette(Qt::transparent);
-    }
     else
-    {
         setPalette(Qt::white);
-    }
 }
 
 // Gets blur state
@@ -73,12 +107,39 @@ bool CWindow::blurState()
     return localBlur;
 }
 
+void CWindow::refreshtemsPositions()
+{
+    _title->resize(topBar->width() - 300, topBar->height());
+    _title->move( 150, 0 );
+}
+
+void CWindow::resizeEvent(QResizeEvent *)
+{
+    refreshtemsPositions();
+}
+
+bool CWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type() == QEvent::MouseButtonPress && ( watched == topBar || watched == _title || watched == topBarItems ))
+    {
+        mouseGrabEvent();
+        return true;
+    }
+    return false;
+}
+
+
 
 // Set surface Opacity
-void CWindow::setWindowOpacity(uint opacity)
+void CWindow::setWindowOpacity(float opacity)
 {
     localOpacity = opacity;
     opacityChanged(opacity);
+}
+
+void CWindow::setCentralWidget(QWidget *widget)
+{
+    verticalLayout->insertWidget( 1, widget, 1 );
 }
 
 // Gets surface opacity

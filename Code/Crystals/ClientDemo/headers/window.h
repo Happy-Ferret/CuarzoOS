@@ -17,7 +17,6 @@ class Window : public CWindow
     Q_OBJECT
 public:
     Window();
-
     CPushButton *home = new CPushButton("Icon and Text",QPixmap("/home/e/icon.svg"));
     CPushButton *wel = new CPushButton(QPixmap("/home/e/icon.svg"),this);
 
@@ -31,7 +30,9 @@ public:
 
     QLabel *movieFrame = new QLabel(this);
 
-    QHBoxLayout *layout = new QHBoxLayout(this);
+    QWidget *widget = new QWidget(this);
+
+    QHBoxLayout *layout = new QHBoxLayout(widget);
 
 
 public slots:

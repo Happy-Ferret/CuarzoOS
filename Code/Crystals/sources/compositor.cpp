@@ -4,7 +4,8 @@
 
 Compositor::Compositor():QWaylandCompositor()
 {
-    // Creates the compositor
+
+    // Start compositor
     create();
 
     // Set the screen resolution
@@ -13,7 +14,7 @@ Compositor::Compositor():QWaylandCompositor()
     // Delete previusly created unix sockets server
     server->removeServer("com.cuarzo.crystals");
 
-    // Creates the unix sockets server
+    // Creates the new unix sockets server
     server->listen("com.cuarzo.crystals");
 
     // Event when wayland surface is created
@@ -49,8 +50,6 @@ void Compositor::newClientConnected()
     // Event when socket sends a message
     connect(socket,SIGNAL(messageIn()),this,SLOT(newClientMessage()));
 
-    // Prints the event
-    qDebug()<<"Client Connected";
 }
 
 // New client Unix Message ( Crystals messaging protocol )
@@ -67,13 +66,13 @@ void Compositor::newClientMessage()
     unsigned int type = *(unsigned int*)data.mid(0,sizeof(unsigned int)).data();
 
     // Switch for message types
-    switch (type) {
+    switch ( type ) {
 
         // Register App ( Asociate the client process id with the socket )
         case REGISTER_APP:{
 
             // Parse the message
-            RegisterAppStruct *message = (RegisterAppStruct*)data.data();
+            RegisterAppStruct *message = ( RegisterAppStruct * ) data.data();
 
             // Asociate client to this socket
             socket->processID = message->pid;
@@ -81,21 +80,8 @@ void Compositor::newClientMessage()
             // Assigns the application type
             socket->appType = message->appType;
 
-            // If is the Crystals Gui Application
-            if(socket->appType  == CRYSTALS_TYPE)
-            {
-                // Save socket
-                crystalsGuiSocket = socket;
-
-                // Now can open apps
-                readyToLaunchApps();
-
-                // Prints the event
-                qDebug() << "Crystals Gui Connected";
-            }
-
             // If is the Paradiso Application
-             else if(socket->appType  == PARADISO_TYPE)
+            if( socket->appType  == PARADISO_TYPE )
             {
                 // Save socket
                 paradisoSocket = socket;
@@ -103,8 +89,6 @@ void Compositor::newClientMessage()
                 // Now can open apps
                 readyToLaunchApps();
 
-                // Prints the event
-                qDebug() << "Paradiso Connected";
             }
 
             // Sends confirmation response
@@ -117,37 +101,36 @@ void Compositor::newClientMessage()
             // Send message
             socket->socket->write(data,sizeof(RegisteredAppStruct));
 
-            // Prints the event
-            qDebug() << "App registered PID: " + QString::number(socket->processID);
 
         }break;
 
-        // Configure a surface ( Size, Position, Title, etc )
+        // Full initial surface configuration ( Size, Position, Opacity, etc )
         case SURFACE_CONFIG:{
 
             // Parse the message
             SurfaceConfigStruct *message = (SurfaceConfigStruct*)data.data();
 
             // Find view that matches the given surface id
-            View *view = findViewByIdAndPid(message->id,socket->processID);
+            View *view = findViewByIdAndPid( message->id, socket->processID );
 
             // Assign the surface position
-            view->setPosition(QPointF(message->x,message->y));
-
-            // Assign surface title
-            view->title = message->title;
+            view->setPosition( QPointF( message->x, message->y ) );
 
             // Assign the surface role
-            view->setRole(message->role);
+            view->setRole( message->role );
 
-            if(message->role == PARADISO_MODE)
+            // Flag the surface ass configured
+            view->configured = true;
+
+            // Save surface if it's Paradiso ( CuarzoOS TopBar )
+            if( message->role == PARADISO_MODE )
+            {
                 window->paradisoView = view;
+                qDebug() << "Paradiso";
+            }
 
             // Triggers OpenGL render
             triggerRender();
-
-            // Prints the event
-            qDebug() << "Surface Configured";
 
         }break;
 
@@ -166,8 +149,6 @@ void Compositor::newClientMessage()
              // Triggers OpenGL render
             triggerRender();
 
-            // Prints the event
-            qDebug() << "Surface Role Changed";
 
         }break;
 
@@ -186,8 +167,19 @@ void Compositor::newClientMessage()
             // Triggers OpenGL render
             triggerRender();
 
-            // Prints the event
-            qDebug() << "Surface Position Changed" ;
+        }break;
+
+        // Change the surface position
+        case SURFACE_GRAB:{
+
+            // Parse the message
+            SurfaceGrabStruct *msg = (SurfaceGrabStruct*)data.data();
+
+            if( window-> mouseView->surfaceId == msg->id)
+                window->mouseGrabBegin();
+
+            // Triggers OpenGL render
+            triggerRender();
 
         }break;
 
@@ -206,83 +198,9 @@ void Compositor::newClientMessage()
             // Triggers OpenGL render
             triggerRender();
 
-            // Prints the event
-            qDebug() << "Surface Opacity Changed";
-
         }break;
 
-        // Blur request
-        case SURFACE_BLUR:{
 
-            // Parse the message
-            SurfaceBlurStruct *msg = (SurfaceBlurStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->id,socket->processID);
-
-            // Set surface blur state
-            view->blur = msg->activate;
-
-            // Triggers OpenGL render
-            triggerRender();
-
-            // Prints the event
-            qDebug() << "Surface Blur Activated";
-
-        }break;
-
-        // Title change request
-        case SURFACE_TITLE:{
-
-            // Parse the message
-            SurfaceTitleStruct *msg = (SurfaceTitleStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->id,socket->processID);
-
-            // Set surface blur state
-            view->setTitle(msg->title);
-
-            // Triggers OpenGL render
-            triggerRender();
-
-            // Prints the event
-            qDebug() << "Surface Title Changed";
-
-        }break;
-
-        // Titlebar created
-        case TITLEBAR_CREATED:{
-
-            // Parse the message
-            TitlebarCreatedStruct *msg = (TitlebarCreatedStruct*)data.data();
-
-            // Finds the titlebar view
-            View *titleBar = findViewByIdAndPid(msg->id,socket->processID);
-
-            // Set surface role
-            titleBar->setRole(TITLEBAR_MODE);
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->forId, msg->forPid);
-
-            // Assigns the titlebar to the view
-            view->titleBar = titleBar;
-            view->setPosition(view->position());
-
-            // Assigns the view to the titlebar
-            titleBar->titleBarParent = view;
-
-            // Now view is configured
-            view->configured = true;
-
-            // Triggers OpenGL render
-            triggerRender();
-
-            // Prints the event
-            qDebug() << "TitleBar created";
-
-        }break;
     }
 }
 
@@ -336,6 +254,8 @@ void Compositor::titleChanged()
 {
     QWaylandWlShellSurface *surface = qobject_cast< QWaylandWlShellSurface*>(sender());
 
+    qDebug() << surface->title();
+
     // Find equivalent view
     View* view = findView(surface->surface());
 
@@ -353,7 +273,6 @@ void Compositor::titleChanged()
     // Ask the surface for a full configuration
     findSocketByPId(surface->surface()->client()->processId())->socket->write(data,sizeof(RegisteredSurfaceStruct));
 
-    qDebug() << "Surface Registered with ID: "+QString::number(view->surfaceId);
     return;
 }
 
@@ -376,40 +295,14 @@ void Compositor::surfaceDestroyed()
 
 void Compositor::surfaceSizeChanged()
 {
-    QWaylandSurface *surface = qobject_cast<QWaylandSurface*>(sender());
-    View *view = findView(surface);
-
-    if(view->role == TITLEBAR_MODE || !view->configured || crystalsGuiSocket == nullptr)
-        return;
-
-    // Send request
-    TitlebarWidthStruct request;
-    request.forId = view->surfaceId;
-    request.forPid = surface->client()->processId();
-    request.width = view->size().width() / ratio;
-
-    // Copy message to a char pointer
-    char data[sizeof(TitlebarWidthStruct)];
-    memcpy(data,&request,sizeof(TitlebarWidthStruct));
-
-    // Ask the surface for a full configuration
-    crystalsGuiSocket->socket->write(data,sizeof(TitlebarWidthStruct));
-
     triggerRender();
-
-    qDebug() << "Surface Size Changed: ";
-
 }
 
 void Compositor::viewSurfaceDestroyed()
 {
     View *view = qobject_cast<View*>(sender());
     view->setBufferLocked(true);
-    views.removeAll(view->titleBar);
-    views.removeAll(view->titleBarParent);
     views.removeAll(view);
-    delete view->titleBar;
-    delete view->titleBarParent;
     delete view;
 }
 
@@ -512,16 +405,17 @@ void Compositor::handleDrag(View *target, QMouseEvent *me)
     }
 }
 
-View *Compositor::findViewById(uint id)
+View *Compositor::findViewById( int id )
 {
     Q_FOREACH(View *view,views)
     {
         if(view->surfaceId == id)
             return view;
     }
+    return nullptr;
 }
 
-View *Compositor::findViewByIdAndPid(uint id, uint pid)
+View *Compositor::findViewByIdAndPid( int id, int pid)
 {
     // Find equivalent view
     Q_FOREACH (View* view, views)
@@ -529,47 +423,26 @@ View *Compositor::findViewByIdAndPid(uint id, uint pid)
         if (view->surfaceId == id && pid == view->surface()->client()->processId())
             return view;
     }
+    return nullptr;
 }
 
-Socket *Compositor::findSocketByPId(uint id)
+Socket *Compositor::findSocketByPId( uint id )
 {
     Q_FOREACH(Socket *socket,sockets)
     {
         if(socket->processID == id)
             return socket;
     }
+    return nullptr;
 }
 
 
-
-
-static int findEndOfChildTree(const QList<View*> &list, int index)
-{
-    int n = list.count();
-    View *parent = list.at(index);
-    while (index + 1 < n) {
-        if (list.at(index+1)->parentView() != parent)
-            break;
-        index = findEndOfChildTree(list, index + 1);
-    }
-    return index;
-}
 
 void Compositor::raise(View *view)
 {
-    int startPos = views.indexOf(view);
-    int endPos = findEndOfChildTree(views, startPos);
+    int index = views.indexOf(view);
+    views.move( index, views.length() - 1 );
 
-    int n = views.count();
-    int tail =  n - endPos - 1;
-
-    //bubble sort: move the child tree to the end of the list
-    for (int i = 0; i < tail; i++) {
-        int source = endPos + 1 + i;
-        int dest = startPos + i;
-        for (int j = source; j > dest; j--)
-            views.swap(j, j-1);
-    }
 }
 
 void Compositor::setScreenResolution(QSize size)
@@ -579,11 +452,11 @@ void Compositor::setScreenResolution(QSize size)
     output->addMode(mode, true);
     output->setCurrentMode(mode);
     if(QGuiApplication::primaryScreen()->physicalDotsPerInch() >= 190)
-        ratio = 2.0;
+        ratio = 1.0;
     else
         ratio = 1.0;
 
-    output->setScaleFactor(ratio);
+    //output->setScaleFactor(ratio);
 }
 
 

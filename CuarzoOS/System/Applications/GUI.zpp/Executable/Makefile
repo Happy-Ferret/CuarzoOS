@@ -52,17 +52,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp \
 		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebarbutton.cpp moc_crystalsgui.cpp \
-		moc_titlebar.cpp \
-		moc_titlebarbutton.cpp
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp moc_crystalsgui.cpp \
+		moc_titlebar.cpp
 OBJECTS       = crystalsgui.o \
 		main.o \
 		titlebar.o \
-		titlebarbutton.o \
 		moc_crystalsgui.o \
-		moc_titlebar.o \
-		moc_titlebarbutton.o
+		moc_titlebar.o
 DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/common/unix.conf \
 		/usr/local/Qt-5.9.1/mkspecs/common/linux.conf \
@@ -72,10 +68,36 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/common/g++-base.conf \
 		/usr/local/Qt-5.9.1/mkspecs/common/g++-unix.conf \
 		/usr/local/Qt-5.9.1/mkspecs/qconfig.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3danimation.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3danimation_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dcore.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dcore_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dextras.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dextras_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dinput.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dinput_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dlogic.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dlogic_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquick.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquick_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickanimation.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickanimation_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickextras.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickextras_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickinput.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickinput_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickrender.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickrender_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickscene2d.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickscene2d_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3drender.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3drender_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bluetooth.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_charts.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_charts_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_core.pri \
@@ -84,6 +106,9 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_datavisualization_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_dbus_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designer.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designer_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_egl_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
@@ -95,14 +120,20 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gamepad_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gui.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gui_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_help.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_help_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_kms_support_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_location.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_location_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimedia.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimedia_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_network.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_networkauth.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_nfc.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_opengl.pri \
@@ -111,8 +142,12 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_openglextensions_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_packetprotocol_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_positioning.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_positioning_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_printsupport.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_purchasing.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_purchasing_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qml.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qml_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -132,6 +167,10 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_remoteobjects_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_repparser.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_repparser_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_script.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_script_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scripttools.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scxml.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scxml_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_sensors.pri \
@@ -150,14 +189,21 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_texttospeech.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_texttospeech_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_theme_support_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uiplugin.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uitools.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uitools_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandclient.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandclient_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandcompositor.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandcompositor_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_webchannel.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_webchannel_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_websockets.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_websockets_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_x11extras.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_x11extras_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xml.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xml_private.pri \
@@ -167,7 +213,6 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/qt_config.prf \
 		/usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf \
 		/usr/local/Qt-5.9.1/mkspecs/features/spec_post.prf \
-		/home/e/Escritorio/.qmake.stash \
 		/usr/local/Qt-5.9.1/mkspecs/features/exclusive_builds.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/toolchain.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf \
@@ -189,11 +234,9 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/lex.prf \
 		/home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h \
 		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/headers.h \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp \
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp \
 		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebarbutton.cpp
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp
 QMAKE_TARGET  = GUI
 DESTDIR       = 
 TARGET        = GUI
@@ -214,10 +257,36 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/common/g++-base.conf \
 		/usr/local/Qt-5.9.1/mkspecs/common/g++-unix.conf \
 		/usr/local/Qt-5.9.1/mkspecs/qconfig.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3danimation.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3danimation_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dcore.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dcore_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dextras.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dextras_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dinput.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dinput_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dlogic.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dlogic_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquick.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquick_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickanimation.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickanimation_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickextras.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickextras_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickinput.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickinput_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickrender.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickrender_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickscene2d.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickscene2d_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3drender.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3drender_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bluetooth.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bootstrap_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_charts.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_charts_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_concurrent_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_core.pri \
@@ -226,6 +295,9 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_datavisualization_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_dbus_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designer.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designer_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_egl_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
@@ -237,14 +309,20 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gamepad_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gui.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gui_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_help.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_help_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_kms_support_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_location.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_location_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimedia.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimedia_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_network.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_networkauth.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_nfc.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_opengl.pri \
@@ -253,8 +331,12 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_openglextensions_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_packetprotocol_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_positioning.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_positioning_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_printsupport.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_printsupport_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_purchasing.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_purchasing_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qml.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qml_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qmldebug_private.pri \
@@ -274,6 +356,10 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_remoteobjects_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_repparser.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_repparser_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_script.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_script_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scripttools.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scxml.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scxml_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_sensors.pri \
@@ -292,14 +378,21 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_texttospeech.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_texttospeech_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_theme_support_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uiplugin.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uitools.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uitools_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandclient.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandclient_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandcompositor.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandcompositor_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_webchannel.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_webchannel_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_websockets.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_websockets_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_x11extras.pri \
+		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_x11extras_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xml.pri \
 		/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xml_private.pri \
@@ -309,7 +402,6 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 		/usr/local/Qt-5.9.1/mkspecs/features/qt_config.prf \
 		/usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf \
 		/usr/local/Qt-5.9.1/mkspecs/features/spec_post.prf \
-		/home/e/Escritorio/.qmake.stash \
 		/usr/local/Qt-5.9.1/mkspecs/features/exclusive_builds.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/toolchain.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf \
@@ -344,10 +436,36 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/common/g++-base.conf:
 /usr/local/Qt-5.9.1/mkspecs/common/g++-unix.conf:
 /usr/local/Qt-5.9.1/mkspecs/qconfig.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3danimation.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3danimation_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dcore.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dcore_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dextras.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dextras_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dinput.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dinput_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dlogic.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dlogic_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquick.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquick_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickanimation.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickanimation_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickextras.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickextras_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickinput.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickinput_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickrender.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickrender_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickscene2d.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3dquickscene2d_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3drender.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_3drender_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_accessibility_support_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bluetooth.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_bootstrap_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_charts.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_charts_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_concurrent.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_concurrent_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_core.pri:
@@ -356,6 +474,9 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_datavisualization_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_dbus.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_dbus_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designer.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designer_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_designercomponents_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_egl_support_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri:
@@ -367,14 +488,20 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gamepad_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gui.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_gui_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_help.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_help_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_input_support_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_kms_support_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_location.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_location_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimedia.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimedia_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimediawidgets.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_network.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_network_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_networkauth.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_networkauth_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_nfc.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_nfc_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_opengl.pri:
@@ -383,8 +510,12 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_openglextensions_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_packetprotocol_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_platformcompositor_support_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_positioning.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_positioning_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_printsupport.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_printsupport_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_purchasing.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_purchasing_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qml.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qml_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_qmldebug_private.pri:
@@ -404,6 +535,10 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_remoteobjects_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_repparser.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_repparser_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_script.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_script_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scripttools.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scripttools_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scxml.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_scxml_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_sensors.pri:
@@ -422,14 +557,21 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_texttospeech.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_texttospeech_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_theme_support_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uiplugin.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uitools.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_uitools_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandclient.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandclient_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandcompositor.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_waylandcompositor_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_webchannel.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_webchannel_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_websockets.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_websockets_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_widgets.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_widgets_private.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_x11extras.pri:
+/usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_x11extras_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xml.pri:
 /usr/local/Qt-5.9.1/mkspecs/modules/qt_lib_xml_private.pri:
@@ -439,7 +581,6 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/GUI/GUI.pro /usr/local/Qt-5.9.1/mkspe
 /usr/local/Qt-5.9.1/mkspecs/features/qt_config.prf:
 /usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf:
 /usr/local/Qt-5.9.1/mkspecs/features/spec_post.prf:
-/home/e/Escritorio/.qmake.stash:
 /usr/local/Qt-5.9.1/mkspecs/features/exclusive_builds.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/toolchain.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf:
@@ -479,8 +620,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/headers.h /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h $(DISTDIR)/
-	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebarbutton.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/headers.h /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h $(DISTDIR)/
+	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -490,6 +631,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) $(TARGET) 
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -511,9 +653,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_crystalsgui.cpp moc_titlebar.cpp moc_titlebarbutton.cpp
+compiler_moc_header_make_all: moc_crystalsgui.cpp moc_titlebar.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_crystalsgui.cpp moc_titlebar.cpp moc_titlebarbutton.cpp
+	-$(DEL_FILE) moc_crystalsgui.cpp moc_titlebar.cpp
 moc_crystalsgui.cpp: /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
@@ -627,16 +769,30 @@ moc_crystalsgui.cpp: /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/headers.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontDatabase \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontdatabase.h \
 		../../../Library/Frameworks/CFramework/include/CCore.h \
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
+		../../../Library/Frameworks/CFramework/include/CWindow.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		../../../Library/Frameworks/CFramework/include/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
 		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/GUI -I/home/e/Escritorio/CuarzoOS/Code/GUI/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h -o moc_crystalsgui.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/GUI -I/home/e/Escritorio/CuarzoOS/Code/GUI/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h -o moc_crystalsgui.cpp
 
 moc_titlebar.cpp: ../../../Library/Frameworks/CFramework/include/CWindow.h \
 		../../../Library/Frameworks/CFramework/include/CCore.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
@@ -662,7 +818,6 @@ moc_titlebar.cpp: ../../../Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
@@ -736,27 +891,11 @@ moc_titlebar.cpp: ../../../Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
-		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
-		../../../Library/Frameworks/CFramework/include/CPushButton.h \
-		../../../Library/Frameworks/CFramework/include/CLabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
@@ -764,132 +903,15 @@ moc_titlebar.cpp: ../../../Library/Frameworks/CFramework/include/CWindow.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
-		moc_predefs.h \
-		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/GUI -I/home/e/Escritorio/CuarzoOS/Code/GUI/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h -o moc_titlebar.cpp
-
-moc_titlebarbutton.cpp: /usr/local/Qt-5.9.1/include/QtCore/QTimer \
-		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
-		../../../Library/Frameworks/CFramework/include/CPushButton.h \
 		../../../Library/Frameworks/CFramework/include/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		../../../Library/Frameworks/CFramework/include/CCore.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h \
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/GUI -I/home/e/Escritorio/CuarzoOS/Code/GUI/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h -o moc_titlebarbutton.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/GUI -I/home/e/Escritorio/CuarzoOS/Code/GUI/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h -o moc_titlebar.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1019,7 +1041,21 @@ crystalsgui.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp /hom
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		../../../Library/Frameworks/CFramework/include/CCore.h
+		/usr/local/Qt-5.9.1/include/QtGui/QFontDatabase \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontdatabase.h \
+		../../../Library/Frameworks/CFramework/include/CCore.h \
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
+		../../../Library/Frameworks/CFramework/include/CWindow.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		../../../Library/Frameworks/CFramework/include/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o crystalsgui.o /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/crystalsgui.cpp
 
 main.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/headers.h \
@@ -1135,20 +1171,29 @@ main.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp /home/e/Escritorio
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontDatabase \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontdatabase.h \
 		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/crystalsgui.h \
 		../../../Library/Frameworks/CFramework/include/CCore.h \
+		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
 		../../../Library/Frameworks/CFramework/include/CWindow.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qicon.h
+		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		../../../Library/Frameworks/CFramework/include/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/main.cpp
 
 titlebar.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebar.h \
 		../../../Library/Frameworks/CFramework/include/CWindow.h \
 		../../../Library/Frameworks/CFramework/include/CCore.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QMainWindow \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qmainwindow.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
@@ -1174,7 +1219,6 @@ titlebar.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp /home/e/Es
 		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
@@ -1248,164 +1292,30 @@ titlebar.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp /home/e/Es
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtabwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qicon.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
-		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
-		../../../Library/Frameworks/CFramework/include/CPushButton.h \
-		../../../Library/Frameworks/CFramework/include/CLabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o titlebar.o /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp
-
-titlebarbutton.o: /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebarbutton.cpp /home/e/Escritorio/CuarzoOS/Code/GUI/Headers/titlebarbutton.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
-		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
-		../../../Library/Frameworks/CFramework/include/CPushButton.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
 		../../../Library/Frameworks/CFramework/include/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		../../../Library/Frameworks/CFramework/include/CCore.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o titlebarbutton.o /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebarbutton.cpp
+		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o titlebar.o /home/e/Escritorio/CuarzoOS/Code/GUI/Sources/titlebar.cpp
 
 moc_crystalsgui.o: moc_crystalsgui.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_crystalsgui.o moc_crystalsgui.cpp
 
 moc_titlebar.o: moc_titlebar.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_titlebar.o moc_titlebar.cpp
-
-moc_titlebarbutton.o: moc_titlebarbutton.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_titlebarbutton.o moc_titlebarbutton.cpp
 
 ####### Install
 
