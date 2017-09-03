@@ -172,7 +172,7 @@ void Window::drawWindow(View *view)
     if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, true, true, 8.0);
 
     // Draws  shadow
-    drawShadow( viewRect,  0.15, view->opacity, 200.0, true, true, true, true, 8.0);
+    drawShadow( viewRect,  0.18, view->opacity, 128.0, true, true, true, true, 8.0);
 
     // Selects blur framebuffer
     glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
@@ -443,9 +443,18 @@ void Window::paintGL()
             // Skip if size is 0
             if (!s.isEmpty()) {
 
-                if(view == mouseView && grabState == LeftResize)
+                if (view == mouseView)
                 {
-                    mouseView->setPosition(QPointF(initialViewPosition.x() - s.width() + initialViewSize.width(), initialViewPosition.y()));
+
+                    int xDiff = initialViewSize.width() - s.width();
+                    int yDiff = initialViewSize.height() - s.height();
+
+                    if( grabState == LeftResize || grabState == BottomLeftResize )
+                        mouseView->setPosition( QPointF( initialViewPosition.x() + xDiff, initialViewPosition.y() ) );
+                    else if( grabState == TopResize || grabState == TopRightResize)
+                        mouseView->setPosition( QPointF( initialViewPosition.x() , initialViewPosition.y() + yDiff ));
+                    else if( grabState == TopLeftResize )
+                        mouseView->setPosition( QPointF( initialViewPosition.x() + xDiff , initialViewPosition.y() + yDiff ));
                 }
 
                 // Draw view
@@ -489,7 +498,7 @@ View *Window::viewAt(const QPointF &point)
             continue;
 
         // Check if point is in view rect
-        QRectF geom(view->position() - QPointF(5,5), view->size() + QSizeF(10,10));
+        QRectF geom(view->position() - QPointF(7,7), view->size() + QSizeF(14,14));
         if (geom.contains(point))
             ret = view;
     }
@@ -558,43 +567,44 @@ void Window::mousePressEvent(QMouseEvent *e)
     {
         QPointF pos = mouseView->position();
         QSize siz = mouseView->size();
-        int margin = 5;
+        int margin = 7;
         bool isWindow = mouseView->role == WINDOW_MODE;
+
+        initialViewSize = mouseView->size();
+        initialViewPosition = mouseView->position();
+        initialMousePos = e->pos();
 
         // Top Left corner
         if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin &&  isWindow )
         {
-            setCursor(Qt::SizeFDiagCursor);
+            grabState = TopLeftResize;
             return;
         }
 
         // Top Right corner
         else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() <= pos.y() + margin &&  isWindow )
         {
-            setCursor(Qt::SizeBDiagCursor);
+            grabState = TopRightResize;
             return;
         }
 
         // Bottom Right corner
         else if ( e->pos().x() >= pos.x() + siz.width() - margin && e->pos().y() >= pos.y() + siz.height()- margin &&  isWindow )
         {
-            setCursor(Qt::SizeFDiagCursor);
+            grabState = BottomRightResize;
             return;
         }
 
         // Bottom Left corner
         else if ( e->pos().x() <= pos.x() + margin && e->pos().y() >= pos.y() + siz.height()- margin &&  isWindow )
         {
-            setCursor(Qt::SizeBDiagCursor);
+            grabState = BottomLeftResize;
             return;
         }
 
         // Left border
         else if ( e->pos().x() - margin <= pos.x() &&  isWindow )
         {
-            initialViewSize = mouseView->size();
-            initialViewPosition = mouseView->position();
-            initialMousePos = e->pos();
             grabState = LeftResize;
             return;
         }
@@ -602,8 +612,6 @@ void Window::mousePressEvent(QMouseEvent *e)
         // Right border
         else if ( e->pos().x() + margin >= pos.x() + siz.width() &&  isWindow )
         {
-            initialViewSize = mouseView->size();
-            initialMousePos = e->pos();
             grabState = RightResize;
             return;
         }
@@ -611,14 +619,13 @@ void Window::mousePressEvent(QMouseEvent *e)
         // Top border
         else if ( e->pos().y() - margin <= pos.y() && isWindow )
         {
-            setCursor(Qt::SizeVerCursor);
+            grabState = TopResize;
+            return;
         }
 
         // Bottom border
         else if ( e->pos().y() + margin >= pos.y() + siz.height() && isWindow )
         {
-            initialViewSize = mouseView->size();
-            initialMousePos = e->pos();
             grabState = BottomResize;
             return;
         }
@@ -633,12 +640,15 @@ void Window::mousePressEvent(QMouseEvent *e)
                 mouseOffset = e->localPos() - mouseView->position();
                 initialViewPosition = mouseView->position();
             }
+
+            compositor->defaultSeat()->setKeyboardFocus(mouseView->surface());
+            compositor->defaultSeat()->setMouseFocus( mouseView );
+            compositor->raise(mouseView);
+            compositor->triggerRender();
+
         }
-        compositor->defaultSeat()->setKeyboardFocus(mouseView->surface());
-        compositor->defaultSeat()->setMouseFocus(mouseView);
-        compositor->raise(mouseView);
-        compositor->triggerRender();
     }
+
     // Send mouse press event
     sendMouseEvent(e, mouseView);
 }
@@ -652,22 +662,25 @@ void Window::mouseReleaseEvent(QMouseEvent *e)
 
 void Window::mouseMoveEvent(QMouseEvent *e)
 {
+
     switch ( grabState )
     {
     case NoGrab: {
 
         mouseView = viewAt(e->localPos());
 
-        if (!mouseView)
+        if ( mouseView == nullptr )
         {
             setCursor(Qt::ArrowCursor);
             return;
         }
+
         QPointF pos = mouseView->position();
         QSize siz = mouseView->size();
-        int margin = 5;
+        int margin = 7;
         bool isWindow = mouseView->role == WINDOW_MODE;
 
+        sendMouseEvent(e, mouseView);
 
         // TopLeft corner
         if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && isWindow )
@@ -716,7 +729,6 @@ void Window::mouseMoveEvent(QMouseEvent *e)
         else
         {
             setCursor(Qt::ArrowCursor);
-            sendMouseEvent(e, mouseView);
         }
     }
         break;
@@ -727,8 +739,9 @@ void Window::mouseMoveEvent(QMouseEvent *e)
         break;
     case TopResize:
     {
-        //mouseView->setSize(QSize(initialViewSize.width() - e->localPos().x() + initialMousePos.x(), initialViewSize.height()));
+        mouseView->setSize(QSize(initialViewSize.width(), initialViewSize.height() - e->localPos().y() + initialMousePos.y() ));
     }
+        break;
     case LeftResize:
     {
         mouseView->setSize(QSize(initialViewSize.width() - e->localPos().x() + initialMousePos.x(), initialViewSize.height()));
@@ -742,6 +755,26 @@ void Window::mouseMoveEvent(QMouseEvent *e)
     case RightResize:
     {
         mouseView->setSize(QSize(initialViewSize.width()+ e->localPos().x() - initialMousePos.x(), initialViewSize.height()));
+    }
+        break;
+    case TopLeftResize:
+    {
+        mouseView->setSize(QSize(initialViewSize.width() - e->localPos().x() + initialMousePos.x(), initialViewSize.height() - e->localPos().y() + initialMousePos.y() ));
+    }
+        break;
+    case TopRightResize:
+    {
+        mouseView->setSize(QSize(initialViewSize.width() + e->localPos().x() - initialMousePos.x(), initialViewSize.height() - e->localPos().y() + initialMousePos.y() ));
+    }
+        break;
+    case BottomRightResize:
+    {
+        mouseView->setSize(QSize(initialViewSize.width() + e->localPos().x() - initialMousePos.x(), initialViewSize.height() + e->localPos().y() - initialMousePos.y() ));
+    }
+        break;
+    case BottomLeftResize:
+    {
+        mouseView->setSize(QSize(initialViewSize.width() - e->localPos().x() + initialMousePos.x(), initialViewSize.height() + e->localPos().y() - initialMousePos.y() ));
     }
         break;
     case DragGrab: {

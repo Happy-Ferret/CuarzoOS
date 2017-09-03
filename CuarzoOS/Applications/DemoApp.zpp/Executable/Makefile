@@ -656,8 +656,9 @@ moc_window.cpp: ../../../System/Library/Frameworks/CFramework/include/CApplicati
 		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
 		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
+		../../../System/Library/Frameworks/CFramework/include/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
@@ -683,6 +684,8 @@ moc_window.cpp: ../../../System/Library/Frameworks/CFramework/include/CApplicati
 		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
@@ -756,31 +759,7 @@ moc_window.cpp: ../../../System/Library/Frameworks/CFramework/include/CApplicati
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QObject \
-		../../../System/Library/Frameworks/CFramework/include/CLabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		../../../System/Library/Frameworks/CFramework/include/CImage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
-		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		../../../System/Library/Frameworks/CFramework/include/CPushButton.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
@@ -793,7 +772,30 @@ moc_window.cpp: ../../../System/Library/Frameworks/CFramework/include/CApplicati
 		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QObject \
+		/usr/local/Qt-5.9.1/include/QtCore/QMap \
+		../../../System/Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QPushButton \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qpushbutton.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qabstractbutton.h \
@@ -821,8 +823,9 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Li
 		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
 		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
+		../../../System/Library/Frameworks/CFramework/include/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
@@ -848,6 +851,8 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Li
 		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
@@ -921,32 +926,7 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Li
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QObject \
-		../../../../Code/Crystals/ClientDemo/headers/window.h \
-		../../../System/Library/Frameworks/CFramework/include/CLabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		../../../System/Library/Frameworks/CFramework/include/CImage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
-		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		../../../System/Library/Frameworks/CFramework/include/CPushButton.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
@@ -959,7 +939,31 @@ main.o: ../../../../Code/Crystals/ClientDemo/sources/main.cpp ../../../System/Li
 		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QObject \
+		/usr/local/Qt-5.9.1/include/QtCore/QMap \
+		../../../../Code/Crystals/ClientDemo/headers/window.h \
+		../../../System/Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QPushButton \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qpushbutton.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qabstractbutton.h \
@@ -973,8 +977,9 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		../../../System/Library/Frameworks/CFramework/include/CCore.h \
 		../../../System/Library/Frameworks/CFramework/include/CProtocol.h \
 		../../../System/Library/Frameworks/CFramework/include/CWindow.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
+		../../../System/Library/Frameworks/CFramework/include/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
@@ -1000,6 +1005,8 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
@@ -1073,31 +1080,7 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
-		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
-		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
-		/usr/local/Qt-5.9.1/include/QtCore/QObject \
-		../../../System/Library/Frameworks/CFramework/include/CLabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
-		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
-		../../../System/Library/Frameworks/CFramework/include/CImage.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
-		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
-		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
-		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		../../../System/Library/Frameworks/CFramework/include/CPushButton.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QFrame \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QHBoxLayout \
@@ -1110,7 +1093,30 @@ window.o: ../../../../Code/Crystals/ClientDemo/sources/window.cpp ../../../../Co
 		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		/usr/local/Qt-5.9.1/include/QtNetwork/QLocalSocket \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qlocalsocket.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetworkglobal.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
+		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QObject \
+		/usr/local/Qt-5.9.1/include/QtCore/QMap \
+		../../../System/Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QPushButton \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qpushbutton.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qabstractbutton.h \

@@ -15,23 +15,40 @@ CWindow::CWindow()
     // Asigns parent
     QWidget::setParent(nullptr);
 
+    firstTopLayout = new QHBoxLayout(topBarItems);
+
     // Window icons
     QString path = SYSTEM_PATH + "/System/Library/Icons/Crystals/";
 
-    closeButton = new CPushButton( QPixmap( path + "window_close.png" ) );
-    minimizeButton = new CPushButton( QPixmap( path + "window_minimize.png" ) );
-    expandButton = new CPushButton( QPixmap( path + "window_expand.png" ) );
+    // Buttons
+    closeButton = new CIconButton(
+                QPixmap( path + "Window_Close_Normal.png"),
+                QPixmap( path + "Window_Close_Over.png"),
+                QPixmap( path + "Window_Close_Press.png"),
+                this
+    );
 
-    QSize winBtn(24,24);
+    minimizeButton = new CIconButton(
+                QPixmap( path + "Window_Minimize_Normal.png"),
+                QPixmap( path + "Window_Minimize_Over.png"),
+                QPixmap( path + "Window_Minimize_Press.png"),
+                this
+    );
 
-    closeButton->setFixedSize( 30, 30 );
-    closeButton->setIconSize( winBtn );
-    minimizeButton->setFixedSize( 30, 30 );
-    minimizeButton->setIconSize( winBtn );
-    expandButton->setFixedSize( 30, 30 );
-    expandButton->setIconSize( winBtn );
+    expandButton = new CIconButton(
+                QPixmap( path + "Window_Expand_Normal.png"),
+                QPixmap( path + "Window_Expand_Over.png"),
+                QPixmap( path + "Window_Expand_Press.png"),
+                this
+    );
 
-    horizontalLayout->setMargin(6);
+    int buttonSize = 16;
+    closeButton->setFixedSize( buttonSize, buttonSize);
+    minimizeButton->setFixedSize( buttonSize, buttonSize);
+    expandButton->setFixedSize( buttonSize, buttonSize);
+
+    horizontalLayout->setMargin(8);
+    horizontalLayout->setSpacing(10);
     horizontalLayout->addWidget(closeButton);
     horizontalLayout->addWidget(minimizeButton);
     horizontalLayout->addWidget(expandButton);
@@ -39,8 +56,9 @@ CWindow::CWindow()
 
     _title->setAlignment( Qt::AlignCenter );
     _title->enableEllipsis(true);
+    _title->setFontColor( QColor(GRAY) );
     topBar->setObjectName("QZTP");
-    topBar->setStyleSheet("#QZTP{background:qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #EEE , stop:1 #DDD);}");
+    topBar->setStyleSheet("#QZTP{background:qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #EEE , stop:1 #DDD);border-bottom:1px solid #CCC}");
     topBar->setAutoFillBackground(true);
 
     verticalLayout->addWidget(topBar,0,Qt::AlignTop);
@@ -120,12 +138,8 @@ void CWindow::resizeEvent(QResizeEvent *)
 
 bool CWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::MouseButtonPress && ( watched == topBar || watched == _title || watched == topBarItems ))
-    {
+    if ( event->type() == QEvent::MouseButtonPress && watched == topBar)
         mouseGrabEvent();
-        return true;
-    }
-    return false;
 }
 
 

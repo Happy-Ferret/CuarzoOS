@@ -198,9 +198,8 @@ void CPushButton::leaveEvent(QEvent *)
 void CPushButton::mousePressEvent(QMouseEvent *event)
 {
     pressed();
-    animState = 0;
     pressing = true;
-    timer->start(1);
+    resetStyle();
 }
 
 void CPushButton::mouseReleaseEvent(QMouseEvent *event)
@@ -208,41 +207,14 @@ void CPushButton::mouseReleaseEvent(QMouseEvent *event)
     released();
     clicked(_mouseOver);
     pressing = false;
-    timer->start(1);
+    resetStyle();
 }
 
-void CPushButton::animate()
-{
-     if(animState == 0)
-    {
-         if(_opacity->opacity()< 0.6)
-         {
-             animState = 1;
-             _opacity->setOpacity(0.6);
-         }
-         else
-         {
-             _opacity->setOpacity(_opacity->opacity() - 0.005);
-             timer->start(1);
-         }
-    }
-    if(animState == 1 && !pressing)
-    {
-         if(_opacity->opacity()> 1.0)
-         {
-             _opacity->setOpacity(1.0);
-         }
-         else
-         {
-             _opacity->setOpacity(_opacity->opacity() + 0.005);
-             timer->start(1);
-         }
-    }
-}
+
 
 void CPushButton::setup()
 {
-    layout->setContentsMargins(10,6,10,6);
+    layout->setContentsMargins(12,8,12,8);
     layout->setSpacing(6);
     layout->addWidget(_icon);
     layout->addWidget(_text);
@@ -253,57 +225,39 @@ void CPushButton::setup()
     _text->enableEllipsis(true);
     _text->setAlignment(Qt::AlignCenter);
 
-    _icon->setScaledContents(true);
-    _opacity->setOpacity(1.0);
 
+    _icon->setScaledContents(true);
+
+    _shadow->setOffset(0);
+    _shadow->setBlurRadius(5);
+    _shadow->setColor( QColor( GRAY ) );
     setFixedHeight(30);
-    setGraphicsEffect(_opacity);
+    setGraphicsEffect(_shadow);
+
+    _icon->setMouseTracking(true);
+    _text->setMouseTracking(true);
     setMouseTracking(true);
+
     setDisplayMode(CPushButton::textOnly);
     setIconPosition(CPushButton::left);
 
-    connect(timer,SIGNAL(timeout()),this,SLOT(animate()));
 }
 
 void CPushButton::resetStyle()
 {
-    if(_frameless == false && (_displayMode == CPushButton::textOnly || _displayMode == CPushButton::textAndIcon))
-    {
-        QColor  color = _frameColor;
-        QColor colorPlus = _frameColor;
-        int variation = 10;
-        int lessVariation = 20;
-
-        if(_frameColor.red() + variation  > 255) { colorPlus.setRed(255);}
-        else { colorPlus.setRed(_frameColor.red() + variation ); }
-        if(_frameColor.green() + variation  > 255) { colorPlus.setGreen(255); }
-        else { colorPlus.setGreen(_frameColor.green() + variation ); }
-        if(_frameColor.blue() + variation  > 255) { colorPlus.setBlue(255); }
-        else { colorPlus.setBlue(_frameColor.blue() + variation ); }
-
-        if(_mouseOver)
-            color = colorPlus;
-
-        QColor colorLess = _frameColor;
-
-        if(_frameColor.red() - lessVariation < 0) { colorLess.setRed(0); }
-        else { colorLess.setRed(_frameColor.red() - lessVariation ); }
-        if(_frameColor.green() - lessVariation  < 0) { colorLess.setGreen(255); }
-        else { colorLess.setGreen(_frameColor.green() - lessVariation); }
-        if(_frameColor.blue() - lessVariation  < 0) { colorLess.setBlue(0); }
-        else { colorLess.setBlue(_frameColor.blue() - lessVariation ); }
-
-        setStyleSheet(
-            "CPushButton{border-color:"+colorLess.name()+
-            ";background:qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 "+colorPlus.name()+
-            ", stop:1 "+color.name()+
-            ");border-radius:"+QString::number(_borderRadius)+"px;border-width:1px;border-style:solid}"
-        );
-    }
+    if( _frameless )
+        setStyleSheet( NULL );
     else
     {
-        setStyleSheet("");
+        if ( pressing )
+            setStyleSheet("CPushButton{background-color:"+_frameColor.darker(110).name()+";border-radius:"+QString::number(_borderRadius)+"px;}");
+        else if ( _mouseOver )
+            setStyleSheet("CPushButton{background-color:"+_frameColor.lighter(110).name()+";border-radius:"+QString::number(_borderRadius)+"px;}");
+        else
+            setStyleSheet("CPushButton{background-color:"+_frameColor.name()+";border-radius:"+QString::number(_borderRadius)+"px;}");
+
     }
+
 }
 
 

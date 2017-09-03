@@ -7,10 +7,11 @@ Window::Window()
 {
 
   setCentralWidget(widget);
-  move(200,200);
+  move(0,0);
   resize(800,500);
+  setMouseTracking(true);
 
-  setWindowTitle("Hello World Application");
+  setWindowTitle("CuarzoOS");
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));
   connect(del,SIGNAL(pressed()),this,SLOT(deleteWindow()));
   connect(mod,SIGNAL(pressed()),this,SLOT(changeMode()));
@@ -22,17 +23,7 @@ Window::Window()
   home->setFrameColor(GREEN);
   cre->setFrameColor(BLUE);
   del->setFrameColor(RED);
-  siz->setFrameColor(YELLOW);
-
-
-  std::default_random_engine generator;
-  std::uniform_int_distribution<int> distribution(0,255);
-
-  uint r = distribution(generator);
-  uint g = distribution(generator);
-  uint b = distribution(generator);
-
-  setPalette( QColor( r, g, b ) );
+  siz->setFrameColor(ORANGE);
 
   QMovie *movie = new QMovie("/home/e/jobs.gif");
   movieFrame->setMovie(movie);
@@ -49,14 +40,15 @@ Window::Window()
   layout->addWidget(movieFrame);
   movie->start();
 
-  wel->hide();
-  home->hide();
-  siz->hide();
-  mod->hide();
-  blu->hide();
-  opa->hide();
-  tit->hide();
-  del->hide();
+}
+
+void Window::mouseMoveEvent(QMouseEvent *e)
+{
+    setWindowTitle(
+                QString::number( QApplication::primaryScreen()->size().width()) + " - " +
+                QString::number( e->screenPos().x()) + " - " +
+                 QString::number( e->localPos().x())
+                );
 }
 
 void Window::createWindow()

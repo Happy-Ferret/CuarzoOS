@@ -22,7 +22,8 @@ HEADERS += \
     Headers/CWindow.h \
     Headers/CPushButton.h \
     Headers/CImage.h \
-    Headers/CProtocol.h
+    Headers/CProtocol.h \
+    Headers/CIconButton.h
 
 SOURCES += \
     Sources/CApplication.cpp \
@@ -30,4 +31,5 @@ SOURCES += \
     Sources/CLabel.cpp \
     Sources/CPushButton.cpp \
     Sources/CImage.cpp \
-    Sources/CProtocol.cpp
+    Sources/CProtocol.cpp \
+    Sources/CIconButton.cpp

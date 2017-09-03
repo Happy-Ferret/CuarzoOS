@@ -176,6 +176,8 @@ SurfaceBlurRemoveStruct;
 #define REGISTERED_APP 0
 #define REGISTERED_SURFACE 1
 #define SURFACE_SCALED 2
+#define SURFACE_MOVED 3
+
 
 typedef struct
 {
@@ -199,6 +201,14 @@ typedef struct
 }
 SurfaceScaledStruct;
 
+typedef struct
+{
+    unsigned int type = SURFACE_MOVED;
+    unsigned int id;
+    int x;
+    int y;
+}
+SurfaceMovedStruct;
 
 #endif
 

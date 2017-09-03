@@ -175,6 +175,8 @@ void Compositor::newClientMessage()
             // Parse the message
             SurfaceGrabStruct *msg = (SurfaceGrabStruct*)data.data();
 
+            if( window->mouseView == nullptr) return;
+
             if( window-> mouseView->surfaceId == msg->id)
                 window->mouseGrabBegin();
 
@@ -271,7 +273,8 @@ void Compositor::titleChanged()
     memcpy(data,&reply,sizeof(RegisteredSurfaceStruct));
 
     // Ask the surface for a full configuration
-    findSocketByPId(surface->surface()->client()->processId())->socket->write(data,sizeof(RegisteredSurfaceStruct));
+    view->socket = findSocketByPId(surface->surface()->client()->processId());
+    view->socket->socket->write(data,sizeof(RegisteredSurfaceStruct));
 
     return;
 }
@@ -353,14 +356,19 @@ void Compositor::adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int
 void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)
 {
 
-    me->setLocalPos(me->localPos() / ratio);
     QWaylandSeat *input = defaultSeat();
     QWaylandSurface *surface = target ? target->surface() : nullptr;
-    switch (me->type()) {
+
+    switch (me->type())
+    {
         case QEvent::MouseButtonPress:
-            input->sendMousePressEvent(me->button());
-            if (surface != input->keyboardFocus()) {
-                if (surface == nullptr) {
+
+            input->sendMousePressEvent( me->button() );
+
+            if ( surface != input->keyboardFocus() )
+            {
+                if (surface == nullptr)
+                {
                     input->setKeyboardFocus(surface);
                 }
             }
@@ -368,7 +376,7 @@ void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)
     case QEvent::MouseButtonRelease:
          input->sendMouseReleaseEvent(me->button());
          break;
-    case QEvent::MouseMove:
+    case QMouseEvent::MouseMove:
         input->sendMouseMoveEvent(target, me->localPos(), me->globalPos());
     default:
         break;
@@ -448,15 +456,12 @@ void Compositor::raise(View *view)
 void Compositor::setScreenResolution(QSize size)
 {
     window->resize(size);
-    QWaylandOutputMode mode = QWaylandOutputMode(size, 60000);
-    output->addMode(mode, true);
+    QWaylandOutputMode mode(size, 600000);
+    output->addMode( mode, true );
     output->setCurrentMode(mode);
-    if(QGuiApplication::primaryScreen()->physicalDotsPerInch() >= 190)
-        ratio = 1.0;
-    else
-        ratio = 1.0;
+    output->setWindow(window);
+    output->setSizeFollowsWindow(true);
 
-    //output->setScaleFactor(ratio);
 }
 
 

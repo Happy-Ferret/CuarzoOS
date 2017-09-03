@@ -95,6 +95,20 @@ void CProtocol::messageIn()
         widget->resize(req->width,req->height);
 
     }break;
+    case SURFACE_MOVED:{
+
+        // Parse Message
+        SurfaceMovedStruct *req = (SurfaceMovedStruct*)message.data();
+
+        if ( !windows.contains(req->id) ) return;
+
+        // Gets the widget
+        CWindow *widget = windows[req->id];
+
+        // Apply the changes
+        widget->QWidget::move(req->x,req->y);
+
+    }break;
 
     }
 

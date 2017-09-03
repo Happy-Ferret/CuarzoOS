@@ -21,15 +21,15 @@ public:
     int surfaceId = -1;
     bool blur = false;
     bool configured = false;
-    bool resized = true;
 
     // Configuration methods
     void setRole(uint newRole);
     void setOpacity(uint newOpacity);
     void setSize(const QSize &size);
 
-    QOpenGLTexture *getTexture();
+    Socket *socket = nullptr;
 
+    QOpenGLTexture *getTexture();
 
     QPointF position() const { return m_position; }
     void setPosition(const QPointF &pos);

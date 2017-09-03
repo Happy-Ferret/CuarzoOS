@@ -47,7 +47,6 @@ public:
 
     // Number of system applications ready
     uint readyApps = 0;
-    float ratio = 2.0;
 
     // Wayland cursor surface
     QWaylandView cursor;
@@ -108,9 +107,6 @@ private slots:
     void onSurfaceCreated(QWaylandSurface *surface);
     void onWlShellCreated(QWaylandWlShellSurface *wlShellSurface);
 
-
-   // void onSubsurfaceChanged(QWaylandSurface *child, QWaylandSurface *parent);
-    //void onSubsurfacePositionChanged(const QPoint &position);
 
     void updateCursor();
 private:

@@ -7,6 +7,7 @@
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QGraphicsOpacityEffect>
+#include <QGraphicsDropShadowEffect>
 #include <QTimer>
 
 
@@ -43,12 +44,6 @@ public:
 
     void setFrameColor(QColor color);
 
-    void enterEvent(QEvent *);
-    void leaveEvent(QEvent*);
-    void mouseDoubleClickEvent(QMouseEvent *){doubleClicked();}
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-
     QHBoxLayout *buttonLayout(){return layout;}
     CLabel *label(){ return _text; }
     QLabel *icon(){ return _icon; }
@@ -61,18 +56,22 @@ signals:
     void released();
     void doubleClicked();
     void clicked(bool);
-public slots:
-    void animate();
+
 private:
     void setup();
     void resetStyle();
+
+    virtual void enterEvent(QEvent *);
+    virtual void leaveEvent(QEvent*);
+    virtual void mouseDoubleClickEvent(QMouseEvent *){doubleClicked();}
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     CLabel *_text = new CLabel(this);
     QLabel *_icon = new QLabel(this);
 
-
-    QGraphicsOpacityEffect *_opacity = new QGraphicsOpacityEffect(this);
+    QGraphicsDropShadowEffect *_shadow = new QGraphicsDropShadowEffect( this );
 
     DisplayMode _displayMode = CPushButton::textOnly;
     IconPosition _iconPosition = CPushButton::left;
@@ -84,7 +83,7 @@ private:
     bool _mouseOver = false;
     bool _iconColorEnabled = false;
 
-    uint _borderRadius = 8;
+    uint _borderRadius = 6;
     uint _borderWidth = 1;
 
     QTimer *timer = new QTimer(this);

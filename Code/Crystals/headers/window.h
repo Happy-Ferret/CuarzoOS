@@ -22,7 +22,7 @@ public:
     // Special views
     View *paradisoView = nullptr;
     View *dragIconView = nullptr;
-    QPointer<View> mouseView;
+    View *mouseView = nullptr;
 
     // Topbar grab
     void mouseGrabBegin();
@@ -109,7 +109,7 @@ private:
     void drawShadow(const QRectF &rect, float intensity, uint opacity, float size, bool TL, bool TR, bool BR, bool BL, float borderRadius);
 
     // Event Variables
-    enum GrabState { NoGrab, MoveGrab, DragGrab , LeftResize, TopResize, RightResize, BottomResize};
+    enum GrabState { NoGrab, MoveGrab, DragGrab , LeftResize, TopResize, RightResize, BottomResize, TopLeftResize, TopRightResize, BottomRightResize, BottomLeftResize};
     QPointF mouseOffset, initialMousePos, initialViewPosition;
     QSize initialSize, blurSize, initialViewSize;
     GrabState grabState = NoGrab;

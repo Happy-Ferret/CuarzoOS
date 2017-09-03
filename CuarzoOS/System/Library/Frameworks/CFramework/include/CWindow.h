@@ -1,6 +1,6 @@
 #include "CCore.h"
 #include "CLabel.h"
-#include "CPushButton.h"
+#include "CIconButton.h"
 #include <QApplication>
 #include <QWidget>
 #include <QBoxLayout>
@@ -15,6 +15,8 @@ class CWindow: public QWidget
 {
 
     Q_OBJECT
+
+    friend class CProtocol;
 
 public:
     CWindow();
@@ -34,7 +36,7 @@ public:
     bool registeredSurface = false;
 
     // Topbar items layout
-    QHBoxLayout *topBarContainer = new QHBoxLayout(topBarItems);
+    QHBoxLayout *firstTopLayout, seccondTopLayout;
 
 signals:
     void positionChanged(const QPoint &pos);
@@ -63,7 +65,7 @@ private:
     CLabel *_title = new CLabel( QApplication::applicationName(), topBar );
 
     // Window buttons
-    CPushButton *closeButton, *minimizeButton, *expandButton;
+    CIconButton *closeButton, *minimizeButton, *expandButton;
 
     // Resize event
     void resizeEvent(QResizeEvent *);
@@ -72,9 +74,6 @@ private:
     uint localMode = WINDOW_MODE;
     uint localOpacity = 255;
     bool localBlur = false;
-
-
-
 
 };
 

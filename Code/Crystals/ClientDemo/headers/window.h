@@ -7,7 +7,7 @@
 #include "CImage.h"
 #include "CPushButton.h"
 
-
+#include <QMouseEvent>
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QTimer>
@@ -34,6 +34,8 @@ public:
 
     QHBoxLayout *layout = new QHBoxLayout(widget);
 
+private:
+    virtual void mouseMoveEvent(QMouseEvent*e);
 
 public slots:
     void deleteWindow();
