@@ -32,7 +32,7 @@ private:
     QColor _fontColor = QColor("#444444");
     QString _fontFamily = "Coves";
     QString _fontWeight = "light";
-    QString _fontSize = "16px";
+    QString _fontSize = "14px";
     QString _fontStyle= "regular";
 
     void resetStyle();

@@ -24,9 +24,25 @@ Window::Window()
   cre->setFrameColor(BLUE);
   del->setFrameColor(RED);
   siz->setFrameColor(ORANGE);
+  tit->setFrameColor(DEEP_PURPLE);
+  mod->setFrameColor(DEEP_ORANGE);
+  blu->setFrameColor(TEAL);
+  opa->setFrameColor(BROWN);
+  a->setFrameColor(INDIGO);
+  b->setFrameColor(PURPLE);
+  c->setFrameColor(AMBER);
+  d->setFrameColor(LIME);
+  e->setFrameColor(PINK);
+
 
   QMovie *movie = new QMovie("/home/e/jobs.gif");
   movieFrame->setMovie(movie);
+
+  layout->addWidget(a);
+  layout->addWidget(b);
+  layout->addWidget(c);
+  layout->addWidget(d);
+  layout->addWidget(e);
 
   layout->addWidget(wel);
   layout->addWidget(home);
@@ -39,6 +55,7 @@ Window::Window()
   layout->addWidget(del);
   layout->addWidget(movieFrame);
   movie->start();
+  movieFrame->hide();
 
 }
 

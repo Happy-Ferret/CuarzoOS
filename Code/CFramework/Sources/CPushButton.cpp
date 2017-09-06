@@ -18,10 +18,14 @@ CPushButton::CPushButton(QPixmap icon, QWidget *parent)
 {
     QFrame::setParent(parent);
     setup();
-    setFixedSize(40,40);
-    _icon->setFixedSize(20,20);
+    setFixedSize(32,32);
     setDisplayMode(CPushButton::iconOnly);
     setIcon(icon);
+    enableIconColor(true);
+    setIconColor(_iconColor);
+    layout->setStretch(0,0);
+    layout->setStretch(1,0);
+    _text->hide();
 }
 
 CPushButton::CPushButton(const QString &text, QPixmap icon, IconPosition position, QWidget *parent)
@@ -31,7 +35,8 @@ CPushButton::CPushButton(const QString &text, QPixmap icon, IconPosition positio
     setDisplayMode(CPushButton::textAndIcon);
     setIcon(icon);
     enableIconColor(true);
-    _icon->setFixedSize(15,15);
+    _icon->setFixedSize(22,22);
+    _text->enableEllipsis(true);
     setIconColor(QColor("#FFFFFF"));
     setTextColor(QColor("#FFFFFF"));
     setFrameColor(QColor(BLUE));
@@ -50,12 +55,19 @@ void CPushButton::setDisplayMode(CPushButton::DisplayMode mode)
         resetStyle();
         break;
     case CPushButton::textAndIcon:
+        layout->setContentsMargins(10,4,10,4);
+        layout->setSpacing(4);
+        layout->setAlignment(Qt::AlignCenter);
         _icon->setAlignment(Qt::AlignLeft);
         _icon->show();
         _text->show();
+        _text->setAlignment(Qt::AlignCenter);
         resetStyle();
         break;
     case CPushButton::iconOnly:
+        layout->setMargin(4);
+        layout->setSpacing(0);
+        layout->setAlignment(Qt::AlignCenter);
         _icon->setAlignment(Qt::AlignCenter);
         _icon->show();
         _text->show();
@@ -221,7 +233,7 @@ void CPushButton::setup()
 
     _text->setFontColor(_textColor);
     _text->setFontFamily("Lucida");
-    _text->setFontWeight("light");
+    _text->setFontWeight("bold");
     _text->enableEllipsis(true);
     _text->setAlignment(Qt::AlignCenter);
 
@@ -231,7 +243,7 @@ void CPushButton::setup()
     _shadow->setOffset(0);
     _shadow->setBlurRadius(5);
     _shadow->setColor( QColor( GRAY ) );
-    setFixedHeight(30);
+    setFixedHeight(33);
     setGraphicsEffect(_shadow);
 
     _icon->setMouseTracking(true);

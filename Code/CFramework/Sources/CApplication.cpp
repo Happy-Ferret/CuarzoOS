@@ -1,5 +1,5 @@
 #include "CApplication.h"
-
+#include <QFontDatabase>
 
 CApplication::CApplication(int &argc,char **argv):QApplication(argc,argv){
 
@@ -12,6 +12,7 @@ CApplication::CApplication(int &argc,char **argv):QApplication(argc,argv){
     setAttribute(Qt::AA_UseHighDpiPixmaps);
     setAttribute(Qt::AA_UseOpenGLES);
 
+    QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Roboto/Roboto-Regular.ttf");
 
 }
 

@@ -23,7 +23,8 @@ HEADERS += \
     Headers/CPushButton.h \
     Headers/CImage.h \
     Headers/CProtocol.h \
-    Headers/CIconButton.h
+    Headers/CIconButton.h \
+    Headers/CMaterialIcon.h
 
 SOURCES += \
     Sources/CApplication.cpp \

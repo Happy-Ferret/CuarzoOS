@@ -258,7 +258,8 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		../CFramework/Headers/CPushButton.h \
 		../CFramework/Headers/CImage.h \
 		../CFramework/Headers/CProtocol.h \
-		../CFramework/Headers/CIconButton.h ../CFramework/Sources/CApplication.cpp \
+		../CFramework/Headers/CIconButton.h \
+		../CFramework/Headers/CMaterialIcon.h ../CFramework/Sources/CApplication.cpp \
 		../CFramework/Sources/CWindow.cpp \
 		../CFramework/Sources/CLabel.cpp \
 		../CFramework/Sources/CPushButton.cpp \
@@ -667,7 +668,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../CFramework/Headers/CApplication.h ../CFramework/Headers/CCore.h ../CFramework/Headers/CLabel.h ../CFramework/Headers/CWindow.h ../CFramework/Headers/CPushButton.h ../CFramework/Headers/CImage.h ../CFramework/Headers/CProtocol.h ../CFramework/Headers/CIconButton.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../CFramework/Headers/CApplication.h ../CFramework/Headers/CCore.h ../CFramework/Headers/CLabel.h ../CFramework/Headers/CWindow.h ../CFramework/Headers/CPushButton.h ../CFramework/Headers/CImage.h ../CFramework/Headers/CProtocol.h ../CFramework/Headers/CIconButton.h ../CFramework/Headers/CMaterialIcon.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../CFramework/Sources/CApplication.cpp ../CFramework/Sources/CWindow.cpp ../CFramework/Sources/CLabel.cpp ../CFramework/Sources/CPushButton.cpp ../CFramework/Sources/CImage.cpp ../CFramework/Sources/CProtocol.cpp ../CFramework/Sources/CIconButton.cpp $(DISTDIR)/
 
 
@@ -1184,6 +1185,7 @@ moc_CPushButton.cpp: ../CFramework/Headers/CLabel.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsDropShadowEffect \
 		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h \
@@ -1686,7 +1688,9 @@ CApplication.o: ../CFramework/Sources/CApplication.cpp ../CFramework/Headers/CAp
 		/usr/local/Qt-5.9.1/include/QtNetwork/qtnetwork-config.h \
 		/usr/local/Qt-5.9.1/include/QtNetwork/qabstractsocket.h \
 		/usr/local/Qt-5.9.1/include/QtCore/QObject \
-		/usr/local/Qt-5.9.1/include/QtCore/QMap
+		/usr/local/Qt-5.9.1/include/QtCore/QMap \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontDatabase \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontdatabase.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CApplication.o ../CFramework/Sources/CApplication.cpp
 
 CWindow.o: ../CFramework/Sources/CWindow.cpp ../CFramework/Headers/CWindow.h \
@@ -2033,6 +2037,7 @@ CPushButton.o: ../CFramework/Sources/CPushButton.cpp ../CFramework/Headers/CPush
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsOpacityEffect \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgraphicseffect.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QGraphicsDropShadowEffect \
 		/usr/local/Qt-5.9.1/include/QtCore/QTimer \
 		/usr/local/Qt-5.9.1/include/QtCore/qtimer.h \
 		/usr/local/Qt-5.9.1/include/QtCore/qbasictimer.h
@@ -2428,6 +2433,7 @@ install_headers: first FORCE
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CIconButton.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CIconButton.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CImage.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CImage.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CLabel.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CLabel.h
+	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CMaterialIcon.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CMaterialIcon.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CProtocol.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CProtocol.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CPushButton.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CPushButton.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CWindow.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CWindow.h
@@ -2436,6 +2442,7 @@ uninstall_headers: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CWindow.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CPushButton.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CProtocol.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CMaterialIcon.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CLabel.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CImage.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CIconButton.h

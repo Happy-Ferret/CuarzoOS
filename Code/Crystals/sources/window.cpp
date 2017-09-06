@@ -823,8 +823,20 @@ void Window::keyPressEvent(QKeyEvent *e)
 {
     if(e->key() == Qt::Key_0)
         compositor->man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
+    if(e->key() == Qt::Key_9)
+        compositor->man.launchZpp(SYSTEM_PATH + "/Applications/Projector.zpp");
     if(e->key() == Qt::Key_Escape)
         QGuiApplication::exit();
+    if(e->key() == Qt::Key_1)
+    {
+        QProcess::startDetached("xrandr -s 1360x768");
+        compositor->setScreenResolution(QSize(1360,768));
+    }
+    if(e->key() == Qt::Key_2)
+    {
+        grabFramebuffer().save("/home/e/Escritorio/Screen.png","png");
+    }
+
 
     compositor->defaultSeat()->sendKeyPressEvent(e->nativeScanCode());
 }
