@@ -25,23 +25,23 @@ CWindow::CWindow()
 
     // Buttons
     closeButton = new CIconButton(
-                QPixmap( path + "Window_Close_Normal.png"),
-                QPixmap( path + "Window_Close_Over.png"),
-                QPixmap( path + "Window_Close_Press.png"),
+                QPixmap( path + "close_focus.png"),
+                QPixmap( path + "close_focus.png"),
+                QPixmap( path + "close_active.png"),
                 this
     );
 
     minimizeButton = new CIconButton(
-                QPixmap( path + "Window_Minimize_Normal.png"),
-                QPixmap( path + "Window_Minimize_Over.png"),
-                QPixmap( path + "Window_Minimize_Press.png"),
+                QPixmap( path + "minimize_focus.png"),
+                QPixmap( path + "minimize_focus.png"),
+                QPixmap( path + "minimize_active.png"),
                 this
     );
 
     expandButton = new CIconButton(
-                QPixmap( path + "Window_Expand_Normal.png"),
-                QPixmap( path + "Window_Expand_Over.png"),
-                QPixmap( path + "Window_Expand_Press.png"),
+                QPixmap( path + "maximize_focus.png"),
+                QPixmap( path + "maximize_focus.png"),
+                QPixmap( path + "maximize_active.png"),
                 this
     );
 
@@ -51,7 +51,7 @@ CWindow::CWindow()
     expandButton->setFixedSize( buttonSize, buttonSize);
 
     horizontalLayout->setMargin(8);
-    horizontalLayout->setSpacing(10);
+    horizontalLayout->setSpacing(8);
     horizontalLayout->addWidget(closeButton);
     horizontalLayout->addWidget(minimizeButton);
     horizontalLayout->addWidget(expandButton);
@@ -61,7 +61,7 @@ CWindow::CWindow()
     _title->enableEllipsis(true);
     _title->setFontColor( QColor(GRAY) );
     topBar->setObjectName("QZTP");
-    topBar->setStyleSheet("#QZTP{background:qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #EEE , stop:1 #DDD);border-bottom:1px solid #CCC}");
+    topBar->setStyleSheet("#QZTP{background:qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFF , stop:1 #e8eaf6);border-bottom:1px solid #CCC}");
     topBar->setAutoFillBackground(true);
 
     verticalLayout->addWidget(topBar,0,Qt::AlignTop);

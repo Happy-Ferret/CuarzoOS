@@ -7,6 +7,8 @@ Window::Window()
 {
 
   setCentralWidget(widget);
+  widget->setAutoFillBackground(true);
+  widget->setPalette(Qt::white);
   move(0,0);
   resize(800,500);
   setMouseTracking(true);

@@ -185,7 +185,7 @@ void Window::drawWindow(View *view)
                         viewRect.y() + blur->y,
                         blur->w,
                         blur->h
-                     ), 0.5, 1.6, 0.4, view->opacity, false, false, true, true, 8.0);
+                     ), 0.5, 1.6, 0.4, view->opacity, false, false, true, true, 7.0);
 
 
         //drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, true, true, 8.0);
@@ -193,13 +193,13 @@ void Window::drawWindow(View *view)
 
 
     // Draws  shadow
-    drawShadow( viewRect,  0.18, view->opacity, 128.0, true, true, true, true, 8.0);
+    drawShadow( viewRect,  0.18, view->opacity, 128.0, true, true, true, true, 7.0);
 
     // Selects blur framebuffer
     glBindFramebuffer( GL_FRAMEBUFFER, offscreenBuffer );
 
     // Draws surface
-    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), true, true , true, true, 8.0, false);
+    drawSurface( viewRect, view->opacity, view->getTexture()->textureId(), true, true , true, true, 7.0, false);
 
     // Saves previus position
     view->previusPosition = view->position();

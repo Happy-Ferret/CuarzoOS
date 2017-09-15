@@ -35,7 +35,7 @@ float borderRadius()
 {
     float x = TextureCoordsOut.x * Size.x;
     float y = TextureCoordsOut.y * Size.y;
-    float solid = 50.0;
+    float solid = 32.0;
 
     if ( Borders[0] )
         if ( x <= BorderRadius && y  <= BorderRadius )

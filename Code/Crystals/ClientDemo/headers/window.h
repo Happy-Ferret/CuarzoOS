@@ -40,8 +40,7 @@ public:
 
     QLabel *movieFrame = new QLabel(this);
 
-    CBlurWidget *widget = new CBlurWidget(this);
-
+    QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
 
 private:
