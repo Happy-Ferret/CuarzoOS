@@ -1,4 +1,4 @@
-QT       += widgets network
+QT       += core gui widgets network
 CONFIG += warn_off alerts_off
 TARGET = CFramework
 TEMPLATE = lib
@@ -24,7 +24,8 @@ HEADERS += \
     Headers/CImage.h \
     Headers/CProtocol.h \
     Headers/CIconButton.h \
-    Headers/CMaterialIcon.h
+    Headers/CMaterialIcon.h \
+    Headers/CBlurWidget.h
 
 SOURCES += \
     Sources/CApplication.cpp \
@@ -33,4 +34,5 @@ SOURCES += \
     Sources/CPushButton.cpp \
     Sources/CImage.cpp \
     Sources/CProtocol.cpp \
-    Sources/CIconButton.cpp
+    Sources/CIconButton.cpp \
+    Sources/CBlurWidget.cpp

@@ -168,25 +168,6 @@ void CProtocol::opacityChanged(float opacity)
     socket->write(data,sizeof(SurfaceOpacityStruct));
 }
 
-void CProtocol::blurStateChanged(bool mode)
-{
-    CWindow *widget = qobject_cast<CWindow*>(sender());
-
-    /*
-    // Send surface title to Crystals
-    SurfaceBlurStruct message;
-    message.id = widget->winId();
-    message.activate = mode;
-
-    // Copy message to a char pointer
-    char data[sizeof(SurfaceBlurStruct)];
-    memcpy(data,&message,sizeof(SurfaceBlurStruct));
-
-    // Send message
-    socket->write(data,sizeof(SurfaceBlurStruct));
-    */
-}
-
 void CProtocol::mouseGrab()
 {
     CWindow *widget = qobject_cast<CWindow*>(sender());
@@ -201,6 +182,141 @@ void CProtocol::mouseGrab()
 
     // Send message
     socket->write(data,sizeof(SurfaceGrabStruct));
+
+}
+
+void CProtocol::blurLevel(float level)
+{
+    CBlurWidget *widget = qobject_cast<CBlurWidget*>(sender());
+
+    // Send surface title to Crystals
+    SurfaceBlurLevelStruct message;
+    message.surfaceId = widget->window()->winId();
+    message.blurId = widget->winId();
+    message.level = level;
+
+    // Copy message to a char pointer
+    char data[sizeof( SurfaceBlurLevelStruct )];
+    memcpy(data,&message,sizeof( SurfaceBlurLevelStruct ));
+
+    // Send message
+    socket->write(data,sizeof( SurfaceBlurLevelStruct ));
+}
+
+void CProtocol::blurTint(float tint)
+{
+    CBlurWidget *widget = qobject_cast<CBlurWidget*>(sender());
+
+    // Send surface title to Crystals
+    SurfaceBlurTintStruct message;
+    message.surfaceId = widget->window()->winId();
+    message.blurId = widget->winId();
+    message.tint = tint;
+
+    // Copy message to a char pointer
+    char data[sizeof( SurfaceBlurTintStruct )];
+    memcpy(data,&message,sizeof( SurfaceBlurTintStruct ));
+
+    // Send message
+    socket->write(data,sizeof( SurfaceBlurTintStruct ));
+}
+
+void CProtocol::blurRect()
+{
+    CBlurWidget *widget = qobject_cast<CBlurWidget*>(sender());
+
+    QPoint pos = widget->mapTo( widget->window(), widget->pos());
+
+    // Send surface title to Crystals
+    SurfaceBlurRectStruct message;
+    message.surfaceId = widget->window()->winId();
+    message.blurId = widget->winId();
+    message.x = pos.x();
+    message.y = pos.y() - widget->window()->height() + widget->height();
+    message.w = widget->width();
+    message.h = widget->height();
+
+    // Copy message to a char pointer
+    char data[sizeof( SurfaceBlurRectStruct )];
+    memcpy(data,&message,sizeof( SurfaceBlurRectStruct ));
+
+    // Send message
+    socket->write(data,sizeof( SurfaceBlurRectStruct ));
+}
+
+void CProtocol::blurRemove(bool mode)
+{
+
+    CBlurWidget *widget = qobject_cast<CBlurWidget*>(sender());
+
+    if (mode)
+    {
+
+        QPoint pos = widget->mapTo(widget->window(), widget->pos());
+
+        // Send surface title to Crystals
+        SurfaceBlurCreateStruct message;
+        message.blurId = widget->winId();
+        message.surfaceId = widget->window()->winId();
+        message.x = pos.x();
+        message.y = pos.y() - widget->window()->height() + widget->height();
+        message.w = widget->width();
+        message.h = widget->height();
+        message.tint = widget->blurTint();
+        message.level = widget->blurLevel();
+
+
+        // Copy message to a char pointer
+        char data[sizeof(SurfaceBlurCreateStruct)];
+        memcpy(data,&message,sizeof(SurfaceBlurCreateStruct));
+
+        // Send message
+        socket->write(data,sizeof(SurfaceBlurCreateStruct));
+    }
+    else{
+
+        // Send surface title to Crystals
+        SurfaceBlurRemoveStruct message;
+        message.surfaceId = widget->window()->winId();
+        message.blurId = widget->winId();
+
+        // Copy message to a char pointer
+        char data[sizeof( SurfaceBlurRemoveStruct )];
+        memcpy(data,&message,sizeof( SurfaceBlurRemoveStruct ));
+
+        // Send message
+        socket->write(data,sizeof( SurfaceBlurRemoveStruct ));
+    }
+}
+
+void CProtocol::connectBlurWidget(CBlurWidget *widget)
+{
+
+    QPoint pos = widget->mapTo(widget->window(), widget->pos());
+
+    // Send surface title to Crystals
+    SurfaceBlurCreateStruct message;
+    message.blurId = widget->winId();
+    message.surfaceId = widget->window()->winId();
+    message.x = pos.x();
+    message.y = pos.y() - widget->window()->height() + widget->height();
+    message.w = widget->width();
+    message.h = widget->height();
+    message.tint = widget->blurTint();
+    message.level = widget->blurLevel();
+
+
+    // Copy message to a char pointer
+    char data[sizeof(SurfaceBlurCreateStruct)];
+    memcpy(data,&message,sizeof(SurfaceBlurCreateStruct));
+
+    // Send message
+    socket->write(data,sizeof(SurfaceBlurCreateStruct));
+
+    connect( widget, SIGNAL( levelChanged( float ) ), this, SLOT( blurLevel( float ) ) );
+    connect( widget, SIGNAL( tintChanged( float ) ), this, SLOT( blurTint( float ) ) );
+    connect( widget, SIGNAL( geometryChanged() ), this, SLOT( blurRect() ) );
+    connect( widget, SIGNAL( stateChanged(bool)), this, SLOT( blurRemove( bool ) ) );
 
 }
 

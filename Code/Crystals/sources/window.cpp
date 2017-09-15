@@ -168,8 +168,29 @@ void Window::drawWindow(View *view)
 
     QRectF viewRect = QRectF(view->position().x(),view->position().y(),view->size().width(),view->size().height());
 
+
     // Draws  blur
-    if( view->blur ) drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, true, true, 8.0);
+    Q_FOREACH (SurfaceBlurCreateStruct *blur, view->blurWidgets.values())
+    {
+
+        if( blur->w > viewRect.width() && blur->x >= 0)
+            blur->w = viewRect.width() - blur->x;
+
+        if( blur->h > viewRect.height() && blur->y >= 0)
+            blur->h = viewRect.height() - blur->y;
+
+        drawBlur(
+                    QRectF(
+                        viewRect.x() + blur->x,
+                        viewRect.y() + blur->y,
+                        blur->w,
+                        blur->h
+                     ), 0.5, 1.6, 0.4, view->opacity, false, false, true, true, 8.0);
+
+
+        //drawBlur( viewRect, 0.5, 1.6, 0.4, view->opacity, true, true, true, true, 8.0);
+    }
+
 
     // Draws  shadow
     drawShadow( viewRect,  0.18, view->opacity, 128.0, true, true, true, true, 8.0);

@@ -76,7 +76,6 @@ void Window::createWindow()
 
 void Window::activateBlur()
 {
-    setBlur(true);
 }
 
 void Window::changeOpacity()

@@ -113,6 +113,8 @@ void Compositor::newClientMessage()
             // Find view that matches the given surface id
             View *view = findViewByIdAndPid( message->id, socket->processID );
 
+            if ( view == nullptr ) return;
+
             // Assign the surface position
             view->setPosition( QPointF( message->x, message->y ) );
 
@@ -143,6 +145,8 @@ void Compositor::newClientMessage()
             // Find view that matches the given surface id and process id
             View *view = findViewByIdAndPid(msg->id,socket->processID);
 
+            if ( view == nullptr ) return;
+
             // Set surface role
             view->setRole(msg->role);
 
@@ -160,6 +164,8 @@ void Compositor::newClientMessage()
 
             // Find view that matches the given surface id and process id
             View *view = findViewByIdAndPid(msg->id,socket->processID);
+
+            if ( view == nullptr ) return;
 
             // Sets surface position
             view->setPosition(QPointF(msg->x,msg->y));
@@ -194,6 +200,8 @@ void Compositor::newClientMessage()
             // Find view that matches the given surface id and process id
             View *view = findViewByIdAndPid(msg->id,socket->processID);
 
+            if ( view == nullptr ) return;
+
             // Sets surface opacity
             view->setOpacity(msg->opacity);
 
@@ -202,6 +210,111 @@ void Compositor::newClientMessage()
 
         }break;
 
+        // New Blur Widget
+        case SURFACE_BLUR_CREATE:{
+
+            // Parse the message
+            SurfaceBlurCreateStruct *msg = (SurfaceBlurCreateStruct*)data.data();
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
+
+            if ( view == nullptr ) return;
+
+            //  Saves the data
+            view->blurWidgets.insert( msg->blurId, msg);
+
+            // Triggers OpenGL render
+            triggerRender();
+
+        }break;
+
+        // Changes blur level
+    case SURFACE_BLUR_LEVEL:{
+
+            // Parse the message
+            SurfaceBlurLevelStruct *msg = (SurfaceBlurLevelStruct*)data.data();
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
+
+            if ( view == nullptr ) return;
+
+            // Sets  level
+           if( view->blurWidgets.contains(msg->blurId) )
+               view->blurWidgets[msg->blurId]->level = msg->level;
+
+
+            // Triggers OpenGL render
+            triggerRender();
+
+        }break;
+
+        // Changes blur rect
+    case SURFACE_BLUR_RECT:{
+
+            // Parse the message
+            SurfaceBlurRectStruct *msg = (SurfaceBlurRectStruct*)data.data();
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
+
+            if ( view == nullptr ) return;
+
+            // Sets  level
+           if( view->blurWidgets.contains(msg->blurId) )
+           {
+               SurfaceBlurCreateStruct *blur = view->blurWidgets[msg->blurId];
+               blur->x = msg->x;
+               blur->y = msg->y;
+               blur->w = msg->w;
+               blur->h = msg->h;
+           }
+
+            // Triggers OpenGL render
+            triggerRender();
+
+        }break;
+
+        // Changes blur tint level
+    case SURFACE_BLUR_TINT:{
+
+            // Parse the message
+            SurfaceBlurTintStruct *msg = (SurfaceBlurTintStruct*)data.data();
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
+
+            if ( view == nullptr ) return;
+
+            // Sets  level
+           if( view->blurWidgets.contains(msg->blurId))
+               view->blurWidgets[msg->blurId]->tint = msg->tint;
+
+            // Triggers OpenGL render
+            triggerRender();
+
+        }break;
+
+        // Remove blur
+    case SURFACE_BLUR_REMOVE:{
+
+            // Parse the message
+            SurfaceBlurRemoveStruct *msg = (SurfaceBlurRemoveStruct*)data.data();
+
+            // Find view that matches the given surface id and process id
+            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
+
+            if ( view == nullptr ) return;
+
+            // Sets  level
+           if( view->blurWidgets.contains(msg->blurId) )
+               delete view->blurWidgets.take(msg->blurId);
+
+            // Triggers OpenGL render
+            triggerRender();
+
+        }break;
 
     }
 }

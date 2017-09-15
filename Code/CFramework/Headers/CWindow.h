@@ -24,14 +24,12 @@ public:
     void move(int x, int y);
     void setWindowTitle(const QString &title);
     void setMode(unsigned int mode = WINDOW_MODE);
-    void setBlur(bool mode);
     void setWindowOpacity( float opacity = 1.0f );
     void setCentralWidget( QWidget *widget );
 
     QString windowTitle();
     uint windowOpacity();
     uint mode();
-    bool blurState();
 
     bool registeredSurface = false;
 
@@ -42,7 +40,6 @@ signals:
     void positionChanged(const QPoint &pos);
     void modeChanged(uint);
     void opacityChanged(float);
-    void blurStateChanged(bool);
     void mouseGrabEvent();
 
 
@@ -73,7 +70,6 @@ private:
 
     uint localMode = WINDOW_MODE;
     uint localOpacity = 255;
-    bool localBlur = false;
 
 };
 

@@ -134,8 +134,8 @@ typedef struct
     unsigned int type = SURFACE_BLUR_CREATE;
     unsigned int surfaceId;
     unsigned int blurId;
-    unsigned int x;
-    unsigned int y;
+    int x;
+    int y;
     unsigned int w;
     unsigned int h;
     float tint;
@@ -160,6 +160,18 @@ typedef struct
     float level;
 }
 SurfaceBlurLevelStruct;
+
+typedef struct
+{
+    unsigned int type = SURFACE_BLUR_RECT;
+    unsigned int surfaceId;
+    unsigned int blurId;
+    int x;
+    int y;
+    unsigned int w;
+    unsigned int h;
+}
+SurfaceBlurRectStruct;
 
 typedef struct
 {

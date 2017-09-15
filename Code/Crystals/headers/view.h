@@ -28,6 +28,7 @@ public:
     void setSize(const QSize &size);
 
     Socket *socket = nullptr;
+    QMap<uint, SurfaceBlurCreateStruct*> blurWidgets;
 
     QOpenGLTexture *getTexture();
 

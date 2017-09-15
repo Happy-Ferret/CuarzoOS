@@ -15,6 +15,9 @@ CWindow::CWindow()
     // Asigns parent
     QWidget::setParent(nullptr);
 
+    // Transparent background
+    setPalette( Qt::transparent );
+
     firstTopLayout = new QHBoxLayout(topBarItems);
 
     // Window icons
@@ -107,23 +110,7 @@ uint CWindow::mode()
     return localMode;
 }
 
-// Turn On/OFF blur
-void CWindow::setBlur(bool mode)
-{
-    localBlur = mode;
-    blurStateChanged(mode);
 
-    if(mode)
-        setPalette(Qt::transparent);
-    else
-        setPalette(Qt::white);
-}
-
-// Gets blur state
-bool CWindow::blurState()
-{
-    return localBlur;
-}
 
 void CWindow::refreshtemsPositions()
 {

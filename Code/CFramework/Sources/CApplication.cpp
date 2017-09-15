@@ -3,6 +3,9 @@
 
 CApplication::CApplication(int &argc,char **argv):QApplication(argc,argv){
 
+    // Creates the message protocol
+    protocol = new CProtocol( this );
+
     // Turn off style alerts
     setDesktopSettingsAware(false);
 

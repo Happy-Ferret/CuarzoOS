@@ -7,6 +7,7 @@
 #include "CImage.h"
 #include "CPushButton.h"
 #include "CMaterialIcon.h"
+#include "CBlurWidget.h"
 
 #include <QMouseEvent>
 #include <QBoxLayout>
@@ -39,7 +40,7 @@ public:
 
     QLabel *movieFrame = new QLabel(this);
 
-    QWidget *widget = new QWidget(this);
+    CBlurWidget *widget = new CBlurWidget(this);
 
     QHBoxLayout *layout = new QHBoxLayout(widget);
 

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CPushButton_t {
-    QByteArrayData data[9];
-    char stringdata0[82];
+    QByteArrayData data[8];
+    char stringdata0[74];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,13 +38,11 @@ QT_MOC_LITERAL(3, 24, 10), // "mouseLeave"
 QT_MOC_LITERAL(4, 35, 7), // "pressed"
 QT_MOC_LITERAL(5, 43, 8), // "released"
 QT_MOC_LITERAL(6, 52, 13), // "doubleClicked"
-QT_MOC_LITERAL(7, 66, 7), // "clicked"
-QT_MOC_LITERAL(8, 74, 7) // "animate"
+QT_MOC_LITERAL(7, 66, 7) // "clicked"
 
     },
     "CPushButton\0mouseEnter\0\0mouseLeave\0"
-    "pressed\0released\0doubleClicked\0clicked\0"
-    "animate"
+    "pressed\0released\0doubleClicked\0clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +52,7 @@ static const uint qt_meta_data_CPushButton[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,15 +60,12 @@ static const uint qt_meta_data_CPushButton[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x06 /* Public */,
-       3,    0,   50,    2, 0x06 /* Public */,
-       4,    0,   51,    2, 0x06 /* Public */,
-       5,    0,   52,    2, 0x06 /* Public */,
-       6,    0,   53,    2, 0x06 /* Public */,
-       7,    1,   54,    2, 0x06 /* Public */,
-
- // slots: name, argc, parameters, tag, flags
-       8,    0,   57,    2, 0x0a /* Public */,
+       1,    0,   44,    2, 0x06 /* Public */,
+       3,    0,   45,    2, 0x06 /* Public */,
+       4,    0,   46,    2, 0x06 /* Public */,
+       5,    0,   47,    2, 0x06 /* Public */,
+       6,    0,   48,    2, 0x06 /* Public */,
+       7,    1,   49,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -79,9 +74,6 @@ static const uint qt_meta_data_CPushButton[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,    2,
-
- // slots: parameters
-    QMetaType::Void,
 
        0        // eod
 };
@@ -98,7 +90,6 @@ void CPushButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 3: _t->released(); break;
         case 4: _t->doubleClicked(); break;
         case 5: _t->clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 6: _t->animate(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -174,13 +165,13 @@ int CPushButton::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 6;
     }
     return _id;
 }
