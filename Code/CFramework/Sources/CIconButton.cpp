@@ -7,38 +7,63 @@ CIconButton::CIconButton(QWidget *parent)
     setMouseTracking(true);
 }
 
-CIconButton::CIconButton(QPixmap normal, QPixmap over, QPixmap pressed, QWidget *parent)
+CIconButton::CIconButton(QPixmap active, QPixmap focus, QPixmap unfocus, QPixmap hover, QWidget *parent)
 {
-    setNormalPixmap( normal );
-    setOverPixmap( over );
-    setPressedPixmap( pressed );
+    setActivePixmap( active );
+    setFocusPixmap( focus );
+    setUnfocusPixmap( unfocus );
+    setHoverPixmap( hover );
+
     setScaledContents(true);
-    setPixmap( _normalPixmap );
     setMouseTracking(true);
+
+    setPixmap( unfocus );
 }
 
-void CIconButton::setNormalPixmap(QPixmap normal)
+void CIconButton::setActivePixmap(QPixmap active)
 {
-    _normalPixmap = normal;
-    setPixmap( _normalPixmap );
+    _active = active;
+    setPixmap( _active);
 }
 
-void CIconButton::setOverPixmap(QPixmap over)
+void CIconButton::setFocusPixmap(QPixmap focus)
 {
-    _overPixmap = over;
+    _focus = focus;
 }
 
-void CIconButton::setPressedPixmap(QPixmap pressed)
+void CIconButton::setUnfocusPixmap(QPixmap unfocus)
 {
-    _pressedPixmap = pressed;
+    _unfocus = unfocus;
+}
+
+void CIconButton::setHoverPixmap(QPixmap hover)
+{
+    _hover= hover;
+}
+
+void CIconButton::setWindowFocus(bool state)
+{
+    focus = state;
+
+    if ( focus )
+    {
+        if ( !_focus.isNull() )
+            setPixmap( _focus);
+    }
+    else
+    {
+        if ( !_unfocus.isNull() )
+            setPixmap( _unfocus);
+    }
+
 }
 
 void CIconButton::mousePressEvent(QMouseEvent *)
 {
     pressing = true;
 
-    if ( !_pressedPixmap.isNull() )
-        setPixmap( _pressedPixmap );
+    if ( !_active.isNull() )
+        setPixmap( _active);
 
     pressed();
 }
@@ -49,14 +74,26 @@ void CIconButton::mouseReleaseEvent(QMouseEvent *)
 
     if( over )
     {
-        if ( !_overPixmap.isNull()  )
-            setPixmap( _overPixmap );
+        if ( !_hover.isNull()  )
+            setPixmap( _hover);
         clicked();
     }
 
     if( !over )
-        if( !_normalPixmap.isNull()  )
-            setPixmap( _normalPixmap );
+    {
+        if( focus )
+        {
+            if( !_focus.isNull()  )
+                setPixmap( _focus);
+        }
+        else
+        {
+            if( !_unfocus.isNull()  )
+                setPixmap( _unfocus );
+        }
+
+    }
+
 
     released();
 }
@@ -65,14 +102,30 @@ void CIconButton::enterEvent(QEvent *)
 {
     over = true;
 
-    if( !_overPixmap.isNull()  )
-        setPixmap( _overPixmap );
+    if( !_hover.isNull()  )
+        setPixmap( _hover);
 
     mouseOver();
 }
 
 void CIconButton::leaveEvent(QEvent *)
 {
-    if( !pressing && !_normalPixmap.isNull() )
-        setPixmap( _normalPixmap );
+    if( !pressing && !_focus.isNull() )
+    {
+        if( focus )
+        {
+            if( !_focus.isNull()  )
+                setPixmap( _focus );
+        }
+        else
+        {
+            if( !_unfocus.isNull()  )
+                setPixmap( _unfocus );
+        }
+    }
+
 }
+
+
+
+

@@ -2,6 +2,7 @@
 #define CICONBUTTON_H
 
 #include <QLabel>
+#include <QEvent>
 
 class CIconButton : public QLabel
 {
@@ -9,26 +10,34 @@ class CIconButton : public QLabel
 
 public:
     CIconButton( QWidget *parent = nullptr );
-    CIconButton( QPixmap normal, QPixmap over, QPixmap pressed, QWidget *parent = nullptr );
+    CIconButton( QPixmap active, QPixmap focus, QPixmap unfocus, QPixmap hover, QWidget *parent = nullptr );
 
-    void setNormalPixmap( QPixmap normal );
-    void setOverPixmap( QPixmap over );
-    void setPressedPixmap( QPixmap pressed );
+    void setActivePixmap( QPixmap active );
+    void setFocusPixmap( QPixmap focus );
+    void setUnfocusPixmap( QPixmap unfocus );
+    void setHoverPixmap( QPixmap hover);
 
-    QPixmap normalPixmap() { return _normalPixmap;}
-    QPixmap overPixmap() { return _overPixmap;}
-    QPixmap pressedPixmap() { return _pressedPixmap;}
+    void setWindowFocus( bool focus );
+
+    QPixmap activePixmap() { return _active;}
+    QPixmap focusPixmap() { return _focus;}
+    QPixmap unfocusPixmap() { return _unfocus;}
+    QPixmap hoverPixmap() { return _hover;}
+
 
 private:
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+
     virtual void enterEvent(QEvent *);
     virtual void leaveEvent(QEvent *);
 
     bool over = false;
     bool pressing = false;
+    bool focus = false;
 
-    QPixmap _normalPixmap, _overPixmap, _pressedPixmap;
+    QPixmap _active, _focus, _hover,_unfocus;
+
 
 signals:
     void mouseOver();

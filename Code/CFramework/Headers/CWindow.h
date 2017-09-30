@@ -68,6 +68,7 @@ private:
     void resizeEvent(QResizeEvent *);
     bool eventFilter(QObject *watched, QEvent *event);
 
+
     uint localMode = WINDOW_MODE;
     uint localOpacity = 255;
 

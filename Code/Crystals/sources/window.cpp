@@ -128,7 +128,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Valparaiso 1.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Forest.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
