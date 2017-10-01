@@ -4,8 +4,8 @@ Paradiso::Paradiso()
 {
     // Configure Paradiso
     setMode(PARADISO_MODE);
+    setCentralWidget( topBar );
     setFixedSize(QApplication::primaryScreen()->size().width(), 28);
-    setPalette(Qt::transparent);
 
     // Event when connects to Crystals
     connect(crystalsSocket,SIGNAL(connected()),this,SLOT(connectedToCrystals()));
@@ -54,6 +54,7 @@ void Paradiso::messageFromCrystals()
         {
             case REGISTERED_SURFACE:{
 
+
                 // Parse Message
                 RegisteredSurfaceStruct *reply = (RegisteredSurfaceStruct*)message.data();
 
@@ -72,7 +73,6 @@ void Paradiso::messageFromCrystals()
                 conf.x = widget->pos().x();
                 conf.y = widget->pos().y();
                 conf.role = widget->mode();
-                strcpy(conf.title,widget->windowTitle().toUtf8());
 
                 // Copy message to a char pointer
                 char data[sizeof(SurfaceConfigStruct)];

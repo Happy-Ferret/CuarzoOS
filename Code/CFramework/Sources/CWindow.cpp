@@ -108,6 +108,9 @@ QString CWindow::windowTitle()
 void CWindow::setMode(unsigned int mode)
 {
     localMode = mode;
+
+    if (mode != WINDOW_MODE)
+        topBar->hide();
     modeChanged(mode);
 }
 

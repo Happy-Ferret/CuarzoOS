@@ -18,6 +18,9 @@ public:
     // IPC with Clients
     QLocalServer *clientsServer = new QLocalServer(this);
 
+    // TopBar
+    QWidget *topBar = new QWidget(this);
+
 public slots:
 
     // Connected to Crystals
