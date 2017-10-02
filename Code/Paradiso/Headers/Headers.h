@@ -7,7 +7,9 @@
 #include <QList>
 #include <QMap>
 #include <QJsonDocument>
+
 #include <CCore.h>
 #include <CWindow.h>
 #include <CLabel.h>
+#include <CImage.h>
 

@@ -6,11 +6,18 @@
 class Menu : public QWidget
 {
     Q_OBJECT
+
 public:
+
     Menu(const QString &title);
-    Menu(QPixmap icon);
+    Menu(QPixmap pix);
+
+    void setup();
+
+    QHBoxLayout *layout = new QHBoxLayout(this);
     CLabel *text = new CLabel(this);
-    QPixmap icon;
+    CImage *icon = nullptr;
+    QPixmap pixmap;
 
 };
 

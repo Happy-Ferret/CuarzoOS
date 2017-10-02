@@ -52,13 +52,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp \
 		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp \
-		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/TextMenu.cpp moc_Paradiso.cpp \
-		moc_TextMenu.cpp
+		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Menu.cpp moc_Paradiso.cpp \
+		moc_Menu.cpp
 OBJECTS       = main.o \
 		Paradiso.o \
-		TextMenu.o \
+		Menu.o \
 		moc_Paradiso.o \
-		moc_TextMenu.o
+		moc_Menu.o
 DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/common/unix.conf \
 		/usr/local/Qt-5.9.1/mkspecs/common/linux.conf \
@@ -213,6 +213,7 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/qt_config.prf \
 		/usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf \
 		/usr/local/Qt-5.9.1/mkspecs/features/spec_post.prf \
+		/home/e/Escritorio/CuarzoOS/Code/Paradiso/.qmake.stash \
 		/usr/local/Qt-5.9.1/mkspecs/features/exclusive_builds.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/toolchain.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf \
@@ -234,9 +235,9 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/lex.prf \
 		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Paradiso.pro /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Paradiso.h \
 		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
-		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/TextMenu.h /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp \
+		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Menu.h /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp \
 		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp \
-		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/TextMenu.cpp
+		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Menu.cpp
 QMAKE_TARGET  = Paradiso
 DESTDIR       = 
 TARGET        = Paradiso
@@ -402,6 +403,7 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Paradiso.pro /usr/local/Qt-5
 		/usr/local/Qt-5.9.1/mkspecs/features/qt_config.prf \
 		/usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf \
 		/usr/local/Qt-5.9.1/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/local/Qt-5.9.1/mkspecs/features/exclusive_builds.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/toolchain.prf \
 		/usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf \
@@ -581,6 +583,7 @@ Makefile: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Paradiso.pro /usr/local/Qt-5
 /usr/local/Qt-5.9.1/mkspecs/features/qt_config.prf:
 /usr/local/Qt-5.9.1/mkspecs/linux-g++/qmake.conf:
 /usr/local/Qt-5.9.1/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/local/Qt-5.9.1/mkspecs/features/exclusive_builds.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/toolchain.prf:
 /usr/local/Qt-5.9.1/mkspecs/features/default_pre.prf:
@@ -620,8 +623,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Paradiso.h /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/TextMenu.h $(DISTDIR)/
-	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/TextMenu.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Paradiso.h /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Menu.h $(DISTDIR)/
+	$(COPY_FILE) --parents /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Menu.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -653,9 +656,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_Paradiso.cpp moc_TextMenu.cpp
+compiler_moc_header_make_all: moc_Paradiso.cpp moc_Menu.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_Paradiso.cpp moc_TextMenu.cpp
+	-$(DEL_FILE) moc_Paradiso.cpp moc_Menu.cpp
 moc_Paradiso.cpp: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
@@ -801,12 +804,19 @@ moc_Paradiso.cpp: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		../../../Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
 		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Paradiso.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
 	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Paradiso -I/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Paradiso.h -o moc_Paradiso.cpp
 
-moc_TextMenu.cpp: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
+moc_Menu.cpp: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
@@ -951,10 +961,17 @@ moc_TextMenu.cpp: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
 		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
-		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/TextMenu.h \
+		../../../Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h \
+		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Menu.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.9.1/bin/moc
-	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Paradiso -I/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/TextMenu.h -o moc_TextMenu.cpp
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/Paradiso -I/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers -I/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Menu.h -o moc_Menu.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1115,7 +1132,14 @@ main.o: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp /home/e/Escri
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		../../../Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/main.cpp
 
 Paradiso.o: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Paradiso.h \
@@ -1263,10 +1287,17 @@ Paradiso.o: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp /home
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		../../../Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Paradiso.o /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Paradiso.cpp
 
-TextMenu.o: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/TextMenu.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/TextMenu.h \
+Menu.o: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Menu.cpp /home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Menu.h \
 		/home/e/Escritorio/CuarzoOS/Code/Paradiso/Headers/Headers.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
@@ -1411,14 +1442,21 @@ TextMenu.o: /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/TextMenu.cpp /home
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
 		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
-		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TextMenu.o /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/TextMenu.cpp
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		../../../Library/Frameworks/CFramework/include/CImage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QPainter \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainter.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtextoption.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpen.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QBitmap \
+		/usr/local/Qt-5.9.1/include/QtGui/qbitmap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Menu.o /home/e/Escritorio/CuarzoOS/Code/Paradiso/Sources/Menu.cpp
 
 moc_Paradiso.o: moc_Paradiso.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Paradiso.o moc_Paradiso.cpp
 
-moc_TextMenu.o: moc_TextMenu.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_TextMenu.o moc_TextMenu.cpp
+moc_Menu.o: moc_Menu.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Menu.o moc_Menu.cpp
 
 ####### Install
 

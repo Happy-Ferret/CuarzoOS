@@ -7,6 +7,11 @@ Paradiso::Paradiso()
     setCentralWidget( topBar );
     setFixedSize(QApplication::primaryScreen()->size().width(), 28);
 
+    // Setup topbar
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->addWidget(cuarzoMenu);
+
     // Event when connects to Crystals
     connect(crystalsSocket,SIGNAL(connected()),this,SLOT(connectedToCrystals()));
 
