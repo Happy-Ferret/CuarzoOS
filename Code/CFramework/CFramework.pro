@@ -26,7 +26,9 @@ HEADERS += \
     Headers/CIconButton.h \
     Headers/CMaterialIcon.h \
     Headers/CBlurWidget.h \
-    Headers/CIcon.h
+    Headers/CIcon.h \
+    Headers/CTopBar.h \
+    Headers/CMenu.h
 
 SOURCES += \
     Sources/CApplication.cpp \
@@ -37,4 +39,6 @@ SOURCES += \
     Sources/CProtocol.cpp \
     Sources/CIconButton.cpp \
     Sources/CBlurWidget.cpp \
-    Sources/CIcon.cpp
+    Sources/CIcon.cpp \
+    Sources/CTopBar.cpp \
+    Sources/CMenu.cpp

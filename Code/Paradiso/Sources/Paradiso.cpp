@@ -11,8 +11,15 @@ Paradiso::Paradiso()
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(cuarzoMenu);
+    layout->addWidget(textMenu);
+    layout->addWidget(textMenuB);
+    textMenu->text->setFontWeight("bold");
     cuarzoMenu->setFixedWidth(64);
     layout->setAlignment(Qt::AlignLeft);
+
+    cuarzoMenu->installEventFilter(this);
+    textMenu->installEventFilter(this);
+    textMenuB->installEventFilter(this);
 
     // Event when connects to Crystals
     connect(crystalsSocket,SIGNAL(connected()),this,SLOT(connectedToCrystals()));
@@ -28,6 +35,49 @@ Paradiso::Paradiso()
 
     // Display Top Bar
     show();
+}
+
+bool Paradiso::eventFilter(QObject *watched, QEvent *event)
+{
+    // Mouse enter
+    if( event->type() == QEvent::Enter)
+    {
+        qDebug() << "ENTRO";
+
+        if( activeMenu != nullptr)
+        {
+            if( Menu *menu = qobject_cast<Menu*>(watched) )
+            {
+                activeMenu->setActive( false );
+                activeMenu = menu;
+                menu->setActive(true);
+                return true;
+            }
+        }
+    }
+
+    // Mouse press
+    if( event->type() == QEvent::MouseButtonPress)
+    {
+        if( Menu *menu = qobject_cast<Menu*>(watched) )
+        {
+            activeMenu = menu;
+            menu->setActive(true);
+            return true;
+
+        }
+        else
+        {
+            if( activeMenu != nullptr)
+            {
+                activeMenu->setActive( false );
+                activeMenu = nullptr;
+            }
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Paradiso::connectedToCrystals()

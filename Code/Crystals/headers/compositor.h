@@ -38,6 +38,9 @@ public:
     // Stored surfaces
     QList<View*> views;
 
+    // Stored menus
+    QList<View*> menus;
+
     // Stored client sockets
     QList<Socket*> sockets;
 

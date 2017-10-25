@@ -3,6 +3,8 @@
 Menu::Menu(const QString &title)
 {
     text->setText(title);
+    text->setFontSize(18);
+    text->enableEllipsis(true);
     setup();
 }
 
@@ -16,30 +18,50 @@ Menu::Menu(QPixmap pix)
     setup();
 }
 
+
+
 void Menu::setup()
 {
+    setMouseTracking(true);
     setPalette( QColor(LIGHT_BLUE) );
     layout->addWidget(text);
 
     if( icon != nullptr)
         layout->addWidget(icon);
 
-    layout->setMargin(0);
+    layout->setContentsMargins(10,0,10,0);
     layout->setSpacing(0);
 
     setMaximumWidth(200);
 }
 
-void Menu::mousePressEvent(QMouseEvent *)
+void Menu::setActive(bool mode)
 {
-    icon->enableColor(true);
-    setAutoFillBackground(true);
+    if( mode )
+    {
+        if( icon == nullptr )
+        {
+            text->setFontColor( Qt::white );
+        }
+        else
+        {
+            icon->enableColor(true);
+        }
+        setAutoFillBackground(true);
+    }
+    else
+    {
+        if( icon == nullptr )
+        {
+            text->setFontColor( QColor(DEEP_GRAY) );
+        }
+        else
+        {
+            icon->enableColor(false);
+        }
+        setAutoFillBackground(false);
+    }
 }
 
-void Menu::mouseReleaseEvent(QMouseEvent *)
-{
-    icon->enableColor(false);
-    setAutoFillBackground(false);
-}
 
 

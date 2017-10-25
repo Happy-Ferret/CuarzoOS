@@ -28,7 +28,18 @@ public:
     // Cuarzo Menu
     Menu *cuarzoMenu = new Menu(QPixmap(SYSTEM_PATH + "/System/Library/Icons/OS/Logo/64x64.png"));
 
+    // Active menu
+    Menu *activeMenu = nullptr;
+
+    // Demo text menus
+    Menu *textMenu = new Menu("Crystals");
+    Menu *textMenuB = new Menu("Hello my friends how are you");
+
+
 public slots:
+
+    // Event filter
+    bool eventFilter(QObject *watched, QEvent *event);
 
     // Connected to Crystals
     void connectedToCrystals();

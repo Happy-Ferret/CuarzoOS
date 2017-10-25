@@ -16,6 +16,7 @@
 #define FRAMELESS_MODE 1
 #define DOCK_MODE 2
 #define PARADISO_MODE 3
+#define MENU_MODE 4
 
 
 // Materialize Colors
@@ -37,6 +38,7 @@
 #define DEEP_ORANGE QString("#ff5722")
 #define BROWN QString("#795548")
 #define GRAY QString("#9e9e9e")
+#define DEEP_GRAY QString("#424242")
 #define BLUE_GRAY QString("#607d8b")
 
 

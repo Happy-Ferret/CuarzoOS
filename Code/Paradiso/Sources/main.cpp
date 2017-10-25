@@ -10,7 +10,9 @@ int main(int argc, char *argv[])
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.setAttribute(Qt::AA_UseOpenGLES);
 
-    QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Coves/Coves Light.otf");
+    //QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Coves/Coves Light.otf");
+    QFontDatabase::addApplicationFont(SYSTEM_PATH + "/System/Library/Fonts/Roboto/Roboto-Regular.ttf");
+
     Paradiso *w = new Paradiso();
     return a.exec();
 }

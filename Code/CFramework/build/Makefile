@@ -58,7 +58,9 @@ SOURCES       = ../Sources/CApplication.cpp \
 		../Sources/CProtocol.cpp \
 		../Sources/CIconButton.cpp \
 		../Sources/CBlurWidget.cpp \
-		../Sources/CIcon.cpp moc_CApplication.cpp \
+		../Sources/CIcon.cpp \
+		../Sources/CTopBar.cpp \
+		../Sources/CMenu.cpp moc_CApplication.cpp \
 		moc_CLabel.cpp \
 		moc_CWindow.cpp \
 		moc_CPushButton.cpp \
@@ -66,7 +68,8 @@ SOURCES       = ../Sources/CApplication.cpp \
 		moc_CProtocol.cpp \
 		moc_CIconButton.cpp \
 		moc_CBlurWidget.cpp \
-		moc_CIcon.cpp
+		moc_CIcon.cpp \
+		moc_CMenu.cpp
 OBJECTS       = CApplication.o \
 		CWindow.o \
 		CLabel.o \
@@ -76,6 +79,8 @@ OBJECTS       = CApplication.o \
 		CIconButton.o \
 		CBlurWidget.o \
 		CIcon.o \
+		CTopBar.o \
+		CMenu.o \
 		moc_CApplication.o \
 		moc_CLabel.o \
 		moc_CWindow.o \
@@ -84,7 +89,8 @@ OBJECTS       = CApplication.o \
 		moc_CProtocol.o \
 		moc_CIconButton.o \
 		moc_CBlurWidget.o \
-		moc_CIcon.o
+		moc_CIcon.o \
+		moc_CMenu.o
 DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.9.1/mkspecs/common/unix.conf \
 		/usr/local/Qt-5.9.1/mkspecs/common/linux.conf \
@@ -269,7 +275,9 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		../Headers/CIconButton.h \
 		../Headers/CMaterialIcon.h \
 		../Headers/CBlurWidget.h \
-		../Headers/CIcon.h ../Sources/CApplication.cpp \
+		../Headers/CIcon.h \
+		../Headers/CTopBar.h \
+		../Headers/CMenu.h ../Sources/CApplication.cpp \
 		../Sources/CWindow.cpp \
 		../Sources/CLabel.cpp \
 		../Sources/CPushButton.cpp \
@@ -277,7 +285,9 @@ DIST          = /usr/local/Qt-5.9.1/mkspecs/features/spec_pre.prf \
 		../Sources/CProtocol.cpp \
 		../Sources/CIconButton.cpp \
 		../Sources/CBlurWidget.cpp \
-		../Sources/CIcon.cpp
+		../Sources/CIcon.cpp \
+		../Sources/CTopBar.cpp \
+		../Sources/CMenu.cpp
 QMAKE_TARGET  = CFramework
 DESTDIR       = 
 TARGET        = libCFramework.so.1.0.0
@@ -680,8 +690,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Headers/CApplication.h ../Headers/CCore.h ../Headers/CLabel.h ../Headers/CWindow.h ../Headers/CPushButton.h ../Headers/CImage.h ../Headers/CProtocol.h ../Headers/CIconButton.h ../Headers/CMaterialIcon.h ../Headers/CBlurWidget.h ../Headers/CIcon.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Sources/CApplication.cpp ../Sources/CWindow.cpp ../Sources/CLabel.cpp ../Sources/CPushButton.cpp ../Sources/CImage.cpp ../Sources/CProtocol.cpp ../Sources/CIconButton.cpp ../Sources/CBlurWidget.cpp ../Sources/CIcon.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Headers/CApplication.h ../Headers/CCore.h ../Headers/CLabel.h ../Headers/CWindow.h ../Headers/CPushButton.h ../Headers/CImage.h ../Headers/CProtocol.h ../Headers/CIconButton.h ../Headers/CMaterialIcon.h ../Headers/CBlurWidget.h ../Headers/CIcon.h ../Headers/CTopBar.h ../Headers/CMenu.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Sources/CApplication.cpp ../Sources/CWindow.cpp ../Sources/CLabel.cpp ../Sources/CPushButton.cpp ../Sources/CImage.cpp ../Sources/CProtocol.cpp ../Sources/CIconButton.cpp ../Sources/CBlurWidget.cpp ../Sources/CIcon.cpp ../Sources/CTopBar.cpp ../Sources/CMenu.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -714,9 +724,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -w -dM -E -o moc_predefs.h /usr/local/Qt-5.9.1/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_CApplication.cpp moc_CLabel.cpp moc_CWindow.cpp moc_CPushButton.cpp moc_CImage.cpp moc_CProtocol.cpp moc_CIconButton.cpp moc_CBlurWidget.cpp moc_CIcon.cpp
+compiler_moc_header_make_all: moc_CApplication.cpp moc_CLabel.cpp moc_CWindow.cpp moc_CPushButton.cpp moc_CImage.cpp moc_CProtocol.cpp moc_CIconButton.cpp moc_CBlurWidget.cpp moc_CIcon.cpp moc_CMenu.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_CApplication.cpp moc_CLabel.cpp moc_CWindow.cpp moc_CPushButton.cpp moc_CImage.cpp moc_CProtocol.cpp moc_CIconButton.cpp moc_CBlurWidget.cpp moc_CIcon.cpp
+	-$(DEL_FILE) moc_CApplication.cpp moc_CLabel.cpp moc_CWindow.cpp moc_CPushButton.cpp moc_CImage.cpp moc_CProtocol.cpp moc_CIconButton.cpp moc_CBlurWidget.cpp moc_CIcon.cpp moc_CMenu.cpp
 moc_CApplication.cpp: ../Headers/CCore.h \
 		../Headers/CWindow.h \
 		../Headers/CLabel.h \
@@ -1810,6 +1820,133 @@ moc_CIcon.cpp: /usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
 		/usr/local/Qt-5.9.1/bin/moc
 	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/CFramework -I/home/e/Escritorio/CuarzoOS/Code/CFramework/Headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Headers/CIcon.h -o moc_CIcon.cpp
 
+moc_CMenu.cpp: ../Headers/CWindow.h \
+		../Headers/CCore.h \
+		../Headers/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
+		../Headers/CIconButton.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QEvent \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent \
+		../Headers/CMenu.h \
+		moc_predefs.h \
+		/usr/local/Qt-5.9.1/bin/moc
+	/usr/local/Qt-5.9.1/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/local/Qt-5.9.1/mkspecs/linux-g++ -I/home/e/Escritorio/CuarzoOS/Code/CFramework -I/home/e/Escritorio/CuarzoOS/Code/CFramework/Headers -I/usr/local/Qt-5.9.1/include -I/usr/local/Qt-5.9.1/include/QtWidgets -I/usr/local/Qt-5.9.1/include/QtGui -I/usr/local/Qt-5.9.1/include/QtNetwork -I/usr/local/Qt-5.9.1/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Headers/CMenu.h -o moc_CMenu.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all:
@@ -2899,6 +3036,134 @@ CIcon.o: ../Sources/CIcon.cpp ../Headers/CIcon.h \
 		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CIcon.o ../Sources/CIcon.cpp
 
+CTopBar.o: ../Sources/CTopBar.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CTopBar.o ../Sources/CTopBar.cpp
+
+CMenu.o: ../Sources/CMenu.cpp ../Headers/CMenu.h \
+		../Headers/CWindow.h \
+		../Headers/CCore.h \
+		../Headers/CLabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QLabel \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlabel.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgetsglobal.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtguiglobal.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qglobal.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qconfig-bootstrapped.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qconfig.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qtcore-config.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsystemdetection.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qprocessordetection.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcompilerdetection.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qtypeinfo.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsysinfo.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qlogging.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qflags.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qbasicatomic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic_bootstrap.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qgenericatomic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic_cxx11.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qatomic_msvc.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qglobalstatic.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmutex.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qnumeric.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qversiontagging.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtgui-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qtwidgets-config.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qframe.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qnamespace.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobjectdefs_impl.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qwindowdefs_win.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobject.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstring.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qchar.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qbytearray.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qrefcount.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qarraydata.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstringbuilder.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qlist.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qalgorithms.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qiterator.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qhashfunctions.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qpair.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qbytearraylist.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstringlist.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qregexp.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qstringmatcher.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreevent.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qscopedpointer.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmetatype.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qvarlengtharray.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcontainerfwd.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qobject_impl.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmargins.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpaintdevice.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qrect.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsize.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qpoint.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpalette.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcolor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgb.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qrgba64.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qbrush.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qvector.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qmatrix.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpolygon.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qregion.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qdatastream.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qiodevice.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qline.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtransform.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpainterpath.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qimage.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixelformat.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qpixmap.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qshareddata.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qhash.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qsharedpointer_impl.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfont.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontmetrics.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qfontinfo.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qsizepolicy.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qcursor.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qkeysequence.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qevent.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qvariant.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qmap.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qdebug.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qtextstream.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qlocale.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qset.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcontiguouscache.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qurl.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qurlquery.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qfile.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qfiledevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qvector2d.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qtouchdevice.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QFontMetrics \
+		../Headers/CIconButton.h \
+		/usr/local/Qt-5.9.1/include/QtCore/QEvent \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QApplication \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qcoreapplication.h \
+		/usr/local/Qt-5.9.1/include/QtCore/qeventloop.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qdesktopwidget.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qguiapplication.h \
+		/usr/local/Qt-5.9.1/include/QtGui/qinputmethod.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QWidget \
+		/usr/local/Qt-5.9.1/include/QtWidgets/QBoxLayout \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qboxlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayout.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qlayoutitem.h \
+		/usr/local/Qt-5.9.1/include/QtWidgets/qgridlayout.h \
+		/usr/local/Qt-5.9.1/include/QtGui/QMouseEvent
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o CMenu.o ../Sources/CMenu.cpp
+
 moc_CApplication.o: moc_CApplication.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CApplication.o moc_CApplication.cpp
 
@@ -2925,6 +3190,9 @@ moc_CBlurWidget.o: moc_CBlurWidget.cpp
 
 moc_CIcon.o: moc_CIcon.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CIcon.o moc_CIcon.cpp
+
+moc_CMenu.o: moc_CMenu.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_CMenu.o moc_CMenu.cpp
 
 ####### Install
 
@@ -2953,14 +3221,18 @@ install_headers: first FORCE
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CImage.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CImage.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CLabel.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CLabel.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CMaterialIcon.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CMaterialIcon.h
+	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CMenu.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CMenu.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CProtocol.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CProtocol.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CPushButton.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CPushButton.h
+	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CTopBar.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CTopBar.h
 	-$(QINSTALL) /home/e/Escritorio/CuarzoOS/Code/CFramework/Headers/CWindow.h $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CWindow.h
 
 uninstall_headers: FORCE
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CWindow.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CTopBar.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CPushButton.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CProtocol.h
+	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CMenu.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CMaterialIcon.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CLabel.h
 	-$(DEL_FILE) -r $(INSTALL_ROOT)/home/e/Escritorio/CuarzoOS/CuarzoOS/System/Library/Frameworks/CFramework/include/CImage.h

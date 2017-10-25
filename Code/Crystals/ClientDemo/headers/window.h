@@ -7,6 +7,7 @@
 #include "CIcon.h"
 #include "CPushButton.h"
 #include "CMaterialIcon.h"
+#include "CMenu.h"
 #include "CBlurWidget.h"
 
 #include <QMouseEvent>
@@ -40,6 +41,7 @@ public:
 
     QLabel *movieFrame = new QLabel(this);
     CIcon *logo = new CIcon(QPixmap("/home/e/inst.png"),QSize(200,200),this);
+    CMenu *menu = new CMenu();
 
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);

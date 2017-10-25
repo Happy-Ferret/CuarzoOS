@@ -420,6 +420,7 @@ void Window::setBackground(QString path)
 }
 
 
+// Main Paint Loop
 
 void Window::paintGL()
 {
@@ -482,6 +483,17 @@ void Window::paintGL()
                 drawWindow(view);
             }
         }
+    }
+
+    // Draw normal menus
+    Q_FOREACH( View*view, compositor->menus)
+    {
+        QRectF rect = QRectF( view->position(), QSizeF( view->size().width(), view->size().height() ) );
+
+        drawBlur( rect, 0.7, 0.6, 0.3, 1.0, true, true, true, true, 8.0 );
+        drawSurface( rect, 1.0, view->getTexture()->textureId(), true, true, true, true, 8, false );
+        drawShadow( rect, 0.1, 0.5, 50, true, true, true, true, 8.0 );
+
     }
 
     // Draw paradiso
@@ -660,11 +672,12 @@ void Window::mousePressEvent(QMouseEvent *e)
                 initialMousePos = e->pos();
                 mouseOffset = e->localPos() - mouseView->position();
                 initialViewPosition = mouseView->position();
+
+                compositor->raise(mouseView);
+                compositor->defaultSeat()->setKeyboardFocus(mouseView->surface());
+                compositor->defaultSeat()->setMouseFocus( mouseView );
             }
 
-            compositor->defaultSeat()->setKeyboardFocus(mouseView->surface());
-            compositor->defaultSeat()->setMouseFocus( mouseView );
-            compositor->raise(mouseView);
             compositor->triggerRender();
 
         }

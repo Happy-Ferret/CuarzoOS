@@ -60,6 +60,8 @@ Window::Window()
   movie->start();
   movieFrame->hide();
 
+  menu->insertItem( new QLabel("Holaaa"));
+
 }
 
 void Window::mouseMoveEvent(QMouseEvent *e)
@@ -89,7 +91,8 @@ void Window::changeOpacity()
 
 void Window::changeMode()
 {
-    setMode(DOCK_MODE);
+    //setMode(DOCK_MODE);
+    menu->show(QPoint(300,300));
 }
 
 void Window::changeTitle()

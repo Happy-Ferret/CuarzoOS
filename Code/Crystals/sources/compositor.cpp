@@ -130,6 +130,12 @@ void Compositor::newClientMessage()
                 window->paradisoView = view;
                 qDebug() << "Paradiso";
             }
+            // Save surface if it's a menu
+            if( message->role == MENU_MODE )
+            {
+                menus.append(view);
+                qDebug() << "New Menu";
+            }
 
             // Triggers OpenGL render
             triggerRender();

@@ -15,15 +15,13 @@ public:
     Menu(QPixmap pix);
 
     void setup();
+    void setActive( bool mode );
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     CLabel *text = new CLabel(this);
     CIcon *icon = nullptr;
     QPixmap pixmap;
 
-private:
-    void mousePressEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent*);
 };
 
 #endif // TEXTMENU_H
