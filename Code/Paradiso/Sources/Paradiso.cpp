@@ -11,6 +11,8 @@ Paradiso::Paradiso()
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(cuarzoMenu);
+    cuarzoMenu->setFixedWidth(64);
+    layout->setAlignment(Qt::AlignLeft);
 
     // Event when connects to Crystals
     connect(crystalsSocket,SIGNAL(connected()),this,SLOT(connectedToCrystals()));

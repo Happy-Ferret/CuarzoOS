@@ -4,7 +4,7 @@
 #include "CApplication.h"
 #include "CWindow.h"
 #include "CLabel.h"
-#include "CImage.h"
+#include "CIcon.h"
 #include "CPushButton.h"
 #include "CMaterialIcon.h"
 #include "CBlurWidget.h"
@@ -39,6 +39,7 @@ public:
     CPushButton *del = new CPushButton("Delete",CMaterialIcon::pixmap("delete"));
 
     QLabel *movieFrame = new QLabel(this);
+    CIcon *logo = new CIcon(QPixmap("/home/e/inst.png"),QSize(200,200),this);
 
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);

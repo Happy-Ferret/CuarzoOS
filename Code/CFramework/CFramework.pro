@@ -25,7 +25,8 @@ HEADERS += \
     Headers/CProtocol.h \
     Headers/CIconButton.h \
     Headers/CMaterialIcon.h \
-    Headers/CBlurWidget.h
+    Headers/CBlurWidget.h \
+    Headers/CIcon.h
 
 SOURCES += \
     Sources/CApplication.cpp \
@@ -35,4 +36,5 @@ SOURCES += \
     Sources/CImage.cpp \
     Sources/CProtocol.cpp \
     Sources/CIconButton.cpp \
-    Sources/CBlurWidget.cpp
+    Sources/CBlurWidget.cpp \
+    Sources/CIcon.cpp

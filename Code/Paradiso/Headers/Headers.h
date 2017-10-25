@@ -11,5 +11,5 @@
 #include <CCore.h>
 #include <CWindow.h>
 #include <CLabel.h>
-#include <CImage.h>
+#include <CIcon.h>
 

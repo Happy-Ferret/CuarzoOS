@@ -79,9 +79,13 @@ void CImage::paintEvent(QPaintEvent *)
     painter->setRenderHint(QPainter::Antialiasing, true);
     QBrush brush;
     _borderColor.setAlphaF(_opacity);
-    QPen pen = QPen(_borderColor);
-    pen.setWidth(_borderWidth);
-    painter->setPen(pen);
+
+    if(_borderWidth != 0)
+    {
+        QPen pen = QPen(_borderColor);
+        pen.setWidth(_borderWidth);
+        painter->setPen(pen);
+    }
 
     if(_colorEnabled)
     {

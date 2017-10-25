@@ -56,6 +56,7 @@ Window::Window()
   layout->addWidget(tit);
   layout->addWidget(del);
   layout->addWidget(movieFrame);
+  layout->addWidget(logo);
   movie->start();
   movieFrame->hide();
 
@@ -78,6 +79,7 @@ void Window::createWindow()
 
 void Window::activateBlur()
 {
+    logo->setColor(Qt::red);
 }
 
 void Window::changeOpacity()

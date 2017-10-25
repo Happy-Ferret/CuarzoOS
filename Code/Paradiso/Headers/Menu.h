@@ -3,6 +3,8 @@
 
 #include "Headers.h"
 
+// A topbar menu (Text or Icon)
+
 class Menu : public QWidget
 {
     Q_OBJECT
@@ -16,9 +18,12 @@ public:
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     CLabel *text = new CLabel(this);
-    CImage *icon = nullptr;
+    CIcon *icon = nullptr;
     QPixmap pixmap;
 
+private:
+    void mousePressEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
 };
 
 #endif // TEXTMENU_H
