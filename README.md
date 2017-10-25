@@ -2,4 +2,4 @@
 CuarzoOS is a free Operating System based on the linux kernel, so it can run almost anywhere.<br>
 It comes with a simple and optimized file system hierarchy, and graphical user interface, which runs under it's own Wayland compositor called Crystals.<br>
 It also has an Application Development Framework for Qt, to let developers take advange of all the OS features, such as blur backgrounds, system topbar, dock, etc.<br><br>
-<img src="https://files.slack.com/files-pri/T5LUCT2D8-F74U3CAV7/desktop_demo.png">
+<img src="https://i.imgur.com/RQvdHa2.jpg">
