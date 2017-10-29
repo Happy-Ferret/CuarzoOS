@@ -44,6 +44,7 @@ signals:
 
 
 private:
+
     void refreshtemsPositions();
 
     // Separate the Titlebar from the central widget

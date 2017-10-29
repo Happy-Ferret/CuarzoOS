@@ -58,10 +58,6 @@ public:
     int m_cursorHotspotX;
     int m_cursorHotspotY;
 
-    // Manage render
-    void startRender();
-    void endRender();
-
     // Changes the screen resolution
     void setScreenResolution(QSize size);
 
@@ -94,6 +90,8 @@ public slots:
     void triggerRender();
     void newClientConnected();
     void newClientMessage();
+    void updateCursor();
+
 
 private slots:
     void socketDisconnected();
@@ -111,7 +109,6 @@ private slots:
     void onWlShellCreated(QWaylandWlShellSurface *wlShellSurface);
 
 
-    void updateCursor();
 private:
     View *findView(const QWaylandSurface *s) const;
 };

@@ -425,6 +425,7 @@ void Window::setBackground(QString path)
 void Window::paintGL()
 {
 
+
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -713,18 +714,18 @@ void Window::mouseMoveEvent(QMouseEvent *e)
 
         mouseView = viewAt(e->localPos());
 
-        if ( mouseView == nullptr )
+        if ( mouseView == false )
         {
             setCursor(Qt::ArrowCursor);
             return;
         }
 
+        sendMouseEvent(e, mouseView);
+
         QPointF pos = mouseView->position();
         QSize siz = mouseView->size();
         int margin = 7;
         bool isWindow = mouseView->role == WINDOW_MODE;
-
-        sendMouseEvent(e, mouseView);
 
         // TopLeft corner
         if ( e->pos().x() <= pos.x() + margin && e->pos().y() <= pos.y() + margin && isWindow )
@@ -772,7 +773,7 @@ void Window::mouseMoveEvent(QMouseEvent *e)
         }
         else
         {
-            setCursor(Qt::ArrowCursor);
+            compositor->updateCursor();
         }
     }
         break;
@@ -849,10 +850,10 @@ void Window::sendMouseEvent(QMouseEvent *e, View *target)
     if (target) mappedPos -= target->position();
 
     // Create the mouse event
-    QMouseEvent *viewEvent = new QMouseEvent(e->type(), mappedPos, e->localPos(), e->button(), e->buttons(), e->modifiers());
+    QMouseEvent viewEvent(e->type(), mappedPos, e->localPos(), e->button(), e->buttons(), e->modifiers());
 
     // Send event to the compositor
-    compositor->handleMouseEvent(target, viewEvent);
+    compositor->handleMouseEvent(target, &viewEvent);
 }
 
 void Window::mouseGrabBegin()

@@ -6,7 +6,7 @@ CBlurWidget::CBlurWidget(QWidget *parent)
     setParent( parent );
     setPalette(Qt::transparent);
     CApplication *app = qobject_cast<CApplication*>(QApplication::instance());
-    app->protocol->connectBlurWidget( this );
+    //app->protocol->connectBlurWidget( this );
 }
 
 void CBlurWidget::enableBlur(bool state)

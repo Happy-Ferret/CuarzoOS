@@ -11,7 +11,6 @@ Window::Window()
   widget->setPalette(Qt::white);
   move(0,0);
   resize(800,500);
-  setMouseTracking(true);
 
   setWindowTitle("CuarzoOS");
   connect(cre,SIGNAL(pressed()),this,SLOT(createWindow()));

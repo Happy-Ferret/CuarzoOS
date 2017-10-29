@@ -3,17 +3,20 @@
 
 CMenuItem::CMenuItem()
 {
+    setMouseTracking(true);
     setup();
 }
 
 CMenuItem::CMenuItem(const QString &text)
 {
+    setMouseTracking(true);
     setup();
     setText( text );
 }
 
 CMenuItem::CMenuItem(const QString &text, const QPixmap &icon)
 {
+    setMouseTracking(true);
     setup();
     setText( text );
     setIcon( icon );
@@ -21,6 +24,7 @@ CMenuItem::CMenuItem(const QString &text, const QPixmap &icon)
 
 CMenuItem::CMenuItem(const QString &text, const QPixmap &icon, const QString &shortcut)
 {
+    setMouseTracking(true);
     setup();
     setText( text );
     setIcon( icon );
@@ -97,20 +101,15 @@ void CMenuItem::mouseReleaseEvent(QMouseEvent *)
 
 }
 
-void CMenuItem::mouseMoveEvent(QMouseEvent *)
-{
-    qDebug() << "caca";
-    setActive( underMouse() );
-}
 
 void CMenuItem::enterEvent(QEvent *e)
 {
-    //setActive(true);
+    setActive(true);
 }
 
 void CMenuItem::leaveEvent(QEvent *)
 {
-    //setActive(false);
+    setActive(false);
 }
 
 void CMenuItem::setup()
@@ -139,8 +138,6 @@ void CMenuItem::setup()
     icon->hide();
     label->hide();
     arrow->hide();
-
-    setMouseTracking( true );
 
 }
 

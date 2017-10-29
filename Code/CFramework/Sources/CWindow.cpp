@@ -75,8 +75,8 @@ CWindow::CWindow()
     verticalLayout->setMargin(0);
     verticalLayout->setSpacing(0);
 
+
     topBar->installEventFilter(this);
-    installEventFilter(this);
     refreshtemsPositions();
 }
 
@@ -135,7 +135,6 @@ void CWindow::resizeEvent(QResizeEvent *)
 
 bool CWindow::eventFilter(QObject *watched, QEvent *event)
 {
-
     if ( event->type() == QEvent::MouseButtonPress && watched == topBar)
     {
         mouseGrabEvent();
@@ -164,7 +163,6 @@ bool CWindow::eventFilter(QObject *watched, QEvent *event)
 
 
 
-
 // Set surface Opacity
 void CWindow::setWindowOpacity(float opacity)
 {
@@ -174,6 +172,7 @@ void CWindow::setWindowOpacity(float opacity)
 
 void CWindow::setCentralWidget(QWidget *widget)
 {
+    widget->setParent(this);
     verticalLayout->insertWidget( 1, widget, 1 );
 }
 

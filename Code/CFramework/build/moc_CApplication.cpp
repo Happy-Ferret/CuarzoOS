@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'CApplication.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'CApplication.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.9.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -77,7 +77,7 @@ void *CApplication::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CApplication.stringdata0))
-        return static_cast<void*>(const_cast< CApplication*>(this));
+        return static_cast<void*>(this);
     return QApplication::qt_metacast(_clname);
 }
 

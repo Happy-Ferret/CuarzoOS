@@ -10,7 +10,6 @@ class QOpenGLTexture;
 
 class Window : public QOpenGLWindow
 {
-    Q_OBJECT
 public:
 
     // Setup

@@ -11,12 +11,6 @@ Compositor::Compositor():QWaylandCompositor()
     // Set the screen resolution
     setScreenResolution(QGuiApplication::primaryScreen()->size());
 
-    // Delete previusly created unix sockets server
-    server->removeServer("com.cuarzo.crystals");
-
-    // Creates the new unix sockets server
-    server->listen("com.cuarzo.crystals");
-
     // Event when wayland surface is created
     connect(this, &QWaylandCompositor::surfaceCreated, this, &Compositor::onSurfaceCreated);
 
@@ -28,6 +22,12 @@ Compositor::Compositor():QWaylandCompositor()
 
     // Event when a wlShellSurface is created ( Wrongly used to identify a view by its title )
     connect(wlShell,&QWaylandWlShell::wlShellSurfaceCreated,this,&Compositor::onWlShellCreated);
+
+    // Delete previusly created unix sockets server
+    server->removeServer("com.cuarzo.crystals");
+
+    // Creates the new unix sockets server
+    server->listen("com.cuarzo.crystals");
 
     // Event when a unix socket is connected ( A client )
     connect(server,SIGNAL(newConnection()),this,SLOT(newClientConnected()));
@@ -189,7 +189,7 @@ void Compositor::newClientMessage()
 
             if( window->mouseView == nullptr) return;
 
-            if( window-> mouseView->surfaceId == msg->id)
+            if( window->mouseView->surfaceId == msg->id)
                 window->mouseGrabBegin();
 
             // Triggers OpenGL render
@@ -353,16 +353,19 @@ void Compositor::socketDisconnected()
 
 void Compositor::onSurfaceCreated(QWaylandSurface *surface)
 {
+
+    connect(surface, &QWaylandSurface::surfaceDestroyed, this, &Compositor::surfaceDestroyed);
+    connect(surface, &QWaylandSurface::hasContentChanged, this, &Compositor::surfaceHasContentChanged);
+    connect(surface, &QWaylandSurface::redraw, this, &Compositor::triggerRender);
+    connect(surface, &QWaylandSurface::sizeChanged, this, &Compositor::surfaceSizeChanged);
+
     View *view = new View(this);
     view->setSurface(surface);
     view->setOutput(outputFor(window));
     views << view;
 
     connect(view, &QWaylandView::surfaceDestroyed, this, &Compositor::viewSurfaceDestroyed);
-    connect(surface, &QWaylandSurface::surfaceDestroyed, this, &Compositor::surfaceDestroyed);
-    connect(surface, &QWaylandSurface::hasContentChanged, this, &Compositor::surfaceHasContentChanged);
-    connect(surface, &QWaylandSurface::redraw, this, &Compositor::triggerRender);
-    connect(surface, &QWaylandSurface::sizeChanged, this, &Compositor::surfaceSizeChanged);
+
 }
 
 void Compositor::onWlShellCreated(QWaylandWlShellSurface *wlShellSurface)
@@ -375,7 +378,7 @@ void Compositor::titleChanged()
 {
     QWaylandWlShellSurface *surface = qobject_cast< QWaylandWlShellSurface*>(sender());
 
-    qDebug() << surface->title();
+    qDebug() << "New Window";
 
     // Find equivalent view
     View* view = findView(surface->surface());
@@ -393,6 +396,7 @@ void Compositor::titleChanged()
 
     // Ask the surface for a full configuration
     view->socket = findSocketByPId(surface->surface()->client()->processId());
+
     view->socket->socket->write(data,sizeof(RegisteredSurfaceStruct));
 
     return;
@@ -429,6 +433,7 @@ void Compositor::viewSurfaceDestroyed()
 }
 
 
+
 View * Compositor::findView(const QWaylandSurface *s) const
 {
     Q_FOREACH (View* view, views) {
@@ -450,6 +455,8 @@ void Compositor::updateCursor()
     QImage image = cursor.currentBuffer().image();
     if (!image.isNull())
         window->setCursor(QCursor(QPixmap::fromImage(image), m_cursorHotspotX, m_cursorHotspotY));
+    else
+        window->setCursor(QCursor(Qt::ArrowCursor));
 }
 
 void Compositor::adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int hotspotY)
@@ -575,11 +582,11 @@ void Compositor::raise(View *view)
 void Compositor::setScreenResolution(QSize size)
 {
     window->resize(size);
-    QWaylandOutputMode mode(size, 600000);
+    QWaylandOutputMode mode(size, 60000);
     output->addMode( mode, true );
     output->setCurrentMode(mode);
     output->setWindow(window);
-    output->setSizeFollowsWindow(true);
+    //output->setSizeFollowsWindow(true);
 
 }
 

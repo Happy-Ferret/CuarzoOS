@@ -1,7 +1,7 @@
 #ifndef CMENUITEM_H
 #define CMENUITEM_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QHBoxLayout>
 #include "CMaterialIcon.h"
 #include "CIcon.h"
@@ -25,6 +25,10 @@ public:
     bool enabled() { return _enabled; }
     QString getShortcut(){ return shortcut; }
 
+    void mousePressEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+    virtual void enterEvent(QEvent *e);
+    virtual void leaveEvent(QEvent *);
 
 private:
 
@@ -39,11 +43,7 @@ private:
 
     void setActive( bool mode);
 
-    void mousePressEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    virtual void mouseMoveEvent(QMouseEvent*);
-    virtual void enterEvent(QEvent *e);
-    virtual void leaveEvent(QEvent *);
+
     void setup();
 
 signals:
