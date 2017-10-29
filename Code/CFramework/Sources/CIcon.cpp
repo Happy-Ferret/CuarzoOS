@@ -4,6 +4,7 @@
 CIcon::CIcon(QWidget *parent)
 {
     setParent(parent);
+    setScaledContents( true );
 }
 
 CIcon::CIcon(const QPixmap &icon, QWidget *parent)
@@ -73,7 +74,7 @@ void CIcon::enableColor(bool mode)
 
 void CIcon::setup()
 {
-    setScaledContents(true);
+    setScaledContents( true );
     _coloredPixmap = _pixmap;
 }
 

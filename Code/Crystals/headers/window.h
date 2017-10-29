@@ -47,6 +47,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *e) override;
 
     // Draws the offscreen buffer
+    void drawMenus();
     void drawFinalView();
     void initShaders();
 

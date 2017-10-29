@@ -57,10 +57,13 @@ Window::Window()
   layout->addWidget(del);
   layout->addWidget(movieFrame);
   layout->addWidget(logo);
+  logo->setFixedSize(50,50);
   movie->start();
   movieFrame->hide();
 
-  menu->insertItem( new QLabel("Holaaa"));
+  menu->insertItem( new CMenuItem("Hola"));
+  menu->insertItem( new CMenuItem("Hopperdiezel"));
+  menu->insertItem( item );
 
 }
 

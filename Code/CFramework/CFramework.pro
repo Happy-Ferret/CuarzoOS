@@ -28,7 +28,8 @@ HEADERS += \
     Headers/CBlurWidget.h \
     Headers/CIcon.h \
     Headers/CTopBar.h \
-    Headers/CMenu.h
+    Headers/CMenu.h \
+    Headers/CMenuItem.h
 
 SOURCES += \
     Sources/CApplication.cpp \
@@ -41,4 +42,5 @@ SOURCES += \
     Sources/CBlurWidget.cpp \
     Sources/CIcon.cpp \
     Sources/CTopBar.cpp \
-    Sources/CMenu.cpp
+    Sources/CMenu.cpp \
+    Sources/CMenuItem.cpp

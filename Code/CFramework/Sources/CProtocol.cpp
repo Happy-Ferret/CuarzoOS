@@ -75,7 +75,7 @@ void CProtocol::messageIn()
         // Connects widget's events
         connect(widget,SIGNAL(positionChanged(QPoint)),this,SLOT(sendPosition(QPoint)));
         connect(widget,SIGNAL(modeChanged(uint)),this,SLOT(modeChanged(uint)));
-        connect(widget,SIGNAL(blurStateChanged(bool)),this,SLOT(blurStateChanged(bool)));
+        //connect(widget,SIGNAL(blurStateChanged(bool)),this,SLOT(blurStateChanged(bool)));
         connect(widget,SIGNAL(opacityChanged(float)),this,SLOT(opacityChanged(float)));
         connect(widget,SIGNAL(mouseGrabEvent()), this,SLOT(mouseGrab()));
 

@@ -135,6 +135,7 @@ void CWindow::resizeEvent(QResizeEvent *)
 
 bool CWindow::eventFilter(QObject *watched, QEvent *event)
 {
+
     if ( event->type() == QEvent::MouseButtonPress && watched == topBar)
     {
         mouseGrabEvent();

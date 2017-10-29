@@ -485,9 +485,25 @@ void Window::paintGL()
         }
     }
 
+
+    // Draw paradiso
+    if( paradisoView != nullptr ) drawParadiso();
+
+    // Draw menus
+    drawMenus();
+
+    // Draw offscreen framebuffer
+    drawFinalView();
+
+}
+
+void Window::drawMenus()
+{
     // Draw normal menus
     Q_FOREACH( View*view, compositor->menus)
     {
+        compositor->raise(view);
+
         QRectF rect = QRectF( view->position(), QSizeF( view->size().width(), view->size().height() ) );
 
         drawBlur( rect, 0.7, 0.6, 0.3, 1.0, true, true, true, true, 8.0 );
@@ -495,14 +511,8 @@ void Window::paintGL()
         drawShadow( rect, 0.1, 0.5, 50, true, true, true, true, 8.0 );
 
     }
-
-    // Draw paradiso
-    if( paradisoView != nullptr ) drawParadiso();
-
-    // Draw offscreen framebuffer
-    drawFinalView();
-
 }
+
 
 void Window::resizeGL(int, int)
 {
@@ -521,7 +531,7 @@ void Window::resizeGL(int, int)
 View *Window::viewAt(const QPointF &point)
 {
     // Store the view
-    View *ret = 0;
+    View *ret = false;
 
     // Loop all views
     Q_FOREACH (View *view, compositor->views)
@@ -831,6 +841,7 @@ void Window::wheelEvent(QWheelEvent *e)
 // Send mouse event to the compositor
 void Window::sendMouseEvent(QMouseEvent *e, View *target)
 {
+
     // Get the mouse coords
     QPointF mappedPos = e->localPos();
 
@@ -838,10 +849,10 @@ void Window::sendMouseEvent(QMouseEvent *e, View *target)
     if (target) mappedPos -= target->position();
 
     // Create the mouse event
-    QMouseEvent viewEvent(e->type(), mappedPos, e->localPos(), e->button(), e->buttons(), e->modifiers());
+    QMouseEvent *viewEvent = new QMouseEvent(e->type(), mappedPos, e->localPos(), e->button(), e->buttons(), e->modifiers());
 
     // Send event to the compositor
-    compositor->handleMouseEvent(target, &viewEvent);
+    compositor->handleMouseEvent(target, viewEvent);
 }
 
 void Window::mouseGrabBegin()

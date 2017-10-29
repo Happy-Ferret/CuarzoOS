@@ -8,6 +8,7 @@
 #include "CPushButton.h"
 #include "CMaterialIcon.h"
 #include "CMenu.h"
+#include "CMenuItem.h"
 #include "CBlurWidget.h"
 
 #include <QMouseEvent>
@@ -29,8 +30,6 @@ public:
     CPushButton *d = new CPushButton(CMaterialIcon::pixmap("restaurant"),this);
     CPushButton *e = new CPushButton(CMaterialIcon::pixmap("power_settings_new"),this);
 
-
-
     CPushButton *cre = new CPushButton("Crear",CMaterialIcon::pixmap("add_circle_outline"));
     CPushButton *opa = new CPushButton("Opacidad",CMaterialIcon::pixmap("format_shapes"));
     CPushButton *mod = new CPushButton("Modo",CMaterialIcon::pixmap("swap_horiz"));
@@ -42,6 +41,7 @@ public:
     QLabel *movieFrame = new QLabel(this);
     CIcon *logo = new CIcon(QPixmap("/home/e/inst.png"),QSize(200,200),this);
     CMenu *menu = new CMenu();
+    CMenuItem *item = new CMenuItem( "Options for a Better World, and a better Life, and Shut Up my friends you need to be quiet pleaseeeee!", CMaterialIcon::pixmap("format_shapes") );
 
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);

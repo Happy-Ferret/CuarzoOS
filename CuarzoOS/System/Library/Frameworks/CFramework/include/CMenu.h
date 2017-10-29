@@ -2,6 +2,8 @@
 #define CMENU_H
 
 #include "CWindow.h"
+#include "CMenuItem.h"
+#include <QList>
 #include <QBoxLayout>
 
 class CMenu : public CWindow
@@ -22,8 +24,11 @@ public:
 
 
     QString title() { return _title; }
+
+
 private:
     void setup();
+    QList<CMenuItem*>items;
     QWidget *widget = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout( widget );
     QString _title = "";

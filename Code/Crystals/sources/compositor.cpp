@@ -495,7 +495,7 @@ void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)
     case QEvent::MouseButtonRelease:
          input->sendMouseReleaseEvent(me->button());
          break;
-    case QMouseEvent::MouseMove:
+    case QEvent::MouseMove:
         input->sendMouseMoveEvent(target, me->localPos(), me->globalPos());
     default:
         break;

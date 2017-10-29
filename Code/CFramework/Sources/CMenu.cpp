@@ -1,4 +1,5 @@
 #include "CMenu.h"
+#include <QDebug>
 
 CMenu::CMenu()
 {
@@ -25,6 +26,7 @@ void CMenu::show(const QPoint &pos)
 void CMenu::insertItem(QWidget *item)
 {
     layout->addWidget(item);
+
 }
 
 void CMenu::insertItemAt(QWidget *item, uint index)
@@ -44,6 +46,9 @@ void CMenu::setup()
     CWindow::hide();
     layout->setSpacing( 0 );
     layout->setContentsMargins( 0, 10, 0, 10);
+    setMinimumWidth(  200 );
     setMaximumWidth( 500 );
     setMode( MENU_MODE );
 }
+
+
