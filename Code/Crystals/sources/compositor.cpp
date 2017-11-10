@@ -84,13 +84,13 @@ void Compositor::newClientMessage()
         view->setRole( message->role );
 
         // Save surface if it's Paradiso ( CuarzoOS TopBar )
-        if( message->role == PARADISO_MODE )
+        if( message->role == TopBar)
         {
             window->paradisoView = view;
             qDebug() << "Paradiso";
         }
         // Save surface if it's a menu
-        if( message->role == MENU_MODE )
+        if( message->role == WindowRole::Menu )
         {
             menus.append(view);
             qDebug() << "New Menu";
@@ -193,7 +193,7 @@ View * Compositor::findView(const QWaylandSurface *s) const
         if (view->surface() == s)
             return view;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void Compositor::triggerRender()
@@ -234,6 +234,8 @@ void Compositor::adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int
 
 void Compositor::handleMouseEvent(QWaylandView *target, QMouseEvent *me)
 {
+
+    if ( target == nullptr) return;
 
     QWaylandSeat *input = defaultSeat();
     QWaylandSurface *surface = target ? target->surface() : nullptr;

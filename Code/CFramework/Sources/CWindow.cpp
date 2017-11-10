@@ -1,16 +1,16 @@
 #include "CWindow.h"
 #include <QDebug>
 
-CWindow::CWindow(uint mode)
+CWindow::CWindow( WindowRole role )
 {
     // Wrongly used to identify a surface
     QWidget::setWindowTitle("{\"id\":" + QString::number(winId()) + ",\"pid\":" + QString::number(QApplication::applicationPid()) + "}" );
 
-    // Set mode
-    setMode(mode);
+    // Set window role
+    setWindowRole(role);
 
     // Prevent app crash
-    move(winId(),winId());
+    move(200,200);
 
     // Deletes blue Qt frame
     setWindowFlags(Qt::FramelessWindowHint);
@@ -57,6 +57,10 @@ CWindow::CWindow(uint mode)
     minimizeButton->setFixedSize( buttonSize, buttonSize);
     expandButton->setFixedSize( buttonSize, buttonSize);
 
+    closeButton->installEventFilter( this );
+    minimizeButton->installEventFilter( this );
+    expandButton->installEventFilter( this );
+
     // Add buttons to the layout
     horizontalLayout->setMargin(8);
     horizontalLayout->setSpacing(8);
@@ -74,14 +78,16 @@ CWindow::CWindow(uint mode)
     topBar->setObjectName("QZTP");
     topBar->setAutoFillBackground(true);
 
+    // Setup Window Layout
     verticalLayout->addWidget(topBar,0,Qt::AlignTop);
     verticalLayout->setMargin(0);
     verticalLayout->setSpacing(0);
 
-
+    // Events
     topBar->installEventFilter(this);
     refreshtemsPositions();
 
+    // Connect to the compositor
     connectToCrystals();
 
 }
@@ -100,19 +106,28 @@ void CWindow::connectToCrystals()
     // Connects to Crystals
     socket->connectToServer("com.cuarzo.crystals");
 
-    qDebug() << "Connecting to Crystals...";
 }
 
 // Assign and send position to Crystals
 void CWindow::move(const QPoint &pos)
 {
-    QWidget::move(pos);
-    sendPosition(pos);
+    QPoint p = pos;
+
+    if ( p.y() < 0)
+        p.setY(0);
+
+    sendPosition(p);
+    QWidget::move(p);
 }
 void CWindow::move(int x, int y)
 {
-    QWidget::move(x,y);
-    sendPosition(QPoint(x,y));
+    QPoint p = QPoint(x,y);
+
+    if ( p.y() < 0)
+        p.setY(0);
+
+    sendPosition(p);
+    QWidget::move(p);
 }
 
 // Sends title to Crystals
@@ -128,19 +143,19 @@ QString CWindow::windowTitle()
 }
 
 // Sends surface mode
-void CWindow::setMode(unsigned int mode)
+void CWindow::setWindowRole(WindowRole role)
 {
-    localMode = mode;
+    localRole = role;
 
-    if (mode != WINDOW_MODE)
+    if (role != WindowRole::Frame)
         topBar->hide();
-    modeChanged(mode);
+    windowRoleChanged(role);
 }
 
 // Gets surface mode
-uint CWindow::mode()
+WindowRole CWindow::windowRole()
 {
-    return localMode;
+    return localRole;
 }
 
 
@@ -161,6 +176,26 @@ bool CWindow::eventFilter(QObject *watched, QEvent *event)
     {
         mouseGrab();
         return true;
+    }
+
+    if ( event->type() == QEvent::MouseButtonRelease)
+    {
+        if( watched == closeButton )
+        {
+            close();
+            return false;
+        }
+        else if( watched == minimizeButton )
+        {
+            minimize();
+            return false;
+        }
+        else if( watched == expandButton )
+        {
+            maximize(CurrentWorkspace,!localMaximized);
+            return false;
+        }
+
     }
 
     if (event->type() == QEvent::WindowActivate)
@@ -198,6 +233,128 @@ void CWindow::setCentralWidget(QWidget *widget)
     verticalLayout->insertWidget( 1, widget, 1 );
 }
 
+
+void CWindow::close()
+{
+    if( beforeClose() )
+        QWidget::close();
+}
+
+void CWindow::minimize(bool state)
+{
+    if( !socket->open() ) return;
+
+    // Send surface title to Crystals
+    SurfaceMinimizeStruct message;
+    message.minimize = state;
+
+    // Copy message to a char pointer
+    uint msgSize =  sizeof(SurfaceMinimizeStruct);
+    char data[msgSize];
+    memcpy(data,&message,msgSize);
+
+    // Send message
+    socket->write(data,msgSize);
+}
+
+void CWindow::maximize(MaximizeMode mode, bool state)
+{
+    if( !socket->open() ) return;
+    if( state == localMaximized ) return;
+
+    localMaximized = state;
+
+    if( QApplication::primaryScreen()->size().width() > QWidget::maximumWidth() )
+    {
+        maximizedSize.setWidth( QWidget::maximumWidth() );
+        maximizedPos.setX( (QApplication::primaryScreen()->size().width() - QWidget::maximumWidth()) / 2 );
+    }
+    else
+        maximizedSize.setWidth( QApplication::primaryScreen()->size().width() );
+
+    if( QApplication::primaryScreen()->size().height() > QWidget::maximumHeight() )
+        maximizedSize.setHeight( QWidget::maximumHeight() );
+    else
+        maximizedSize.setHeight( QApplication::primaryScreen()->size().height() );
+
+    maximizedPos.setY(0);
+
+    if( localMaximized )
+    {
+        unmaximizedPos = pos();
+        unmaximizedSize = size();
+
+         if( unmaximizedPos.x() < maximizedPos.x() )
+             dxMaxim = qFabs( unmaximizedPos.x() - maximizedPos.x()) / maximizeSteps;
+
+         if( unmaximizedPos.x() > maximizedPos.x() )
+             dxMaxim = -qFabs( unmaximizedPos.x() - maximizedPos.x()) / maximizeSteps;
+
+         if( unmaximizedPos.y() < maximizedPos.y() )
+             dyMaxim = qFabs( unmaximizedPos.y() - maximizedPos.y()) / maximizeSteps;
+
+         if( unmaximizedPos.y() > maximizedPos.y() )
+             dyMaxim = -qFabs( unmaximizedPos.y() - maximizedPos.y()) / maximizeSteps;
+
+         if( unmaximizedSize.width() < maximizedSize.width() )
+             dwMaxim = qFabs( unmaximizedSize.width() - maximizedSize.width()) / maximizeSteps;
+
+         if( unmaximizedSize.width() > maximizedSize.width() )
+             dwMaxim = -qFabs( unmaximizedSize.width() - maximizedSize.width()) / maximizeSteps;
+
+         if( unmaximizedSize.height() < maximizedSize.height() )
+             dhMaxim = qFabs( unmaximizedSize.height() - maximizedSize.height()) / maximizeSteps;
+
+         if( unmaximizedSize.height() > maximizedSize.height() )
+             dhMaxim = -qFabs( unmaximizedSize.height() - maximizedSize.height()) / maximizeSteps;
+    }
+    else
+    {
+        if( unmaximizedPos.x() < maximizedPos.x() )
+            dxMaxim = -qFabs( unmaximizedPos.x() - maximizedPos.x()) / maximizeSteps;
+
+        if( unmaximizedPos.x() > maximizedPos.x() )
+            dxMaxim = qFabs( unmaximizedPos.x() - maximizedPos.x()) / maximizeSteps;
+
+        if( unmaximizedPos.y() < maximizedPos.y() )
+            dyMaxim = -qFabs( unmaximizedPos.y() - maximizedPos.y()) / maximizeSteps;
+
+        if( unmaximizedPos.y() > maximizedPos.y() )
+            dyMaxim = qFabs( unmaximizedPos.y() - maximizedPos.y()) / maximizeSteps;
+
+        if( unmaximizedSize.width() < maximizedSize.width() )
+            dwMaxim = -qFabs( unmaximizedSize.width() - maximizedSize.width()) / maximizeSteps;
+
+        if( unmaximizedSize.width() > maximizedSize.width() )
+            dwMaxim = qFabs( unmaximizedSize.width() - maximizedSize.width()) / maximizeSteps;
+
+        if( unmaximizedSize.height() < maximizedSize.height() )
+            dhMaxim = -qFabs( unmaximizedSize.height() - maximizedSize.height()) / maximizeSteps;
+
+        if( unmaximizedSize.height() > maximizedSize.height() )
+            dhMaxim = qFabs( unmaximizedSize.height() - maximizedSize.height()) / maximizeSteps;
+    }
+
+    qDebug() << "X:" << dxMaxim << "Y:" << dyMaxim;
+
+    currentMaximizeStep = 0;
+    connect(animationTimer,SIGNAL(timeout()), this, SLOT(maximizeAnimation()));
+    animationTimer->start(0);
+
+    // Send surface title to Crystals
+    SurfaceExpandStruct message;
+    message.expand = state;
+    message.expandMode = mode;
+
+    // Copy message to a char pointer
+    uint msgSize =  sizeof(SurfaceExpandStruct);
+    char data[msgSize];
+    memcpy(data,&message,msgSize);
+
+    // Send message
+    socket->write(data,msgSize);
+}
+
 // Gets surface opacity
 uint CWindow::windowOpacity()
 {
@@ -214,8 +371,8 @@ void CWindow::connected()
     message.id = winId();
     message.pid = QApplication::applicationPid();
     message.opacity = 255;
-    message.role = mode();
-    message.appType = CLIENT_TYPE;
+    message.role = windowRole();
+    message.appType = ApplicationType::Client;
     message.x = pos().x();
     message.y = pos().y();
 
@@ -261,6 +418,31 @@ void CWindow::newMessage()
 
 }
 
+void CWindow::maximizeAnimation()
+{
+    if( currentMaximizeStep < maximizeSteps )
+    {
+        resize( size().width() + dwMaxim, size().height() + dhMaxim );
+        move( pos().x() + dxMaxim, pos().y() + dyMaxim);
+        currentMaximizeStep++;
+        animationTimer->start(18);
+    }
+    else
+    {
+        if( localMaximized )
+        {
+            resize(maximizedSize);
+            move(maximizedPos);
+        }
+        else
+        {
+            resize(unmaximizedSize);
+            move(unmaximizedPos);
+        }
+        disconnect(animationTimer,SIGNAL(timeout()),this,SLOT(maximizeAnimation()));
+    }
+}
+
 
 // Widget events
 void CWindow::sendPosition(const QPoint &pos)
@@ -281,14 +463,14 @@ void CWindow::sendPosition(const QPoint &pos)
 }
 
 
-void CWindow::modeChanged(uint mode)
+void CWindow::windowRoleChanged(WindowRole role)
 {
 
     if( !socket->open() ) return;
 
     // Send surface title to Crystals
     SurfaceRoleStruct message;
-    message.role = mode;
+    message.role = role;
 
     // Copy message to a char pointer
     char data[sizeof(SurfaceRoleStruct)];

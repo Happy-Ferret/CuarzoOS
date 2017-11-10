@@ -58,9 +58,12 @@ void View::setPosition(const QPointF &pos)
 {
 
     if ( socket == nullptr ) return;
+
+    QPointF p = pos;
+
     SurfaceMovedStruct msg;
-    msg.x = pos.x();
-    msg.y = pos.y();
+    msg.x = p.x();
+    msg.y = p.y();
 
     // Copy message to a char pointer
     char data[sizeof(SurfaceMovedStruct)];
@@ -69,7 +72,10 @@ void View::setPosition(const QPointF &pos)
     // Sends the message
     socket->socket->write(data,sizeof(SurfaceMovedStruct));
 
-    m_position = pos;
+    if (p.y() < 29)
+        p.setY(29);
+
+    m_position = p;
 }
 
 

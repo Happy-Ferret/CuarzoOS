@@ -6,6 +6,9 @@
 #include <QBoxLayout>
 #include <QMouseEvent>
 #include <QLocalSocket>
+#include <QTimer>
+#include <QScreen>
+#include <QtMath>
 
 #ifndef CWINDOW
 #define CWINDOW
@@ -18,33 +21,41 @@ class CWindow: public QWidget
     Q_OBJECT
 
 public:
-    CWindow( uint mode = WINDOW_MODE);
+    CWindow( WindowRole role = WindowRole::Frame);
     void move(const QPoint &pos);
     void move(int x, int y);
     void setWindowTitle(const QString &title);
-    void setMode(unsigned int mode = WINDOW_MODE);
+    void setWindowRole(WindowRole role = Frame);
     void setWindowOpacity( float opacity = 1.0f );
     void setCentralWidget( QWidget *widget );
 
+    bool beforeClose() { return true; }
+    bool maximized(){ return localMaximized; }
+
+    QLocalSocket *getSocket(){ return socket; }
+
     QString windowTitle();
     uint windowOpacity();
-    uint mode();
+    WindowRole windowRole();
 
     bool registeredSurface = false;
 
     // Topbar items layout
     QHBoxLayout *firstTopLayout, seccondTopLayout;
 
+    void close();
+    void minimize( bool state = true );
+    void maximize(MaximizeMode mode = CurrentWorkspace, bool state = true );
 
 private slots:
     void connected();
     void newMessage();
-
+    void maximizeAnimation();
 protected:
     void connectToCrystals();
 private:
     void sendPosition(const QPoint &pos);
-    void modeChanged(uint mode);
+    void windowRoleChanged(WindowRole role);
     void opacityChanged(float opacity);
     void mouseGrab();
 
@@ -79,8 +90,16 @@ private:
     void resizeEvent(QResizeEvent *);
     bool eventFilter(QObject *watched, QEvent *event);
 
+    // Animation
+    QTimer *animationTimer = new QTimer( this );
+    bool localMaximized = false;
+    QSize unmaximizedSize, maximizedSize;
+    QPoint unmaximizedPos, maximizedPos;
+    int currentMaximizeStep = 0;
+    float maximizeSteps = 15.0f;
+    float dxMaxim, dyMaxim, dwMaxim, dhMaxim;
 
-    uint localMode = WINDOW_MODE;
+    WindowRole localRole;
     uint localOpacity = 255;
 
 

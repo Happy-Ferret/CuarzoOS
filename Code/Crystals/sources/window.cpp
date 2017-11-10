@@ -128,7 +128,7 @@ void Window::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(background->Indices), background->Indices, GL_STATIC_DRAW);
 
     // Set default background image
-    setBackground(SYSTEM_PATH + "/System/Wallpapers/Forest.jpg");
+    setBackground(SYSTEM_PATH + "/System/Wallpapers/Sea.jpg");
 
     // Set default background color
     background->setColor(Qt::white);
@@ -532,13 +532,13 @@ void Window::resizeGL(int, int)
 View *Window::viewAt(const QPointF &point)
 {
     // Store the view
-    View *ret = false;
+    View *ret = nullptr;
 
     // Loop all views
     Q_FOREACH (View *view, compositor->views)
     {
         // Skip if is the drag icon
-        if (view == dragIconView)
+        if (view == dragIconView || !view->configured)
             continue;
 
         // Check if point is in view rect
@@ -714,7 +714,7 @@ void Window::mouseMoveEvent(QMouseEvent *e)
 
         mouseView = viewAt(e->localPos());
 
-        if ( mouseView == false )
+        if ( mouseView == nullptr )
         {
             setCursor(Qt::ArrowCursor);
             return;
@@ -824,6 +824,9 @@ void Window::mouseMoveEvent(QMouseEvent *e)
         break;
     case DragGrab: {
         View *view = viewAt(e->localPos());
+
+        if( view == nullptr ) return;
+
         compositor->handleDrag(view, e);
         if (dragIconView) {
             dragIconView->setPosition(e->localPos() + dragIconView->position());
@@ -842,6 +845,7 @@ void Window::wheelEvent(QWheelEvent *e)
 // Send mouse event to the compositor
 void Window::sendMouseEvent(QMouseEvent *e, View *target)
 {
+    if( target == nullptr) return;
 
     // Get the mouse coords
     QPointF mappedPos = e->localPos();

@@ -1,6 +1,6 @@
-#include "Menu.h"
+#include "PMenu.h"
 
-Menu::Menu(const QString &title)
+PMenu::PMenu(const QString &title)
 {
     text->setText(title);
     text->setFontSize(18);
@@ -8,7 +8,7 @@ Menu::Menu(const QString &title)
     setup();
 }
 
-Menu::Menu(QPixmap pix)
+PMenu::PMenu(QPixmap pix)
 {
     text->hide();
     pixmap = pix;
@@ -20,7 +20,7 @@ Menu::Menu(QPixmap pix)
 
 
 
-void Menu::setup()
+void PMenu::setup()
 {
     setMouseTracking(true);
     setPalette( QColor(LIGHT_BLUE) );
@@ -35,7 +35,7 @@ void Menu::setup()
     setMaximumWidth(200);
 }
 
-void Menu::setActive(bool mode)
+void PMenu::setActive(bool mode)
 {
     if( mode )
     {

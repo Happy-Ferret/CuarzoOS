@@ -5,14 +5,14 @@
 
 // A topbar menu (Text or Icon)
 
-class Menu : public QWidget
+class PMenu : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    Menu(const QString &title);
-    Menu(QPixmap pix);
+    PMenu(const QString &title);
+    PMenu(QPixmap pix);
 
     void setup();
     void setActive( bool mode );

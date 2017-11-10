@@ -9,6 +9,10 @@
 #define CRYSTALS_TYPE 1
 #define PARADISO_TYPE 2
 
+enum ApplicationType
+{
+    Client = 0,
+};
 
 // Way Crystals identify a surface
 
@@ -17,6 +21,21 @@
 #define DOCK_MODE 2
 #define PARADISO_MODE 3
 #define MENU_MODE 4
+
+enum WindowRole
+{
+    Frame = 0,
+    Frameless = 1,
+    Dock = 2,
+    TopBar= 3,
+    Menu = 4
+};
+
+enum MaximizeMode
+{
+    CurrentWorkspace = 0,
+    NewWorkspace = 1
+};
 
 
 // Materialize Colors
@@ -47,7 +66,7 @@
 #define SYSTEM_PATH QString("/home/e/Escritorio/CuarzoOS/CuarzoOS")
 
 
-/* ------------------ Messages From Clients ------------------ */
+/* ------------------ Clients to Crystals ------------------ */
 
 #define SURFACE_REGISTER 0
 #define SURFACE_ROLE 1
@@ -173,7 +192,7 @@ SurfaceBlurRemoveStruct;
 
 
 
-/* ------------------ Messages to Clients ------------------ */
+/* ------------------ Crystals to Clients ------------------ */
 
 #define REGISTERED_APP 0
 #define REGISTERED_SURFACE 1

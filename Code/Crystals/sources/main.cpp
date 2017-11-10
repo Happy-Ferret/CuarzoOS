@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     LaunchMan man;
 
     // Launch Crystals Gui
-    //man.launchZpp(SYSTEM_PATH + "/System/Applications/Paradiso.zpp");
+    man.launchZpp(SYSTEM_PATH + "/System/Applications/Paradiso.zpp");
 
     // Execute Application
     return app.exec();

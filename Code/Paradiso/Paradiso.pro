@@ -19,9 +19,9 @@ TEMPLATE = app
 HEADERS += \
     Headers/Paradiso.h \
     Headers/Headers.h \
-    Headers/Menu.h
+    Headers/PMenu.h
 
 SOURCES += \
     Sources/main.cpp \
     Sources/Paradiso.cpp \
-    Sources/Menu.cpp
+    Sources/PMenu.cpp

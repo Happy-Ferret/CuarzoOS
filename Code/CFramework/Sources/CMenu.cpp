@@ -1,7 +1,7 @@
 #include "CMenu.h"
 #include <QDebug>
 
-CMenu::CMenu() : CWindow( MENU_MODE )
+CMenu::CMenu() : CWindow( Menu )
 {
     setup();
 }
@@ -47,7 +47,7 @@ void CMenu::setup()
     layout->setContentsMargins( 0, 10, 0, 10);
     setMinimumWidth(  200 );
     setMaximumWidth( 500 );
-    setMode( MENU_MODE );
+    setWindowRole( WindowRole::Menu );
 }
 
 
