@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CWindow_t {
-    QByteArrayData data[7];
-    char stringdata0[71];
+    QByteArrayData data[4];
+    char stringdata0[30];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,16 +32,12 @@ struct qt_meta_stringdata_CWindow_t {
 static const qt_meta_stringdata_CWindow_t qt_meta_stringdata_CWindow = {
     {
 QT_MOC_LITERAL(0, 0, 7), // "CWindow"
-QT_MOC_LITERAL(1, 8, 15), // "positionChanged"
-QT_MOC_LITERAL(2, 24, 0), // ""
-QT_MOC_LITERAL(3, 25, 3), // "pos"
-QT_MOC_LITERAL(4, 29, 11), // "modeChanged"
-QT_MOC_LITERAL(5, 41, 14), // "opacityChanged"
-QT_MOC_LITERAL(6, 56, 14) // "mouseGrabEvent"
+QT_MOC_LITERAL(1, 8, 9), // "connected"
+QT_MOC_LITERAL(2, 18, 0), // ""
+QT_MOC_LITERAL(3, 19, 10) // "newMessage"
 
     },
-    "CWindow\0positionChanged\0\0pos\0modeChanged\0"
-    "opacityChanged\0mouseGrabEvent"
+    "CWindow\0connected\0\0newMessage"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,23 +47,19 @@ static const uint qt_meta_data_CWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       0,       // signalCount
 
- // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x06 /* Public */,
-       4,    1,   37,    2, 0x06 /* Public */,
-       5,    1,   40,    2, 0x06 /* Public */,
-       6,    0,   43,    2, 0x06 /* Public */,
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   24,    2, 0x08 /* Private */,
+       3,    0,   25,    2, 0x08 /* Private */,
 
- // signals: parameters
-    QMetaType::Void, QMetaType::QPoint,    3,
-    QMetaType::Void, QMetaType::UInt,    2,
-    QMetaType::Void, QMetaType::Float,    2,
+ // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -79,44 +71,12 @@ void CWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         CWindow *_t = static_cast<CWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->positionChanged((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 1: _t->modeChanged((*reinterpret_cast< uint(*)>(_a[1]))); break;
-        case 2: _t->opacityChanged((*reinterpret_cast< float(*)>(_a[1]))); break;
-        case 3: _t->mouseGrabEvent(); break;
+        case 0: _t->connected(); break;
+        case 1: _t->newMessage(); break;
         default: ;
         }
-    } else if (_c == QMetaObject::IndexOfMethod) {
-        int *result = reinterpret_cast<int *>(_a[0]);
-        void **func = reinterpret_cast<void **>(_a[1]);
-        {
-            typedef void (CWindow::*_t)(const QPoint & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CWindow::positionChanged)) {
-                *result = 0;
-                return;
-            }
-        }
-        {
-            typedef void (CWindow::*_t)(uint );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CWindow::modeChanged)) {
-                *result = 1;
-                return;
-            }
-        }
-        {
-            typedef void (CWindow::*_t)(float );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CWindow::opacityChanged)) {
-                *result = 2;
-                return;
-            }
-        }
-        {
-            typedef void (CWindow::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CWindow::mouseGrabEvent)) {
-                *result = 3;
-                return;
-            }
-        }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObject CWindow::staticMetaObject = {
@@ -144,42 +104,15 @@ int CWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 2;
     }
     return _id;
-}
-
-// SIGNAL 0
-void CWindow::positionChanged(const QPoint & _t1)
-{
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
-}
-
-// SIGNAL 1
-void CWindow::modeChanged(uint _t1)
-{
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 1, _a);
-}
-
-// SIGNAL 2
-void CWindow::opacityChanged(float _t1)
-{
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
-}
-
-// SIGNAL 3
-void CWindow::mouseGrabEvent()
-{
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

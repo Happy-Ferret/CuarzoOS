@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Compositor_t {
-    QByteArrayData data[26];
-    char stringdata0[368];
+    QByteArrayData data[25];
+    char stringdata0[349];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,29 +44,27 @@ QT_MOC_LITERAL(9, 83, 13), // "triggerRender"
 QT_MOC_LITERAL(10, 97, 18), // "newClientConnected"
 QT_MOC_LITERAL(11, 116, 16), // "newClientMessage"
 QT_MOC_LITERAL(12, 133, 12), // "updateCursor"
-QT_MOC_LITERAL(13, 146, 18), // "socketDisconnected"
-QT_MOC_LITERAL(14, 165, 24), // "surfaceHasContentChanged"
-QT_MOC_LITERAL(15, 190, 16), // "surfaceDestroyed"
-QT_MOC_LITERAL(16, 207, 18), // "surfaceSizeChanged"
-QT_MOC_LITERAL(17, 226, 20), // "viewSurfaceDestroyed"
-QT_MOC_LITERAL(18, 247, 9), // "startDrag"
-QT_MOC_LITERAL(19, 257, 12), // "titleChanged"
-QT_MOC_LITERAL(20, 270, 16), // "onSurfaceCreated"
-QT_MOC_LITERAL(21, 287, 16), // "QWaylandSurface*"
-QT_MOC_LITERAL(22, 304, 7), // "surface"
-QT_MOC_LITERAL(23, 312, 16), // "onWlShellCreated"
-QT_MOC_LITERAL(24, 329, 23), // "QWaylandWlShellSurface*"
-QT_MOC_LITERAL(25, 353, 14) // "wlShellSurface"
+QT_MOC_LITERAL(13, 146, 24), // "surfaceHasContentChanged"
+QT_MOC_LITERAL(14, 171, 16), // "surfaceDestroyed"
+QT_MOC_LITERAL(15, 188, 18), // "surfaceSizeChanged"
+QT_MOC_LITERAL(16, 207, 20), // "viewSurfaceDestroyed"
+QT_MOC_LITERAL(17, 228, 9), // "startDrag"
+QT_MOC_LITERAL(18, 238, 12), // "titleChanged"
+QT_MOC_LITERAL(19, 251, 16), // "onSurfaceCreated"
+QT_MOC_LITERAL(20, 268, 16), // "QWaylandSurface*"
+QT_MOC_LITERAL(21, 285, 7), // "surface"
+QT_MOC_LITERAL(22, 293, 16), // "onWlShellCreated"
+QT_MOC_LITERAL(23, 310, 23), // "QWaylandWlShellSurface*"
+QT_MOC_LITERAL(24, 334, 14) // "wlShellSurface"
 
     },
     "Compositor\0startResize\0\0edge\0anchored\0"
     "dragStarted\0View*\0dragIcon\0readyToLaunchApps\0"
     "triggerRender\0newClientConnected\0"
     "newClientMessage\0updateCursor\0"
-    "socketDisconnected\0surfaceHasContentChanged\0"
-    "surfaceDestroyed\0surfaceSizeChanged\0"
-    "viewSurfaceDestroyed\0startDrag\0"
-    "titleChanged\0onSurfaceCreated\0"
+    "surfaceHasContentChanged\0surfaceDestroyed\0"
+    "surfaceSizeChanged\0viewSurfaceDestroyed\0"
+    "startDrag\0titleChanged\0onSurfaceCreated\0"
     "QWaylandSurface*\0surface\0onWlShellCreated\0"
     "QWaylandWlShellSurface*\0wlShellSurface"
 };
@@ -78,7 +76,7 @@ static const uint qt_meta_data_Compositor[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -86,24 +84,23 @@ static const uint qt_meta_data_Compositor[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   94,    2, 0x06 /* Public */,
-       5,    1,   99,    2, 0x06 /* Public */,
+       1,    2,   89,    2, 0x06 /* Public */,
+       5,    1,   94,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    0,  102,    2, 0x0a /* Public */,
-       9,    0,  103,    2, 0x0a /* Public */,
-      10,    0,  104,    2, 0x0a /* Public */,
-      11,    0,  105,    2, 0x0a /* Public */,
-      12,    0,  106,    2, 0x0a /* Public */,
-      13,    0,  107,    2, 0x08 /* Private */,
-      14,    0,  108,    2, 0x08 /* Private */,
-      15,    0,  109,    2, 0x08 /* Private */,
-      16,    0,  110,    2, 0x08 /* Private */,
-      17,    0,  111,    2, 0x08 /* Private */,
-      18,    0,  112,    2, 0x08 /* Private */,
-      19,    0,  113,    2, 0x08 /* Private */,
-      20,    1,  114,    2, 0x08 /* Private */,
-      23,    1,  117,    2, 0x08 /* Private */,
+       8,    0,   97,    2, 0x0a /* Public */,
+       9,    0,   98,    2, 0x0a /* Public */,
+      10,    0,   99,    2, 0x0a /* Public */,
+      11,    0,  100,    2, 0x0a /* Public */,
+      12,    0,  101,    2, 0x0a /* Public */,
+      13,    0,  102,    2, 0x08 /* Private */,
+      14,    0,  103,    2, 0x08 /* Private */,
+      15,    0,  104,    2, 0x08 /* Private */,
+      16,    0,  105,    2, 0x08 /* Private */,
+      17,    0,  106,    2, 0x08 /* Private */,
+      18,    0,  107,    2, 0x08 /* Private */,
+      19,    1,  108,    2, 0x08 /* Private */,
+      22,    1,  111,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Bool,    3,    4,
@@ -121,9 +118,8 @@ static const uint qt_meta_data_Compositor[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 21,   22,
-    QMetaType::Void, 0x80000000 | 24,   25,
+    QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void, 0x80000000 | 23,   24,
 
        0        // eod
 };
@@ -141,15 +137,14 @@ void Compositor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->newClientConnected(); break;
         case 5: _t->newClientMessage(); break;
         case 6: _t->updateCursor(); break;
-        case 7: _t->socketDisconnected(); break;
-        case 8: _t->surfaceHasContentChanged(); break;
-        case 9: _t->surfaceDestroyed(); break;
-        case 10: _t->surfaceSizeChanged(); break;
-        case 11: _t->viewSurfaceDestroyed(); break;
-        case 12: _t->startDrag(); break;
-        case 13: _t->titleChanged(); break;
-        case 14: _t->onSurfaceCreated((*reinterpret_cast< QWaylandSurface*(*)>(_a[1]))); break;
-        case 15: _t->onWlShellCreated((*reinterpret_cast< QWaylandWlShellSurface*(*)>(_a[1]))); break;
+        case 7: _t->surfaceHasContentChanged(); break;
+        case 8: _t->surfaceDestroyed(); break;
+        case 9: _t->surfaceSizeChanged(); break;
+        case 10: _t->viewSurfaceDestroyed(); break;
+        case 11: _t->startDrag(); break;
+        case 12: _t->titleChanged(); break;
+        case 13: _t->onSurfaceCreated((*reinterpret_cast< QWaylandSurface*(*)>(_a[1]))); break;
+        case 14: _t->onWlShellCreated((*reinterpret_cast< QWaylandWlShellSurface*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -162,14 +157,14 @@ void Compositor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< View* >(); break;
             }
             break;
-        case 14:
+        case 13:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QWaylandSurface* >(); break;
             }
             break;
-        case 15:
+        case 14:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -222,13 +217,13 @@ int Compositor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 15;
     }
     return _id;
 }

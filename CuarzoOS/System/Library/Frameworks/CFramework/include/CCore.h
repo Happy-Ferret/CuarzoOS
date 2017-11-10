@@ -49,43 +49,36 @@
 
 /* ------------------ Messages From Clients ------------------ */
 
-#define REGISTER_APP 0
-#define SURFACE_CONFIG 1
-#define SURFACE_ROLE 2
-#define SURFACE_POS 3
-#define SURFACE_GRAB 4
-#define SURFACE_OPACITY 5
-#define SURFACE_MINIMIZE 6
-#define SURFACE_EXPAND 7
-#define SURFACE_BLUR_CREATE 8
-#define SURFACE_BLUR_TINT 9
-#define SURFACE_BLUR_LEVEL 10
-#define SURFACE_BLUR_RECT 11
-#define SURFACE_BLUR_REMOVE 12
+#define SURFACE_REGISTER 0
+#define SURFACE_ROLE 1
+#define SURFACE_POS 2
+#define SURFACE_GRAB 3
+#define SURFACE_OPACITY 4
+#define SURFACE_MINIMIZE 5
+#define SURFACE_EXPAND 6
+#define SURFACE_BLUR_CREATE 7
+#define SURFACE_BLUR_TINT 8
+#define SURFACE_BLUR_LEVEL 9
+#define SURFACE_BLUR_RECT 10
+#define SURFACE_BLUR_REMOVE 11
 
 typedef struct
 {
-    unsigned int type = REGISTER_APP;
-    unsigned int pid;
+    unsigned int type = SURFACE_REGISTER;
+    unsigned int pid; // App ID ( Proccess ID )
     unsigned int appType;
-}
-RegisterAppStruct;
 
-typedef struct
-{
-    unsigned int type = SURFACE_CONFIG;
-    unsigned int id;
+    unsigned int id; // Surface Id
     unsigned int role;
     int x;
     int y;
     unsigned int opacity;
 }
-SurfaceConfigStruct;
+SurfaceRegisterStruct;
 
 typedef struct
 {
     unsigned int type = SURFACE_ROLE;
-    unsigned int id;
     unsigned int role;
 }
 SurfaceRoleStruct;
@@ -93,7 +86,6 @@ SurfaceRoleStruct;
 typedef struct
 {
     unsigned int type = SURFACE_POS;
-    unsigned int id;
     int x;
     int y;
 }
@@ -102,14 +94,12 @@ SurfacePosStruct;
 typedef struct
 {
     unsigned int type = SURFACE_GRAB;
-    unsigned int id;
 }
 SurfaceGrabStruct;
 
 typedef struct
 {
     unsigned int type = SURFACE_OPACITY;
-    unsigned int id;
     unsigned int opacity;
 }
 SurfaceOpacityStruct;
@@ -117,7 +107,6 @@ SurfaceOpacityStruct;
 typedef struct
 {
     unsigned int type = SURFACE_MINIMIZE;
-    unsigned int id;
     bool minimize;
 }
 SurfaceMinimizeStruct;
@@ -125,7 +114,6 @@ SurfaceMinimizeStruct;
 typedef struct
 {
     unsigned int type = SURFACE_EXPAND;
-    unsigned int id;
     bool expand;
     unsigned int expandMode;
 }
@@ -202,14 +190,12 @@ RegisteredAppStruct;
 typedef struct
 {
     unsigned int type = REGISTERED_SURFACE;
-    unsigned int id;
 }
 RegisteredSurfaceStruct;
 
 typedef struct
 {
     unsigned int type = SURFACE_SCALED;
-    unsigned int id;
     unsigned int width;
     unsigned  int height;
 }
@@ -218,7 +204,6 @@ SurfaceScaledStruct;
 typedef struct
 {
     unsigned int type = SURFACE_MOVED;
-    unsigned int id;
     int x;
     int y;
 }

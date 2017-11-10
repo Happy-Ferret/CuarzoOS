@@ -60,9 +60,7 @@ Window::Window()
   movie->start();
   movieFrame->hide();
 
-  menu->insertItem( new CMenuItem("Hola"));
-  menu->insertItem( new CMenuItem("Hopperdiezel"));
-  menu->insertItem( item );
+
 
 }
 
@@ -94,6 +92,10 @@ void Window::changeOpacity()
 void Window::changeMode()
 {
     //setMode(DOCK_MODE);
+    CMenu *menu = new CMenu();
+    menu->insertItem( new CMenuItem("Hola"));
+    menu->insertItem( new CMenuItem("Hopperdiezel"));
+    menu->insertItem( item );
     menu->show(QPoint(300,300));
 }
 

@@ -19,6 +19,7 @@ public:
     uint role = WINDOW_MODE;
     uint opacity = 255;
     int surfaceId = -1;
+    int appId = -1;
     bool blur = false;
     bool configured = false;
 
@@ -26,6 +27,7 @@ public:
     void setRole(uint newRole);
     void setOpacity(uint newOpacity);
     void setSize(const QSize &size);
+    void setSocket( Socket *_socket );
 
     Socket *socket = nullptr;
     QMap<uint, SurfaceBlurCreateStruct*> blurWidgets;
@@ -43,6 +45,8 @@ public:
     QPointF m_position, previusPosition;
     QSize previusSize;
 
+private slots:
+    void newMessage();
 
 signals:
     void roleChanged(uint newRole);

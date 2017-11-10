@@ -7,6 +7,8 @@
 #include "socket.h"
 #include "launchman.h"
 
+#include <QJsonDocument>
+
 class QOpenGLTexture;
 class Compositor;
 class View;
@@ -41,9 +43,6 @@ public:
     // Stored menus
     QList<View*> menus;
 
-    // Stored client sockets
-    QList<Socket*> sockets;
-
     // Special sockets
     Socket *crystalsGuiSocket = nullptr;
     Socket *paradisoSocket = nullptr;
@@ -61,7 +60,6 @@ public:
     // Changes the screen resolution
     void setScreenResolution(QSize size);
 
-
     void handleMouseEvent(QWaylandView *target, QMouseEvent *me);
     void handleResize(View *target, const QSize &initialSize, const QPoint &delta, int edge);
     void handleDrag(View *target, QMouseEvent *me);
@@ -75,8 +73,6 @@ public:
     // Find view by id and pid
     View *findViewByIdAndPid(int id,int pid);
 
-    // Find socket by pid
-    Socket *findSocketByPId(uint id);
 
 protected:
     void adjustCursorSurface(QWaylandSurface *surface, int hotspotX, int hotspotY);
@@ -94,7 +90,6 @@ public slots:
 
 
 private slots:
-    void socketDisconnected();
     void surfaceHasContentChanged();
     void surfaceDestroyed();
     void surfaceSizeChanged();

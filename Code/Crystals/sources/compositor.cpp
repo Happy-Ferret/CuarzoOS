@@ -41,12 +41,6 @@ void Compositor::newClientConnected()
     // Gets the new socket
     Socket *socket = new Socket(server->nextPendingConnection());
 
-    // Store the socket
-    sockets.append(socket);
-
-    // Event when socket is disconnected
-    connect(socket,SIGNAL(disconnected()),this,SLOT(socketDisconnected()));
-
     // Event when socket sends a message
     connect(socket,SIGNAL(messageIn()),this,SLOT(newClientMessage()));
 
@@ -65,263 +59,45 @@ void Compositor::newClientMessage()
     // Detects the message type
     unsigned int type = *(unsigned int*)data.mid(0,sizeof(unsigned int)).data();
 
-    // Switch for message types
-    switch ( type ) {
-
-        // Register App ( Asociate the client process id with the socket )
-        case REGISTER_APP:{
-
-            // Parse the message
-            RegisterAppStruct *message = ( RegisterAppStruct * ) data.data();
-
-            // Asociate client to this socket
-            socket->processID = message->pid;
-
-            // Assigns the application type
-            socket->appType = message->appType;
-
-            // If is the Paradiso Application
-            if( socket->appType  == PARADISO_TYPE )
-            {
-                // Save socket
-                paradisoSocket = socket;
-
-                // Now can open apps
-                readyToLaunchApps();
-
-            }
-
-            // Sends confirmation response
-            RegisteredAppStruct reply;
-
-            // Copy message to a char pointer
-            char data[sizeof(RegisteredAppStruct)];
-            memcpy(data,&reply,sizeof(RegisteredAppStruct));
-
-            // Send message
-            socket->socket->write(data,sizeof(RegisteredAppStruct));
-
-
-        }break;
-
-        // Full initial surface configuration ( Size, Position, Opacity, etc )
-        case SURFACE_CONFIG:{
-
-            // Parse the message
-            SurfaceConfigStruct *message = (SurfaceConfigStruct*)data.data();
-
-            // Find view that matches the given surface id
-            View *view = findViewByIdAndPid( message->id, socket->processID );
-
-            if ( view == nullptr ) return;
-
-            // Assign the surface position
-            view->setPosition( QPointF( message->x, message->y ) );
-
-            // Assign the surface role
-            view->setRole( message->role );
-
-            // Flag the surface ass configured
-            view->configured = true;
-
-            // Save surface if it's Paradiso ( CuarzoOS TopBar )
-            if( message->role == PARADISO_MODE )
-            {
-                window->paradisoView = view;
-                qDebug() << "Paradiso";
-            }
-            // Save surface if it's a menu
-            if( message->role == MENU_MODE )
-            {
-                menus.append(view);
-                qDebug() << "New Menu";
-            }
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Change surface role
-        case SURFACE_ROLE:{
-
-            // Parse the message
-            SurfaceRoleStruct *msg = (SurfaceRoleStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->id,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Set surface role
-            view->setRole(msg->role);
-
-             // Triggers OpenGL render
-            triggerRender();
-
-
-        }break;
-
-        // Change the surface position
-        case SURFACE_POS:{
-
-            // Parse the message
-            SurfacePosStruct *msg = (SurfacePosStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->id,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Sets surface position
-            view->setPosition(QPointF(msg->x,msg->y));
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Change the surface position
-        case SURFACE_GRAB:{
-
-            // Parse the message
-            SurfaceGrabStruct *msg = (SurfaceGrabStruct*)data.data();
-
-            if( window->mouseView == nullptr) return;
-
-            if( window->mouseView->surfaceId == msg->id)
-                window->mouseGrabBegin();
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Change surface opacity
-        case SURFACE_OPACITY:{
-
-            // Parse the message
-            SurfaceOpacityStruct *msg = (SurfaceOpacityStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->id,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Sets surface opacity
-            view->setOpacity(msg->opacity);
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // New Blur Widget
-        case SURFACE_BLUR_CREATE:{
-
-            // Parse the message
-            SurfaceBlurCreateStruct *msg = (SurfaceBlurCreateStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            //  Saves the data
-            view->blurWidgets.insert( msg->blurId, msg);
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Changes blur level
-    case SURFACE_BLUR_LEVEL:{
-
-            // Parse the message
-            SurfaceBlurLevelStruct *msg = (SurfaceBlurLevelStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Sets  level
-           if( view->blurWidgets.contains(msg->blurId) )
-               view->blurWidgets[msg->blurId]->level = msg->level;
-
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Changes blur rect
-    case SURFACE_BLUR_RECT:{
-
-            // Parse the message
-            SurfaceBlurRectStruct *msg = (SurfaceBlurRectStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Sets  level
-           if( view->blurWidgets.contains(msg->blurId) )
-           {
-               SurfaceBlurCreateStruct *blur = view->blurWidgets[msg->blurId];
-               blur->x = msg->x;
-               blur->y = msg->y;
-               blur->w = msg->w;
-               blur->h = msg->h;
-           }
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Changes blur tint level
-    case SURFACE_BLUR_TINT:{
-
-            // Parse the message
-            SurfaceBlurTintStruct *msg = (SurfaceBlurTintStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Sets  level
-           if( view->blurWidgets.contains(msg->blurId))
-               view->blurWidgets[msg->blurId]->tint = msg->tint;
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
-        // Remove blur
-    case SURFACE_BLUR_REMOVE:{
-
-            // Parse the message
-            SurfaceBlurRemoveStruct *msg = (SurfaceBlurRemoveStruct*)data.data();
-
-            // Find view that matches the given surface id and process id
-            View *view = findViewByIdAndPid(msg->surfaceId,socket->processID);
-
-            if ( view == nullptr ) return;
-
-            // Sets  level
-           if( view->blurWidgets.contains(msg->blurId) )
-               delete view->blurWidgets.take(msg->blurId);
-
-            // Triggers OpenGL render
-            triggerRender();
-
-        }break;
-
+    // New surface registration
+    if( type == SURFACE_REGISTER )
+    {
+        // Disconnect messages for the compositor
+        disconnect(socket,SIGNAL(messageIn()),this,SLOT(newClientMessage()));
+
+        // Parse the message
+        SurfaceRegisterStruct *message = (SurfaceRegisterStruct*)data.data();
+
+        // Find view that matches the given surface id
+        View *view = findViewByIdAndPid( message->id, message->pid );
+
+        // If no view found return
+        if ( view == nullptr ) return;
+
+        // Assign the socket to the view
+        view->setSocket( socket );
+
+        // Assign the surface position
+        view->setPosition( QPointF( message->x, message->y ) );
+
+        // Assign the surface role
+        view->setRole( message->role );
+
+        // Save surface if it's Paradiso ( CuarzoOS TopBar )
+        if( message->role == PARADISO_MODE )
+        {
+            window->paradisoView = view;
+            qDebug() << "Paradiso";
+        }
+        // Save surface if it's a menu
+        if( message->role == MENU_MODE )
+        {
+            menus.append(view);
+            qDebug() << "New Menu";
+        }
+
+        // Triggers OpenGL render
+        triggerRender();
     }
 }
 
@@ -335,18 +111,6 @@ void Compositor::readyToLaunchApps()
     if(readyApps == 2) {// Launch a Demo App
         //man.launchZpp(SYSTEM_PATH + "/Applications/DemoApp.zpp");
 }
-}
-
-
-// Client disconnected
-
-void Compositor::socketDisconnected()
-{
-    // Gets the asociated socket
-    Socket *socket = qobject_cast<Socket *>(sender());
-
-    // Deletes the socket from the list
-    delete sockets.takeAt(sockets.indexOf(socket));
 }
 
 // Wayland surface created event
@@ -378,27 +142,16 @@ void Compositor::titleChanged()
 {
     QWaylandWlShellSurface *surface = qobject_cast< QWaylandWlShellSurface*>(sender());
 
-    qDebug() << "New Window";
-
     // Find equivalent view
     View* view = findView(surface->surface());
 
     // Asign the ID
-    view->surfaceId = surface->title().toInt();
+    QJsonDocument data = QJsonDocument::fromJson(surface->title().toUtf8());
+    QVariantMap json = data.toVariant().toMap();
+    view->surfaceId = json["id"].toInt();
+    view->appId = json["pid"].toInt();
 
-    // Send response
-    RegisteredSurfaceStruct reply;
-    reply.id = view->surfaceId;
-
-    // Copy message to a char pointer
-    char data[sizeof(RegisteredSurfaceStruct)];
-    memcpy(data,&reply,sizeof(RegisteredSurfaceStruct));
-
-    // Ask the surface for a full configuration
-    view->socket = findSocketByPId(surface->surface()->client()->processId());
-
-    view->socket->socket->write(data,sizeof(RegisteredSurfaceStruct));
-
+    qDebug() << "New Window" << surface->title();
     return;
 }
 
@@ -560,15 +313,6 @@ View *Compositor::findViewByIdAndPid( int id, int pid)
     return nullptr;
 }
 
-Socket *Compositor::findSocketByPId( uint id )
-{
-    Q_FOREACH(Socket *socket,sockets)
-    {
-        if(socket->processID == id)
-            return socket;
-    }
-    return nullptr;
-}
 
 
 
@@ -586,7 +330,7 @@ void Compositor::setScreenResolution(QSize size)
     output->addMode( mode, true );
     output->setCurrentMode(mode);
     output->setWindow(window);
-    //output->setSizeFollowsWindow(true);
+    output->setSizeFollowsWindow(true);
 
 }
 

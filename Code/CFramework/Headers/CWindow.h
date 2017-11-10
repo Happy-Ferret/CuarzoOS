@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QBoxLayout>
 #include <QMouseEvent>
+#include <QLocalSocket>
 
 #ifndef CWINDOW
 #define CWINDOW
@@ -16,10 +17,8 @@ class CWindow: public QWidget
 
     Q_OBJECT
 
-    friend class CProtocol;
-
 public:
-    CWindow();
+    CWindow( uint mode = WINDOW_MODE);
     void move(const QPoint &pos);
     void move(int x, int y);
     void setWindowTitle(const QString &title);
@@ -36,14 +35,25 @@ public:
     // Topbar items layout
     QHBoxLayout *firstTopLayout, seccondTopLayout;
 
-signals:
-    void positionChanged(const QPoint &pos);
-    void modeChanged(uint);
-    void opacityChanged(float);
-    void mouseGrabEvent();
 
+private slots:
+    void connected();
+    void newMessage();
 
+protected:
+    void connectToCrystals();
 private:
+    void sendPosition(const QPoint &pos);
+    void modeChanged(uint mode);
+    void opacityChanged(float opacity);
+    void mouseGrab();
+
+    /*
+    void blurTint(float tint);
+    void blurLevel(float level);
+    void blurRect();
+    void blurRemove(bool);
+    */
 
     void refreshtemsPositions();
 
@@ -72,6 +82,10 @@ private:
 
     uint localMode = WINDOW_MODE;
     uint localOpacity = 255;
+
+
+    QLocalSocket *socket = new QLocalSocket(this);
+
 
 };
 

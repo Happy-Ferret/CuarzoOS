@@ -2,7 +2,7 @@
 #define CBLURWIDGET_H
 
 #include <QWidget>
-#include "CApplication.h"
+//#include "CApplication.h"
 
 class CBlurWidget : public QWidget
 {
